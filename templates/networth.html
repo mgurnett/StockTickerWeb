@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+      <h1>{{player.name}}</h1>
+      <h2>Cash on hand {{player.balance_str()}}</h2>
+      
+      <h2>Portfolio value {{Player.money_str(player.calculate_networth() - player.balance)}}</h2>
+      
+      <h2>Networth {{Player.money_str(player.calculate_networth() )}}</h2>
+      
+      <h2>Profit & Loss {{Player.money_str(player.calculate_networth() - 10000) }}</h2>
+    </div>
+
+{% endblock %}

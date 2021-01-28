@@ -1,0 +1,10 @@
+Flask
+yahoo_fin
+requests
+pandas
+matplotlib
+requests_html
+
+# run this: env $pip3 install -r requirements.txt
+
+# to make a file try env $pip3 freeze > requirements.txt
