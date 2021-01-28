@@ -5,12 +5,16 @@ from db_data import *
 from ST_classes_NEW import *
 
 app = Flask(__name__)
+player_id = ""
+current_player = Player ('michael')
 
 @app.route('/')
-def index():
+@app.route('/<player_id>')
+def index(player_id = 'michael'):
+    global current_player
     title = "This is web based STOCK TICKER"
     
-    current_player = Player ("Computer dumb")
+    current_player = Player (player_id)
     common = [("amzn", "Amazon.com, Inc."),
              ("goog", "Alphabet Inc Class C"),
              ("aapl", "Apple Inc"),
@@ -32,27 +36,34 @@ def index():
 def about():
     return render_template ('about.html')
 
+@app.route('/index_test')
+def index_test():
+    global current_player
+    title = "This is a test page"
+    return render_template ('index_test.html', title = title, player = current_player, Player=Player)
+
 @app.route('/newplayer')
 def newplayer():
     return render_template ('newplayer.html')
 
 @app.route('/form', methods=["POST"])
 def form():
+    global current_player
     name = request.form.get ("name")
     current_player = Player (name)
     return render_template ('form.html', player = current_player, Player=Player)
 
 @app.route('/networth')
 def networth():
-    current_player = Player ("Computer dumb")
+    global current_player
     return render_template ('networth.html', player = current_player, Player=Player)
 
 @app.route('/portfolio')
 def portfolio():
-    current_player = Player ("Computer dumb")
+    global current_player
     return render_template ('portfolio.html', player = current_player, Player=Player)
 
 @app.route('/ledger')
 def ledger():
-    current_player = Player ("Computer dumb")
+    global current_player
     return render_template ('ledger.html', player = current_player, Player=Player)

@@ -105,6 +105,7 @@ celerybeat.pid
 .env
 .venv
 TSEnv/
+boot/
 env/
 venv/
 ENV/
