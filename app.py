@@ -6,15 +6,15 @@ from ST_classes_NEW import *
 
 app = Flask(__name__)
 player_id = ""
-current_player = Player ('michael')
+current_player = 'Michael'
 
 @app.route('/')
 @app.route('/<player_id>')
-def index(player_id = 'michael'):
+def index(player_id = 'Michael'):
     global current_player
     title = "This is web based STOCK TICKER"
-    
-    current_player = Player (player_id)
+    current_player = player_id
+    print ('from the index route', current_player, "   ", player_id)
     common = [("amzn", "Amazon.com, Inc."),
              ("goog", "Alphabet Inc Class C"),
              ("aapl", "Apple Inc"),
@@ -66,4 +66,5 @@ def portfolio():
 @app.route('/ledger')
 def ledger():
     global current_player
+    print ('from the ledger route', current_player)
     return render_template ('ledger.html', player = current_player, Player=Player)

@@ -80,6 +80,7 @@ class Player ():
     # This looks for a player in the database and gets it's ID.
     def setup_player(self):
         # if there isn't that player, then it creates it and gets the new ID.
+        print ("from the class", self.name)
         sqliteConnection = open_db(db_file_name, debug=False)
         c = sqliteConnection.cursor()
         c.execute("SELECT id, balance FROM Players WHERE First = ?",
