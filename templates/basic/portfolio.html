@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+      <h2> Portfolio of {{player.name}}</h2>
+    </div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Symbol</th>
+      <th scope="col">Purchase price</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Current price</th>
+      <th scope="col">Stock value</th>
+      <th scope="col">P&L</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for p in player.load_portfolio() %}
+        {% set symbol = p[1] %}
+        {% set purchase_price = p[4] %}
+        {% set quantity = p[3] %}
+        {% set current_price = Player.current_price(p[1]) %}
+        {% set pl = ((current_price - purchase_price) * quantity)  %}
+    
+        <tr>
+          <th scope="row">{{symbol}}</th>
+          <td>{{Player.money_str( purchase_price )}}</td>
+          <td>{{quantity}}</td>
+          <td>{{Player.money_str( current_price )}}</td>
+          <td>{{Player.money_str( current_price * quantity )}}</td>
+          <td>{{Player.money_str( pl )}}</td>
+          
+        </tr>
+    {% endfor %}
+    <tr>
+      <th></th>
+      <td></td>
+      <td></td>
+      <td><b>TOTALS</b></td>
+      <td><b>{{Player.money_str(player.calculate_networth() - player.balance)}}</b></td>
+      <td><b>{{ Player.money_str(player.calculate_networth() - 10000) }}</b></td>
+    </tr>
+  </tbody>
+</table>
+
+{% endblock %}

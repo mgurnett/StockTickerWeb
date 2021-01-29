@@ -37,7 +37,7 @@
                         role="button" data-bs-toggle="dropdown" aria-expanded="false">Current players</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarStocks">
                             {% for p in Player.player_list() %}
-                                <li><a class="dropdown-item" href="/?name={{ p }}">{{p}}</a></li>
+                                <li><a class="dropdown-item" href="/{{ p }}">{{p}}</a></li>
                             {% endfor %}
                         </ul>
                     </li>

@@ -1,0 +1,12 @@
+
+                    
+                            <li><a class="dropdown-item" href="{{ url_for('index_test')}}">test</a></li>
+                    
+                
+                
+                
+                            <li><a class="dropdown-item" href="{{ url_for('newplayer')}}">New player</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ url_for('portfolio')}}">Portfolio</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('ledger')}}">Ledger</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('networth')}}">Net worth</a></li>

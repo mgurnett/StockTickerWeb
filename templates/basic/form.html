@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+      <h1></h1>
+    </div>
+    <p>{{player.name_balance_str()}} who is has a net worth of {{Player.money_str(player.calculate_networth())}}</p>
+
+{% endblock %}

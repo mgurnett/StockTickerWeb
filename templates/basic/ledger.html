@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+      <h2> Ledger of {{player.name}}</h2>
+    </div>
+
+<table class="table table-hover ">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Symbol</th>
+      <th scope="col">Purchase price</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for l in player.load_ledger() %}
+        {% set date = player.purchase_timestamp_str (l[5]) %}
+        {% set symbol = l[1] %}
+        {% set purchase_price = l[2] %}
+        {% set quantity = l[3] %}
+        {% set action = l[6] %}
+    
+        <tr>
+          <th scope="row">{{date}}</th>
+          <td>{{symbol}}</td>
+          <td>{{Player.money_str( purchase_price )}}</td>
+          <td>{{quantity }}</td>
+          <td>{{action}}</td>
+          
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
