@@ -24,11 +24,11 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
                         role="button" data-bs-toggle="dropdown" aria-expanded="false">Players</a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <li><a class="dropdown-item" href="#">New player</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('newplayer')}}">New player</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Portfolio</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('portfolio')}}">Portfolio</a></li>
                             <li><a class="dropdown-item" href="{{ url_for('ledger')}}">Ledger</a></li>
-                            <li><a class="dropdown-item" href="#">Net worth</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('networth')}}">Net worth</a></li>
                         </ul>
                     </li>
                     

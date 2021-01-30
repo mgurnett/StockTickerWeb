@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def main():
-    global current_player
+    global player_id
     title = "This is web based STOCK TICKER"
     player_id = request.args.get("name", "Michael") #Michael is the default   127.0.0.1:5000/?name=michael
     current_player = Player(player_id)
@@ -32,7 +32,7 @@ def main():
 
 @app.route('/about')
 def about():
-    global current_player
+    current_player = "Michael"
     return render_template ('about.html')
 
 @app.route('/newplayer')
@@ -58,6 +58,8 @@ def portfolio():
 
 @app.route('/ledger')
 def ledger():
-    global current_player
-    print ('from the ledger route', current_player.name)
+    global player_id
+    print ('from the ledger route player_id', player_id)
+    current_player = Player(player_id)
+    print ('from the ledger route', current_player.name, "   ", player_id)
     return render_template ('ledger.html', player = current_player, Player=Player)

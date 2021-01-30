@@ -205,3 +205,61 @@ class Player ():
         sqliteConnection.commit()
         close_db(sqliteConnection)
         return
+
+'''
+# current_player = Player ("Computer dumb")
+# #
+# # print (current_player.purchase_timestamp_str(current_player.current_date))
+# #
+# # print (current_player.name_balance_str(), " & ",
+# #        current_player.balance_str(), " @ ",
+# #        current_player.purchase_timestamp_str(current_player.current_date))
+#
+# portfolio = current_player.load_portfolio()
+# # print (portfolio[1][1])
+# ledger = current_player.load_ledger()
+# # print (current_player.purchase_timestamp_str(ledger[1][5]))
+# worth = current_player.calculate_networth()
+#
+# price = Player.current_price ("aapl")
+#
+#
+#
+playerlist = Player.player_list()
+# print (playerlist)
+results = []; total_value = 0
+
+for player in playerlist:
+    local_worth = Player(player).calculate_networth()
+    print(player, "is worth", Player.money_str(local_worth))
+    results.append(local_worth)
+    total_value =total_value + local_worth
+    
+average_value = total_value / len(results)
+print (total_value, average_value)
+fig = plt.figure()
+ax = fig.add_axes([0,0,1,1])
+ax.bar(playerlist,results)
+
+# specifying horizontal line type 
+plt.axhline(y = int(Player.start_balance), color = 'r', linestyle = '-')
+plt.axhline(y = int(average_value), color = 'g', linestyle = '-') 
+plt.show()
+# current_player = Player("rabbit")
+# # print (current_player.name_balance_str(), " & ",
+# #        current_player.balance_str(), " @ ",
+# #        current_player.purchase_timestamp_str(current_player.current_date))
+# current_player.transaction_amount = 2
+# current_player.transaction_symbol = "aapl"
+# print("full name", Player.stock_full_name(current_player.transaction_symbol))
+# current_player.purchase_shares()
+
+# current_player = Player("rabbit")
+# # print (current_player.name_balance_str(), " & ",
+# #        current_player.balance_str(), " @ ",
+# #        current_player.purchase_timestamp_str(current_player.current_date))
+# current_player.transaction_amount = 2
+# current_player.transaction_symbol = "aapl"
+# print("full name", Player.stock_full_name(current_player.transaction_symbol))
+# current_player.sell_shares()
+'''
