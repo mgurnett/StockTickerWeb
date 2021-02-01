@@ -59,7 +59,7 @@
                         role="button" data-bs-toggle="dropdown" aria-expanded="false">Common stocks</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarStocks">
                             {% for c in common %}
-                                <li><a class="dropdown-item" href="/stock={{c.0}}">{{c.0}} ( {{c.1}} )</a></li>
+                                <li><a class="dropdown-item" href="/?stock={{ c.0 }}">{{c.0}} ( {{c.1}} )</a></li>
                             {% endfor %}
                         </ul>
                     </li>
@@ -69,6 +69,10 @@
                     </li>
                 </ul>
                 <p class="navbar-text navbar-right"> <b>{{player.name_balance_str()}} </b></p>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Stock symbol" aria-label="Search">
+                    <button class="btn btn-secondary" type="submit">Search</button>
+                </form>
             </div>
         </div>
     </nav>
