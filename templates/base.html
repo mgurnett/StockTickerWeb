@@ -46,7 +46,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
                         role="button" data-bs-toggle="dropdown" aria-expanded="false">Stocks</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarStocks">
-                            <li><a class="dropdown-item" href="#">Search</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('plot')}}">Graph</a></li>
                             <li><a class="dropdown-item" href="#">buy</a></li>
                             <li><a class="dropdown-item" href="#">sell</a></li>
                             <li><hr class="dropdown-divider"></li>
@@ -68,8 +68,9 @@
                         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                     </li>
                 </ul>
-                <p class="navbar-text navbar-right"> <b>{{player.name_balance_str()}} </b></p>
-                <form class="d-flex">
+                <p class="navbar-text navbar-right"> <b>{{stock.full_name()}} ({{stock.symbol}} ) --- {{player.name_balance_str()}} |</b></p>
+                
+                <form class="d-flex" action="/graph">
                     <input class="form-control me-2" type="search" placeholder="Stock symbol" aria-label="Search">
                     <button class="btn btn-secondary" type="submit">Search</button>
                 </form>

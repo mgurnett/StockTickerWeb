@@ -1,4 +1,5 @@
 from db_data import *
+from scrapping import *
 import datetime
 import sqlite3
 from sqlite3 import Error
@@ -205,3 +206,26 @@ class Player ():
         sqliteConnection.commit()
         close_db(sqliteConnection)
         return
+    
+#======================================================   
+class Stock:
+    def __init__(self, symbol):
+        self.symbol = symbol
+        
+    def current_price(self):
+        try:
+            current_stock_price = si.get_live_price(self.symbol)
+        except:
+            current_stock_price = ""
+        return current_stock_price
+        
+    def price_history(self):
+        try:
+            current_stock_data = si.get_data(self.symbol , start_date = '01/01/2010')
+        except:
+            current_stock_data = ""
+        return current_stock_data
+    
+    def full_name (self):
+        name  = get_stock_full_name(self.symbol)
+        return name
