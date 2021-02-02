@@ -4,7 +4,6 @@
     <div class="container">
       <h1></h1>
     </div>
-    <p>Stock history of {{stock.full_name()}} with a closing price of {{"${:,.2f}".format(stock.current_price())}}</p>
     <img src="data:image/png;base64, {{ plot_url }}">
 
 {% endblock %}

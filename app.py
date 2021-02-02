@@ -11,6 +11,22 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.dates import DateFormatter
 
+COMMON = [("aapl", "Apple Inc"),
+          ("ac", "Air Canada"),
+          ("amzn", "Amazon.com, Inc."),
+          ("ba", "Boeing Co"),
+          ("coke", "Coca-Cola Consolidated Inc"),
+          ("f", "Ford"),
+          ("fb", "Facebook, Inc. Common Stock"),
+          ("goog", "Alphabet Inc Class C"),
+          ("gme", "Gamestop"),
+          ("mar", "Marriott International"),
+          ("msft", "Microsoft"),
+          ("nflx", "Netflix Inc"),
+          ("su", "Suncor Energy Inc."),
+          ("tsla", "Tesla Inc"),
+          ("zm", "Zoom Video Com")]
+
 default_player = Player("Michael"); current_player = ""
 default_stock = Stock("aapl"); current_stock = ""
 
@@ -48,24 +64,7 @@ def main_loop():
         print ("current_player", current_player.name, "current_stock", current_stock.symbol)
         
         title = "This is web based STOCK TICKER"
-
-        common = [("amzn", "Amazon.com, Inc."),
-                 ("goog", "Alphabet Inc Class C"),
-                 ("aapl", "Apple Inc"),
-                 ("tsla", "Tesla Inc"),
-                 ("coke", "Coca-Cola Consolidated Inc"),
-                 ("ba", "Boeing Co"),
-                 ("su", "Suncor Energy Inc."),
-                 ("f", "Ford"),
-                 ("msft", "Microsoft"),
-                 ("mar", "Marriott International"),
-                 ("nflx", "Netflix Inc"),
-                 ("ac", "Air Canada"),
-                 ("fb", "Facebook, Inc. Common Stock"),
-                 ("zm", "Zoom Video Com"),
-                 ("gme", "Gamestop")
-                 ]
-        return render_template ('index.html', title = title, common = common, player = current_player, Player=Player, stock = current_stock)
+        return render_template ('index.html', title = title, common = COMMON, player = current_player, Player=Player, stock = current_stock)
 
     @app.route('/about')
     def about():
@@ -74,30 +73,30 @@ def main_loop():
 
     @app.route('/newplayer')
     def newplayer():
-        return render_template ('newplayer.html', player = current_player, Player=Player)
+        return render_template ('newplayer.html', player = current_player, Player=Player, common = COMMON, stock = current_stock)
 
     @app.route('/form', methods=["POST"])
     def form():
         global current_player
         name = request.form.get ("name")
         current_player = Player (name)
-        return render_template ('form.html', player = current_player, Player=Player)
+        return render_template ('form.html', player = current_player, Player=Player, common = COMMON, stock = current_stock)
 
     @app.route('/networth')
     def networth():
         global current_player
-        return render_template ('networth.html', player = current_player, Player=Player)
+        return render_template ('networth.html', player = current_player, Player=Player, common = COMMON, stock = current_stock)
 
     @app.route('/portfolio')
     def portfolio():
         global current_player
-        return render_template ('portfolio.html', player = current_player, Player=Player)
+        return render_template ('portfolio.html', player = current_player, Player=Player, common = COMMON, stock = current_stock)
 
     @app.route('/ledger')
     def ledger():
         global current_player
     #     print ('from the ledger route', current_player.name)
-        return render_template ('ledger.html', player = current_player, Player=Player)
+        return render_template ('ledger.html', player = current_player, Player=Player, common = COMMON, stock = current_stock)
 
     @app.route('/graph')
     def plot():
@@ -125,7 +124,8 @@ def main_loop():
                                 stock = current_stock,
                                 plot_url = plot_url,
                                 player = current_player,
-                                Player = Player)
+                                Player = Player,
+                                common = COMMON)
 
 if __name__ == "__main__":
     # execute only if run as a script

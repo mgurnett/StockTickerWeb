@@ -219,7 +219,7 @@ class Stock:
             current_stock_price = ""
         return current_stock_price
         
-    def price_history(self):
+    def price_history(self, days):
         try:
             current_stock_data = si.get_data(self.symbol , start_date = '01/01/2010')
         except:
