@@ -40,31 +40,34 @@ def main_loop():
         
         player_id = request.args.get("name", None) #Michael is the default   127.0.0.1:5000/?name=michael
         if player_id == None:
-            print ("player - None", player_id)
-            print ("current_player", current_player)
+#             print ("player - None", player_id)
+#             print ("current_player", current_player)
             if current_player == "":
-                print ('current_player = None')
+#                 print ('current_player = None')
                 current_player = default_player
         else:
-            print ("player - NOT None", player_id)
+#             print ("player - NOT None", player_id)
             current_player = Player(player_id)
         
         stock_symb = request.args.get("stock", None) #aapl is the default   127.0.0.1:5000/?stock=aapl
         if stock_symb == None:
-            print ("stock - None", stock_symb)
+            print ("stock - None", stock_symb, )
             if current_stock == "":
                 stock_symb = "goog"
                 current_stock = Stock(stock_symb)
-                print ("stock - None2", stock_symb)
+                print ("stock - None2", current_stock.full_name())
         else:
             print ("stock - NOT None", stock_symb)
             current_stock = Stock(stock_symb)
+            print ("stock - NOT None2", current_stock.full_name())
             
         print ("player_id", player_id, "stock_symb", stock_symb)
         print ("current_player", current_player.name, "current_stock", current_stock.symbol)
         
         title = "This is web based STOCK TICKER"
-        return render_template ('index.html', title = title, common = COMMON, player = current_player, Player=Player, stock = current_stock)
+        return render_template ('index.html', title = title, common = COMMON,
+                                player = current_player, Player = Player,
+                                stock = current_stock, Stock = Stock)
 
     @app.route('/about')
     def about():
@@ -73,30 +76,35 @@ def main_loop():
 
     @app.route('/newplayer')
     def newplayer():
-        return render_template ('newplayer.html', player = current_player, Player=Player, common = COMMON, stock = current_stock)
+        return render_template ('newplayer.html', player = current_player, Player=Player, common = COMMON, stock = current_stock,
+                                Stock = Stock)
 
     @app.route('/form', methods=["POST"])
     def form():
         global current_player
         name = request.form.get ("name")
         current_player = Player (name)
-        return render_template ('form.html', player = current_player, Player=Player, common = COMMON, stock = current_stock)
+        return render_template ('form.html', player = current_player, Player=Player, common = COMMON, stock = current_stock,
+                                Stock = Stock)
 
     @app.route('/networth')
     def networth():
         global current_player
-        return render_template ('networth.html', player = current_player, Player=Player, common = COMMON, stock = current_stock)
+        return render_template ('networth.html', player = current_player, Player=Player, 
+                                Stock = Stock, common = COMMON, stock = current_stock)
 
     @app.route('/portfolio')
     def portfolio():
         global current_player
-        return render_template ('portfolio.html', player = current_player, Player=Player, common = COMMON, stock = current_stock)
+        return render_template ('portfolio.html', player = current_player, Player=Player, common = COMMON, 
+                                Stock = Stock, stock = current_stock)
 
     @app.route('/ledger')
     def ledger():
         global current_player
     #     print ('from the ledger route', current_player.name)
-        return render_template ('ledger.html', player = current_player, Player=Player, common = COMMON, stock = current_stock)
+        return render_template ('ledger.html', player = current_player, Player=Player, common = COMMON, 
+                                Stock = Stock, stock = current_stock)
 
     @app.route('/graph')
     def plot():
@@ -105,8 +113,8 @@ def main_loop():
         figure1 = plt.figure(figsize=(12.5, 8))
                 # adding the subplot
         plot1 = figure1.add_subplot(111)
-
-        plt.plot(current_stock.price_history()['adjclose'], label=current_stock.symbol)
+#         print (current_stock.price_history(300))
+        plt.plot(current_stock.price_history(300)['adjclose'], label=current_stock.symbol)
         plt.title('Adj. Close Price History')
         plt.xlabel('Date')
         plt.ylabel('Adj. Close Price (USD)')
@@ -122,6 +130,7 @@ def main_loop():
 
         return render_template ('graph.html',
                                 stock = current_stock,
+                                Stock = Stock,
                                 plot_url = plot_url,
                                 player = current_player,
                                 Player = Player,

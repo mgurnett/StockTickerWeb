@@ -24,7 +24,7 @@ def open_db(db_file, debug=False):
         if debug:
             print ('connected to ', db_file)
     except Error as e:
-        print(e)
+        print("e",e)
         return
     return sqliteConnection
 
@@ -87,7 +87,7 @@ def get_player_logs(cursor, player, debug):
             print ('player_logs is:', player_logs)
     
     except Error as e:
-        print(e)
+        print("e",e)
 
     return player_logs
 

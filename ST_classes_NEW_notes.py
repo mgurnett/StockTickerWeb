@@ -206,7 +206,7 @@ class Player ():
         close_db(sqliteConnection)
         return
 
-'''
+
 # current_player = Player ("Computer dumb")
 # #
 # # print (current_player.purchase_timestamp_str(current_player.current_date))
@@ -262,4 +262,6 @@ plt.show()
 # current_player.transaction_symbol = "aapl"
 # print("full name", Player.stock_full_name(current_player.transaction_symbol))
 # current_player.sell_shares()
-'''
+
+current_stock = Stock('f')
+print (current_stock.full_name())

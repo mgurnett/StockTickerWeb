@@ -1,6 +1,7 @@
 from db_data import *
-from scrapping import *
+# from scrapping import *
 import datetime
+from datetime import timedelta
 import sqlite3
 from sqlite3 import Error
 from yahoo_fin import stock_info as si
@@ -208,9 +209,14 @@ class Player ():
         return
     
 #======================================================   
-class Stock:
+class Stock ():
     def __init__(self, symbol):
         self.symbol = symbol
+#         print ("From Stock CLASS: ", symbol)
+
+    @staticmethod
+    def smoney_str(value):
+        return "${:,.2f}".format(value)
         
     def current_price(self):
         try:
@@ -221,11 +227,24 @@ class Stock:
         
     def price_history(self, days):
         try:
-            current_stock_data = si.get_data(self.symbol , start_date = '01/01/2010')
+            start_date = datetime.datetime.today() - timedelta(days=days)
+            current_stock_data = si.get_data(self.symbol , start_date = start_date)
         except:
             current_stock_data = ""
         return current_stock_data
     
-    def full_name (self):
-        name  = get_stock_full_name(self.symbol)
+    def full_name(self):
+#         print ("Full_name", self.symbol)
+        URL = "https://www.google.com/search?q="+self.symbol+"&tbm=fin"
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0'}
+        page = requests.get(URL, headers=headers)
+#         print (symbol, page)
+        soup = bs(page.content, "html.parser")
+        try:
+            name = soup.find('span', attrs={'class': "mfMhoc"}).text
+        except:
+            name = ""
+#         print ("CLASS will return ", name)
         return name
+    
