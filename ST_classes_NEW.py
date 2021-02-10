@@ -5,7 +5,7 @@ from datetime import timedelta
 import sqlite3
 from sqlite3 import Error
 from yahoo_fin import stock_info as si
-
+import pandas as pd
 import requests
 from bs4 import BeautifulSoup as bs
 import matplotlib.pyplot as plt
@@ -226,9 +226,13 @@ class Stock ():
         return current_stock_price
         
     def price_history(self, days):
+        current_stock_data_30 = pd.DataFrame()
+        current_stock_data_100 = pd.DataFrame()
         try:
             start_date = datetime.datetime.today() - timedelta(days=days)
             current_stock_data = si.get_data(self.symbol , start_date = start_date)
+            current_stock_data [30] = current_stock_data ['Adj Close Price'].rolling (window = 30).mean()   
+            current_stock_data [100] = current_stock_data ['Adj Close Price'].rolling (window = 100).mean()
         except:
             current_stock_data = ""
         return current_stock_data

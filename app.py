@@ -10,6 +10,7 @@ import base64
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.dates import DateFormatter
+plt.style.use('dark_background')
 
 COMMON = [("aapl", "Apple Inc"),
           ("ac", "Air Canada"),
@@ -110,12 +111,13 @@ def main_loop():
     def plot():
         global current_stock
         png_output = BytesIO()
+        
+        #https://www.youtube.com/watch?v=6rKe2IEIu8c  Three are 2 ways of making plots
         figure1 = plt.figure(figsize=(12.5, 8))
                 # adding the subplot
-        plot1 = figure1.add_subplot(111)
-#         print (current_stock.price_history(300))
-        plt.plot(current_stock.price_history(300)['adjclose'], label=current_stock.symbol)
-        plt.title('Adj. Close Price History')
+        plot1 = figure1.add_subplot(1,1,1) #num of plot, numb of columns, current plot
+        legend_label = '{} Adj. Close Price History'.format (current_stock.symbol)  #https://www.youtube.com/watch?v=vTX3IwquFkc
+        plt.plot(current_stock.price_history(300)[30], label=legend_label)
         plt.xlabel('Date')
         plt.ylabel('Adj. Close Price (USD)')
         plt.legend(loc='upper left')
