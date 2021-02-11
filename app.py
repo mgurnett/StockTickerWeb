@@ -16,6 +16,7 @@ COMMON = [("aapl", "Apple Inc"),
           ("ac", "Air Canada"),
           ("amzn", "Amazon.com, Inc."),
           ("ba", "Boeing Co"),
+          ("ccl", "Carnival Corp"),
           ("coke", "Coca-Cola Consolidated Inc"),
           ("f", "Ford"),
           ("fb", "Facebook, Inc. Common Stock"),
@@ -52,18 +53,18 @@ def main_loop():
         
         stock_symb = request.args.get("stock", None) #aapl is the default   127.0.0.1:5000/?stock=aapl
         if stock_symb == None:
-            print ("stock - None", stock_symb, )
+#             print ("stock - None", stock_symb, )
             if current_stock == "":
                 stock_symb = "goog"
                 current_stock = Stock(stock_symb)
-                print ("stock - None2", current_stock.full_name())
+#                 print ("stock - None2", current_stock.full_name())
         else:
-            print ("stock - NOT None", stock_symb)
+#             print ("stock - NOT None", stock_symb)
             current_stock = Stock(stock_symb)
-            print ("stock - NOT None2", current_stock.full_name())
+#             print ("stock - NOT None2", current_stock.full_name())
             
-        print ("player_id", player_id, "stock_symb", stock_symb)
-        print ("current_player", current_player.name, "current_stock", current_stock.symbol)
+#         print ("player_id", player_id, "stock_symb", stock_symb)
+#         print ("current_player", current_player.name, "current_stock", current_stock.symbol)
         
         title = "This is web based STOCK TICKER"
         return render_template ('index.html', title = title, common = COMMON,
@@ -86,6 +87,16 @@ def main_loop():
         name = request.form.get ("name")
         current_player = Player (name)
         return render_template ('form.html', player = current_player, Player=Player, common = COMMON, stock = current_stock,
+                                Stock = Stock)
+
+    @app.route('/search_stock', methods=["POST"])
+    def search_stock():
+        global current_stock
+#         query = request.args['search']
+        stock = request.form.get ("stock")
+        print (stock)
+        current_stock = Stock(stock)
+        return render_template ('search_stock.html', player = current_player, Player=Player, common = COMMON, stock = current_stock,
                                 Stock = Stock)
 
     @app.route('/networth')
@@ -117,7 +128,10 @@ def main_loop():
                 # adding the subplot
         plot1 = figure1.add_subplot(1,1,1) #num of plot, numb of columns, current plot
         legend_label = '{} Adj. Close Price History'.format (current_stock.symbol)  #https://www.youtube.com/watch?v=vTX3IwquFkc
-        plt.plot(current_stock.price_history(300)[30], label=legend_label)
+        plot_data = current_stock.price_history(300)
+        plt.plot(plot_data['adjclose'], label=legend_label)
+        plt.plot(plot_data[30], label="30 day average")
+        plt.plot(plot_data[100], label="100 day average")
         plt.xlabel('Date')
         plt.ylabel('Adj. Close Price (USD)')
         plt.legend(loc='upper left')

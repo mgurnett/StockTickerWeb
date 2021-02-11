@@ -226,15 +226,14 @@ class Stock ():
         return current_stock_price
         
     def price_history(self, days):
-        current_stock_data_30 = pd.DataFrame()
-        current_stock_data_100 = pd.DataFrame()
         try:
+            stock_data = si.get_data(self.symbol)
             start_date = datetime.datetime.today() - timedelta(days=days)
-            current_stock_data = si.get_data(self.symbol , start_date = start_date)
-            current_stock_data [30] = current_stock_data ['Adj Close Price'].rolling (window = 30).mean()   
-            current_stock_data [100] = current_stock_data ['Adj Close Price'].rolling (window = 100).mean()
-        except:
-            current_stock_data = ""
+            current_stock_data = stock_data.tail(days)
+            current_stock_data[30] = stock_data ['adjclose'].rolling (window = 30).mean()   
+            current_stock_data[100] = stock_data ['adjclose'].rolling (window = 100).mean()
+        except Exception as e: print("e" + e)
+#             current_stock_data = "no go"
         return current_stock_data
     
     def full_name(self):
@@ -252,3 +251,6 @@ class Stock ():
 #         print ("CLASS will return ", name)
         return name
     
+# current_stock = Stock('f')
+# print (current_stock.full_name())
+# print (current_stock.price_history(300))

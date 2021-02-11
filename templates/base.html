@@ -65,8 +65,8 @@
                     </li>
                 </ul>
                 
-                <form class="d-flex" action="/graph">
-                    <input class="form-control me-2" type="search" placeholder="Stock symbol" aria-label="Search">
+                <form class="d-flex" action="{{ url_for('search_stock')}}" method="post">
+                    <input class="form-control me-2" type="search" name="stock" placeholder="Stock symbol" aria-label="stock" stock='stock'>
                     <button class="btn btn-secondary" type="submit">Search</button>
                 </form>
             </div>
