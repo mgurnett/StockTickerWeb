@@ -6,6 +6,7 @@ import sqlite3
 from sqlite3 import Error
 from yahoo_fin import stock_info as si
 import pandas as pd
+import numpy as np
 import requests
 from bs4 import BeautifulSoup as bs
 import matplotlib.pyplot as plt
@@ -136,14 +137,26 @@ class Player ():
         dt = datetime.datetime.fromtimestamp(date_time)
         return dt.strftime("%a, %e %b %Y - %l:%M %p")
 
-    def purchase_shares(self):
-        ps_id = current_player.id
+    def purchase_shares(self, **options):
+        ps_id = self.id
         ps_volume = self.transaction_amount
         ps_symbol = self.transaction_symbol
-        ps_price = Player.current_price(ps_symbol)
-        print(current_player.name_balance_str(), "(", ps_id, ") wants to purchase",  ps_volume, "of",
+        if h_price: # if a price was sent, then use it else use current.
+            ps_price = h_price["historical_price"]
+        else:
+            ps_price = Player.current_price(ps_symbol)
+            
+        if p_date: # if a date was sent, then use it else use current.
+            ps_date = p_date["historical_date"]
+            p = '%Y-%m-%d %H:%M:%S'
+            epoch = datetime.datetime(1970, 1, 1)
+            print((datetime.datetime.strptime(p_date, p) - epoch).total_seconds())
+        else:
+            ps_date = datetime.datetime.now().strftime('%s')
+
+        print(self.name_balance_str(), "(", ps_id, ") wants to purchase",  ps_volume, "of",
               Player.stock_full_name(ps_symbol), "with a purchase price of",
-              Player.money_str(Player.current_price(ps_symbol)))
+              Player.money_str(ps_price))
 
         sqliteConnection = open_db(db_file_name, debug=False)
         c = sqliteConnection.cursor()
@@ -152,8 +165,7 @@ class Player ():
                   (ps_symbol, ps_id, ps_volume, ps_price))
 
         c.execute("INSERT INTO Ledger (Ticker, Price, Volume, Player, date, action ) VALUES (?, ?, ?, ?, ?, ?)",
-                  (ps_symbol, ps_price, ps_volume,
-                   ps_id,  datetime.datetime.now().strftime('%s'), "buy"))
+                  (ps_symbol, ps_price, ps_volume, ps_id,  ps_date, "buy"))
 
         self.balance = self.balance - (ps_price * ps_volume)
         c.execute("UPDATE Players SET Balance = ? WHERE id = ?",
@@ -164,18 +176,18 @@ class Player ():
         return
 
     def sell_shares(self):
-        ss_id = current_player.id
+        ss_id = self.id
         ss_volume = self.transaction_amount
         ss_symbol = self.transaction_symbol
         ss_price = Player.current_price(ss_symbol)
-        print(current_player.name_balance_str(), "(", ss_id, ") wants to sell",  ss_volume, "of",
+        print(self.name_balance_str(), "(", ss_id, ") wants to sell",  ss_volume, "of",
               Player.stock_full_name(ss_symbol), "with a current price of",
               Player.money_str(ss_price),
-              "They have", current_player.balance_str(),
+              "They have", self.balance_str(),
               ". The total sell price is", Player.money_str(
             ss_volume * ss_price),
             "leaving a new balance of", Player.money_str(
-            current_player.balance + (ss_volume * ss_price))
+            self.balance + (ss_volume * ss_price))
         )
 
         sqliteConnection = open_db(db_file_name, debug=False)
@@ -198,11 +210,11 @@ class Player ():
         c.execute("INSERT INTO Ledger (Ticker, Price, Volume, Player, date, action ) VALUES (?, ?, ?, ?, ?, ?)",
                   (ss_symbol, ss_price, ss_volume, ss_id, datetime.datetime.now().strftime('%s'), "sell"))
 
-        current_player.balance = current_player.balance + \
+        self.balance = self.balance + \
             (ss_volume * ss_price)
 
         c.execute("UPDATE Players SET Balance = ? WHERE id = ?",
-                  (current_player.balance, ss_id))
+                  (self.balance, ss_id))
 
         sqliteConnection.commit()
         close_db(sqliteConnection)
@@ -230,10 +242,39 @@ class Stock ():
             stock_data = si.get_data(self.symbol)
             start_date = datetime.datetime.today() - timedelta(days=days)
             current_stock_data = stock_data.tail(days)
-            current_stock_data[30] = stock_data ['adjclose'].rolling (window = 30).mean()   
-            current_stock_data[100] = stock_data ['adjclose'].rolling (window = 100).mean()
-        except Exception as e: print("e" + e)
-#             current_stock_data = "no go"
+            current_stock_data['SMA30'] = stock_data ['adjclose'].rolling (window = 30).mean()   
+            current_stock_data['SMA100'] = stock_data ['adjclose'].rolling (window = 100).mean()
+            print (current_stock_data)
+            sigPriceBuy = []
+            sigPriceSell = []
+            flag = -1
+
+            for i in range(len(current_stock_data)):
+                if current_stock_data['SMA30'][i] > current_stock_data['SMA100'][i]:
+                    if flag != 1:
+                        sigPriceBuy.append(current_stock_data['adjclose'][i])
+                        sigPriceSell.append(np.nan)
+                        flag = 1
+                    else:
+                        sigPriceBuy.append(np.nan)
+                        sigPriceSell.append(np.nan)
+                elif current_stock_data['SMA30'][i] < current_stock_data['SMA100'][i]:
+                    if flag != 0:
+                        sigPriceBuy.append(np.nan)
+                        sigPriceSell.append(current_stock_data['adjclose'][i])
+                        flag = 0
+                    else:
+                        sigPriceBuy.append(np.nan)
+                        sigPriceSell.append(np.nan)
+                else:
+                    sigPriceBuy.append(np.nan)
+                    sigPriceSell.append(np.nan)
+            current_stock_data.loc[:,'Buy_Signal_Price'] = sigPriceBuy
+            current_stock_data.loc[:,'Sell_Signal_Price'] = sigPriceSell
+
+        except Exception as e:
+            print(e)
+            current_stock_data = "no go"
         return current_stock_data
     
     def full_name(self):
@@ -250,6 +291,7 @@ class Stock ():
             name = ""
 #         print ("CLASS will return ", name)
         return name
+
     
 # current_stock = Stock('f')
 # print (current_stock.full_name())

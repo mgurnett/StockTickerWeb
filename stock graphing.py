@@ -2,7 +2,7 @@
 """
 Spyder Editor
 """
-
+#https://thecleverprogrammer.com/2020/05/25/algorithmic-trading-strategy-with-machine-learning-and-python/
 #description: this program uses the dual moving average croissover to determine when to buy and sell stock
 
 #Import the libraries 

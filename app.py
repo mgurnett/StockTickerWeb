@@ -130,8 +130,11 @@ def main_loop():
         legend_label = '{} Adj. Close Price History'.format (current_stock.symbol)  #https://www.youtube.com/watch?v=vTX3IwquFkc
         plot_data = current_stock.price_history(300)
         plt.plot(plot_data['adjclose'], label=legend_label)
-        plt.plot(plot_data[30], label="30 day average")
-        plt.plot(plot_data[100], label="100 day average")
+        plt.plot(plot_data['SMA30'], label="30 day average", alpha = 0.35)
+        plt.plot(plot_data['SMA100'], label="100 day average", alpha = 0.35)
+        
+        plt.scatter(plot_data.index, plot_data['Buy_Signal_Price'], label = 'BUY', marker = '^', color = 'green')
+        plt.scatter(plot_data.index, plot_data['Sell_Signal_Price'], label = 'SELL', marker = 'v', color = 'red')
         plt.xlabel('Date')
         plt.ylabel('Adj. Close Price (USD)')
         plt.legend(loc='upper left')
