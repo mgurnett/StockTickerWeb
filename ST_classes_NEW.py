@@ -136,23 +136,21 @@ class Player ():
     def purchase_timestamp_str(self, date_time):
         dt = datetime.datetime.fromtimestamp(date_time)
         return dt.strftime("%a, %e %b %Y - %l:%M %p")
-
-    def purchase_shares(self, **options):
+    
+    
+    def purchase_shares(self, **kwargs):
         ps_id = self.id
         ps_volume = self.transaction_amount
         ps_symbol = self.transaction_symbol
-        if h_price: # if a price was sent, then use it else use current.
-            ps_price = h_price["historical_price"]
-        else:
-            ps_price = Player.current_price(ps_symbol)
-            
-        if p_date: # if a date was sent, then use it else use current.
-            ps_date = p_date["historical_date"]
-            p = '%Y-%m-%d %H:%M:%S'
-            epoch = datetime.datetime(1970, 1, 1)
-            print((datetime.datetime.strptime(p_date, p) - epoch).total_seconds())
-        else:
-            ps_date = datetime.datetime.now().strftime('%s')
+        
+        ps_price = kwargs.get("historical_price", Player.current_price(ps_symbol))
+        # either the price sent in via historical_price = 25 or default to current price
+        cur_datetime = datetime.datetime.now().replace(microsecond=0) # now time without the microseconds
+        p_date  = kwargs.get("historical_date", str(cur_datetime))
+        # either the date sent in via historical_date = str('2018-02-12 09:07:56') or default to datetime.now
+        p = '%Y-%m-%d %H:%M:%S' #format coming in
+        epoch = datetime.datetime(1970, 1, 1) # used to convert to epoch
+        ps_date = (datetime.datetime.strptime(p_date, p) - epoch).total_seconds()
 
         print(self.name_balance_str(), "(", ps_id, ") wants to purchase",  ps_volume, "of",
               Player.stock_full_name(ps_symbol), "with a purchase price of",
@@ -291,8 +289,3 @@ class Stock ():
             name = ""
 #         print ("CLASS will return ", name)
         return name
-
-    
-# current_stock = Stock('f')
-# print (current_stock.full_name())
-# print (current_stock.price_history(300))

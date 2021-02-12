@@ -225,26 +225,7 @@ class Player ():
 #
 #
 #
-playerlist = Player.player_list()
-# print (playerlist)
-results = []; total_value = 0
 
-for player in playerlist:
-    local_worth = Player(player).calculate_networth()
-    print(player, "is worth", Player.money_str(local_worth))
-    results.append(local_worth)
-    total_value =total_value + local_worth
-    
-average_value = total_value / len(results)
-print (total_value, average_value)
-fig = plt.figure()
-ax = fig.add_axes([0,0,1,1])
-ax.bar(playerlist,results)
-
-# specifying horizontal line type 
-plt.axhline(y = int(Player.start_balance), color = 'r', linestyle = '-')
-plt.axhline(y = int(average_value), color = 'g', linestyle = '-') 
-plt.show()
 # current_player = Player("rabbit")
 # # print (current_player.name_balance_str(), " & ",
 # #        current_player.balance_str(), " @ ",
