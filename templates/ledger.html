@@ -18,7 +18,7 @@
 
   <tbody>
     {% for l in player.load_ledger() %}
-        {% set date = player.purchase_timestamp_str (l[5]) %}
+        {% set date = player.timestamp_str_from_e (l[5]) %}
         {% set symbol = l[1] %}
         {% set purchase_price = l[2] %}
         {% set quantity = l[3] %}

@@ -19,6 +19,8 @@ config_object.read("ST_config.ini")
 player_info = config_object["PLAYERS"]
 initial_balance = player_info["initial"]
 
+TIMESTAMP_FORMAT = '%Y-%m-%d %H:%M:%S'
+DISPLAY_FORMAT = "%a, %e %b %Y -%l:%M %p"
 
 class Player ():
     start_balance = initial_balance
@@ -28,9 +30,9 @@ class Player ():
         self.balance = 0
         self.transaction_symbol = ""
         self.transaction_amount = 0
+        self.current_date_e = int(datetime.datetime.now().timestamp())
         # this starts whenever the class is called.
         self.id = self.setup_player()
-        self.current_date = int(datetime.datetime.now().strftime('%s'))
 
     @staticmethod
     def player_list():
@@ -133,10 +135,19 @@ class Player ():
             nw = nw + p[3] * Player.current_price(p[1])
         return nw
 
-    def purchase_timestamp_str(self, date_time):
+    def timestamp_str_from_e (self, date_time):
         dt = datetime.datetime.fromtimestamp(date_time)
-        return dt.strftime("%a, %e %b %Y - %l:%M %p")
-    
+        return str(dt)
+
+    def timestamp_str_to_e (self, date_time):
+        epoch = datetime.datetime(1970, 1, 1)
+        tz_string = datetime.datetime.now(datetime.timezone.utc).astimezone().tzname()
+        if tz_string == 'MST':
+            tz_comp = 25200
+        else:
+            tz_comp = 28800
+        epoch_time = (datetime.datetime.strptime(date_time, TIMESTAMP_FORMAT) - epoch).total_seconds() + tz_comp
+        return int(epoch_time)
     
     def purchase_shares(self, **kwargs):
         ps_id = self.id
@@ -148,13 +159,16 @@ class Player ():
         cur_datetime = datetime.datetime.now().replace(microsecond=0) # now time without the microseconds
         p_date  = kwargs.get("historical_date", str(cur_datetime))
         # either the date sent in via historical_date = str('2018-02-12 09:07:56') or default to datetime.now
-        p = '%Y-%m-%d %H:%M:%S' #format coming in
-        epoch = datetime.datetime(1970, 1, 1) # used to convert to epoch
-        ps_date = (datetime.datetime.strptime(p_date, p) - epoch).total_seconds()
+        ps_date = self.timestamp_str_to_e (p_date)
 
-        print(self.name_balance_str(), "(", ps_id, ") wants to purchase",  ps_volume, "of",
-              Player.stock_full_name(ps_symbol), "with a purchase price of",
-              Player.money_str(ps_price))
+#         print(self.name_balance_str(), "(", ps_id, ") wants to purchase",  ps_volume, "of",
+#               Player.stock_full_name(ps_symbol), "with a purchase price of",
+#               Player.money_str(ps_price))
+        
+        print ("cur_datetime is {}".format(cur_datetime))
+        print ("p_date is {}".format(p_date))
+        print ("ps_date is {}".format(ps_date))
+        print ("ps_date is {}".format(self.timestamp_str_from_e(ps_date)))
 
         sqliteConnection = open_db(db_file_name, debug=False)
         c = sqliteConnection.cursor()
@@ -165,29 +179,34 @@ class Player ():
         c.execute("INSERT INTO Ledger (Ticker, Price, Volume, Player, date, action ) VALUES (?, ?, ?, ?, ?, ?)",
                   (ps_symbol, ps_price, ps_volume, ps_id,  ps_date, "buy"))
 
+#         print ('balance is {} minus {} * {}'.format(type(self.balance), type(ps_price), type(ps_volume)))
         self.balance = self.balance - (ps_price * ps_volume)
         c.execute("UPDATE Players SET Balance = ? WHERE id = ?",
                   (self.balance, ps_id))
 
         sqliteConnection.commit()
-        close_db(sqliteConnection)
+#         close_db(sqliteConnection)
+#===========   need to make a consolidation pass or change how stock is added to the portfolio, by adding if it exists
         return
 
-    def sell_shares(self):
+    def sell_shares(self, **kwargs):
         ss_id = self.id
         ss_volume = self.transaction_amount
         ss_symbol = self.transaction_symbol
-        ss_price = Player.current_price(ss_symbol)
-        print(self.name_balance_str(), "(", ss_id, ") wants to sell",  ss_volume, "of",
-              Player.stock_full_name(ss_symbol), "with a current price of",
-              Player.money_str(ss_price),
-              "They have", self.balance_str(),
-              ". The total sell price is", Player.money_str(
-            ss_volume * ss_price),
-            "leaving a new balance of", Player.money_str(
-            self.balance + (ss_volume * ss_price))
-        )
-
+        ss_price = kwargs.get("historical_price", Player.current_price(ss_symbol))
+        # either the price sent in via historical_price = 25 or default to current price
+#         cur_datetime = datetime.datetime.now().replace(microsecond=0) # now time without the microseconds
+        cur_datetime = self.timestamp_str_from_e(self.current_date_e)
+        s_date  = kwargs.get("historical_date", str(cur_datetime))
+        # either the date sent in via historical_date = str('2018-02-12 09:07:56') or default to datetime.now
+        ss_date = self.timestamp_str_to_e (s_date)
+        
+        print ('{} ({}) wants to sell {} of {} with a price of {}.  They have {}.'.
+               format(self.name_balance_str(), ss_id, ss_volume,
+                      Player.stock_full_name(ss_symbol), Player.money_str(ss_price), self.balance_str()))
+        print ('The total sell price is {} leaving a new balance of {}'.
+               format(Player.money_str( ss_volume * ss_price), Player.money_str( self.balance + (ss_volume * ss_price))))
+        
         sqliteConnection = open_db(db_file_name, debug=False)
         c = sqliteConnection.cursor()
 
@@ -196,7 +215,9 @@ class Player ():
         port_num = c.fetchone()
 
         ss_stock_owned = port_num[0]
+        print ('ss_stock_owned is {}'.format( ss_stock_owned ))
         ss_stock_left = ss_stock_owned - ss_volume
+        print ('ss_stock_left is {}'.format( ss_stock_left ))
 
         if ss_stock_left > 0:
             c.execute("UPDATE Portfolio SET number = ? WHERE stock = ? AND player = ?",
@@ -206,16 +227,15 @@ class Player ():
                 "DELETE FROM Portfolio WHERE stock = ? AND player = ?", (ss_symbol, ss_id))
 
         c.execute("INSERT INTO Ledger (Ticker, Price, Volume, Player, date, action ) VALUES (?, ?, ?, ?, ?, ?)",
-                  (ss_symbol, ss_price, ss_volume, ss_id, datetime.datetime.now().strftime('%s'), "sell"))
+                  (ss_symbol, ss_price, ss_volume, ss_id, ss_date, "sell"))
 
-        self.balance = self.balance + \
-            (ss_volume * ss_price)
+        self.balance = self.balance + (ss_volume * ss_price)
 
         c.execute("UPDATE Players SET Balance = ? WHERE id = ?",
                   (self.balance, ss_id))
 
         sqliteConnection.commit()
-        close_db(sqliteConnection)
+#         close_db(sqliteConnection)
         return
     
 #======================================================   
@@ -242,7 +262,7 @@ class Stock ():
             current_stock_data = stock_data.tail(days)
             current_stock_data['SMA30'] = stock_data ['adjclose'].rolling (window = 30).mean()   
             current_stock_data['SMA100'] = stock_data ['adjclose'].rolling (window = 100).mean()
-            print (current_stock_data)
+#             print (current_stock_data)
             sigPriceBuy = []
             sigPriceSell = []
             flag = -1
@@ -276,16 +296,14 @@ class Stock ():
         return current_stock_data
     
     def full_name(self):
-#         print ("Full_name", self.symbol)
-        URL = "https://www.google.com/search?q="+self.symbol+"&tbm=fin"
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0'}
+        symbol = self.symbol
+        URL = "https://ca.finance.yahoo.com/quote/{}?p=".format(symbol)
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0'}
         page = requests.get(URL, headers=headers)
-#         print (symbol, page)
         soup = bs(page.content, "html.parser")
         try:
-            name = soup.find('span', attrs={'class': "mfMhoc"}).text
+            name=soup.find ('h1', attrs = {'class':"D(ib) Fz(18px)"}).text
+            large_name = name[:name.index(" (")]
         except:
-            name = ""
-#         print ("CLASS will return ", name)
-        return name
+            large_name = ""
+        return large_name
