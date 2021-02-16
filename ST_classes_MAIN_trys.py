@@ -1,5 +1,6 @@
 from ST_classes_MAIN import *
-
+help(Player)
+help(Stock)
 current_player = Player ("Garbage")
 current_stock = Stock('f')
 

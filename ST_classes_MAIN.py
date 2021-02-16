@@ -73,8 +73,9 @@ class Player ():
             current_stock_price = 0
         return current_stock_price
 
-    def __repr__(self):  # use for troubleshooting
-        return "${:,.2f}".format(self.balance)
+    def __repr__(self):  # use for recreating the instance
+        #print (current_player) gets you exactly what you used to create the instance
+        return "Player ('{}')".format(self.name)
 
     def balance_str(self):
         return "${:,.2f}".format(self.balance)

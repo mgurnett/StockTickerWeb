@@ -128,7 +128,7 @@ def main_loop():
                 # adding the subplot
         plot1 = figure1.add_subplot(1,1,1) #num of plot, numb of columns, current plot
         legend_label = '{} Adj. Close Price History'.format (current_stock.symbol)  #https://www.youtube.com/watch?v=vTX3IwquFkc
-        plot_data = current_stock.price_history(300)
+        plot_data = current_stock.price_history(4000)
         plt.plot(plot_data['adjclose'], label=legend_label)
         plt.plot(plot_data['SMA30'], label="30 day average", alpha = 0.35)
         plt.plot(plot_data['SMA100'], label="100 day average", alpha = 0.35)

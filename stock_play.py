@@ -2,8 +2,8 @@ from db_data import *
 from ST_classes_MAIN import *
 import numpy as np
 
-current_stock = Stock("f")
-current_player = Player ("history f")
+current_stock = Stock("aapl")
+current_player = Player ("history Apple")
 
 current_player.transaction_symbol = current_stock.symbol
 stock_data = current_stock.price_history(4000)
