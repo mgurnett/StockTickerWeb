@@ -83,20 +83,20 @@ df_team= read_API ("teams")
 # print (df_team.info())
 # print (df_team.head())
 # print (df_team)
-teams = []
-for row in df_team.iterrows():
-    tm = Team (row[1]['id'])
-    tm.name = row[1]['name']
-    tm.teamName = row[1]['teamName']
-    tm.division = row[1]['division']['name']
-    tm.conference = row[1]['conference']['name']
-    tm.venue = row[1]['venue']['name']
-    tm.abbreviation = row[1]['abbreviation']
-    teams.append (tm)
+# teams = []
+# for row in df_team.iterrows():
+#     tm = Team (row[1]['id'])
+#     tm.name = row[1]['name']
+#     tm.teamName = row[1]['teamName']
+#     tm.division = row[1]['division']['name']
+#     tm.conference = row[1]['conference']['name']
+#     tm.venue = row[1]['venue']['name']
+#     tm.abbreviation = row[1]['abbreviation']
+#     teams.append (tm)
 
 # teams[20].crazyname()
-
+# 
 df_game= read_API ("games/2020020010")
-print (df_game.info())
-print (df_game.head())
-print (df_game)
+# print (df_game.info())
+# print (df_game.head())
+# print (df_game)
