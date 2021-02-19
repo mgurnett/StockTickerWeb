@@ -53,21 +53,8 @@ def read_API (section):
     else:
         data = r.json()
         return data
-
-# Loop over the counter and format the API call
-# for i in range(1,max_game_ID):
-#     url='game/' + year + season_type +str(i).zfill(4) + '/linescore'
-#     data = read_API (url)
-#     game_data.append(data)
-#     if data['currentPeriod'] != 0:    
-#         home = data['teams']['home']['team']['name']
-#         h_score = data['teams']['home']['goals']
-#         away = data['teams']['away']['team']['name']
-#         a_score = data['teams']['away']['goals']
-#         date_data = data['periods'][0]['startTime']
-#         datetime_object = datetime.strptime(date_data, '%Y-%m-%dT%H:%M:%SZ')
-#         print (f'On {datetime_object.strftime("%a, %b %d")} the {home} scored {h_score} and the {away} scored {a_score}')
         
+# =======load the teams into the Class Teams===============
 df_teams = read_API ("teams")
 dict_teams = df_teams['teams']
 teams = []
@@ -80,5 +67,20 @@ for row in dict_teams:
     tm.venue = row['venue']['name']
     tm.abbreviation = row['abbreviation']
     teams.append (tm)
+        
+# =======load the games into the Class Games===============
 
-teams[20].crazyname()
+for i in range(1,max_game_ID):
+    url='game/' + year + season_type +str(i).zfill(4) + '/linescore'
+    gameID = int(year + season_type +str(i).zfill(4)); print (gameID)
+    data = read_API (url)
+    game_data.append(data)
+    if data['currentPeriod'] != 0:    
+        home = data['teams']['home']['team']['name']
+        h_score = data['teams']['home']['goals']
+        away = data['teams']['away']['team']['name']
+        a_score = data['teams']['away']['goals']
+        date_data = data['periods'][0]['startTime']
+        datetime_object = datetime.strptime(date_data, '%Y-%m-%dT%H:%M:%SZ')
+        print (f'On {datetime_object.strftime("%a, %b %d")} the {home} scored {h_score} and the {away} scored {a_score}')
+
