@@ -33,6 +33,7 @@ class Team:
         
     def game_points (self):
         self.points = self.win * 2 + self.otloss + self.soloss
+        self.game_played = self.win + self.otloss + self.soloss + self.loss
     
 class Game:
     def __init__ (self, id, home_obj, away_obj, date):
@@ -53,18 +54,23 @@ class Game:
         point_string = f"{self.home_obj.name} has {self.home_obj.points} and {self.away_obj.name} has {self.away_obj.points}"
         return point_string
     
-    def points_awarded (self):
-        self.home_obj.game_played += 1
-        self.away_obj.game_played += 1
+    def games_recorded (self):
         if self.home_score > self.away_score:
-            self.home_obj.points += 2
-            if self.game_end != "":
-                self.away_obj.points += 1
+            self.home_obj.win += 1
+            if self.game_end == "OT":
+                self.away_obj.otloss += 1
+            elif self.game_end == "SO":
+                self.away_obj.soloss += 1
+            else:
+                self.away_obj.loss += 1
         if self.home_score < self.away_score:
-            self.away_obj.points += 2
-            if self.game_end != "":
-                self.home_obj.points += 1
-        pass
+            self.away_obj.win += 1
+            if self.game_end == "OT":
+                self.home_obj.otloss += 1
+            elif self.game_end == "SO":
+                self.home_obj.soloss += 1
+            else:
+                self.home_obj.loss += 1
 
 def read_API (section):
     url = base_URL + section
@@ -106,7 +112,7 @@ for row in dict_teams:
     teams [home_id].abbreviation = row['abbreviation']
 #     teams [home_id].crazyname()
 
-print (teams[team_manager (22)].name_id())
+# print (teams[team_manager (22)].name_id())
 
 # =======load the games into the Class Games===============
 for i in range(1,max_game_ID):
@@ -125,5 +131,8 @@ for i in range(1,max_game_ID):
         games[index-1].game_end = data['currentPeriodOrdinal']
 #         print (f'{index} On {datetime_object.strftime("%a, %b %d")} the {teams[team_manager (home_id)].teamName} ({games[index-1].home_score}) and the {teams[team_manager (away_id)].teamName} ({games[index-1].away_score})')
 #         print (index-1, " --", games[index-1].game_info())
-        games[index-1].points_awarded()
-        print (games[index-1].point_info())
+        games[index-1].games_recorded()
+
+for team in teams:
+    team.game_points()
+    print (f" The {team.name} have {team.points} points in {team.game_played} games.")
