@@ -37,3 +37,18 @@ data = Data('Indore', 25000, emp)
 
 # call Data class instance method 
 data.display()
+================================
+
+class Person():
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+person_list = [Person("Amy", 25), Person("Bob", 30), Person("Cat", 25)]
+
+age_25_list = [p for p in person_list if p.age == 25]
+
+for person in age_25_list:
+    print(person.name)
+OUTPUT
+Amy
+Cat
