@@ -22,6 +22,14 @@ class Team:
         self.soloss = 0
         self.points = 0
         self.game_played = 0
+        
+    @staticmethod
+    def standings (div):
+#         if div = "a" :
+        print (f"Team\t\t\tWin\tLoss\tOTloss\tSOloss\tPoints\tGP\tDiv")
+        for team in teams:
+            team.game_points()
+            print (f" {team.name}\t\t\t{team.win}\t{team.loss}\t{team.otloss}\t{team.soloss}\t{team.points}\t{team.game_played}\t{team.division}")
     
     def name_id (self):
         namestring = f"The team is {self.name} with id of {self.id}"
@@ -34,7 +42,8 @@ class Team:
     def game_points (self):
         self.points = self.win * 2 + self.otloss + self.soloss
         self.game_played = self.win + self.otloss + self.soloss + self.loss
-    
+        
+        
 class Game:
     def __init__ (self, id, home_obj, away_obj, date):
         self.id = id
@@ -71,7 +80,7 @@ class Game:
                 self.home_obj.soloss += 1
             else:
                 self.home_obj.loss += 1
-
+                
 def read_API (section):
     url = base_URL + section
 #     print (url)
@@ -132,7 +141,5 @@ for i in range(1,max_game_ID):
 #         print (f'{index} On {datetime_object.strftime("%a, %b %d")} the {teams[team_manager (home_id)].teamName} ({games[index-1].home_score}) and the {teams[team_manager (away_id)].teamName} ({games[index-1].away_score})')
 #         print (index-1, " --", games[index-1].game_info())
         games[index-1].games_recorded()
-
-for team in teams:
-    team.game_points()
-    print (f" The {team.name} have {team.points} points in {team.game_played} games.")
+        
+Team.standings("a")
