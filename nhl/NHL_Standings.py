@@ -27,27 +27,27 @@ class Team:
     @staticmethod
     def standings (div):
         team_list = []
-        labels = ['Team', 'Games Played', 'Win', 'Loss', 'OT Loss', 'SO Loss', 'Points', 'Division']
+        labels = ['Team', 'Games Played', 'Win', 'Loss', 'OT Loss', 'SO Loss', 'Points', 'Division', 'GP adjust']
         for team in teams:
             team.game_points()
             data = (team.name, team.game_played,
                     team.win, team.loss,
                     team.otloss, team.soloss,
-                    team.points, team.division)
+                    team.points, team.division, 0)
             team_list.append(data)
         df = pd.DataFrame( team_list, columns=labels )
-        if div == 'all':
-            df = df.sort_values(by = 'Points', ascending = False)
-        elif div in {'Scotia North', 'Honda West', 'Discover Central', 'MassMutual East'}:
-            df = df [df['Division'] == div].sort_values(by = 'Points', ascending = False)
-        team_list = []
-        max_gp = df['Games Played'].max()
-        for team in teams:
-            data = round((max_gp / team.game_played * team.points), 1)
-            team_list.append(data)
-        
-        df['GP Adjust'] = team_list
-        df = df.sort_values(by = 'GP Adjust', ascending = False)
+#         if div == 'all':
+#             df = df.sort_values(by = 'Points', ascending = False)
+#         elif div in {'Scotia North', 'Honda West', 'Discover Central', 'MassMutual East'}:
+#             df = df [df['Division'] == div].sort_values(by = 'Points', ascending = False)
+#         team_list = []
+#         max_gp = df['Games Played'].max()
+#         for team in teams:
+#             data = round((max_gp / team.game_played * team.points), 1)
+#             team_list.append(data)
+#         
+#         df['GP Adjust'] = team_list
+#         df = df.sort_values(by = 'GP Adjust', ascending = False)
         return df    
     
     def name_id (self):
@@ -161,9 +161,9 @@ for i in range(1,max_game_ID):
 #         print (index-1, " --", games[index-1].game_info())
         games[index-1].games_recorded()
         
-game_frame = Team.standings('all')
-# print (game_frame.info()) 
-# print (game_frame.head(10))
+game_frame = Team.standings('Scotia North')
+print (game_frame.info()) 
+print (game_frame.head(10))
 print (game_frame.to_string())
 # north_div = game_frame[game_frame['Division'] == 'Scotia North'].sort_values(by = 'Points', ascending = False)
 # max_gp = north_div['Games Played'].max() 
