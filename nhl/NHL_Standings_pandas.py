@@ -25,30 +25,19 @@ class Team:
         self.game_played = 0
         
     @staticmethod
-    def standings (div):
-        team_list = []
-        labels = ['Team', 'Games Played', 'Win', 'Loss', 'OT Loss', 'SO Loss', 'Points', 'Division']
+    def standings ():
+        columns = [['Team', 'Win', 'Loss', 'OT Loss', 'SO Loss', 'Points', 'Games Played', 'Division']]
+        df = pd.DataFrame(columns)
         for team in teams:
             team.game_points()
-            data = (team.name, team.game_played,
-                    team.win, team.loss,
-                    team.otloss, team.soloss,
-                    team.points, team.division)
-            team_list.append(data)
-        df = pd.DataFrame( team_list, columns=labels )
-        if div == 'all':
-            df = df.sort_values(by = 'Points', ascending = False)
-        elif div in {'Scotia North', 'Honda West', 'Discover Central', 'MassMutual East'}:
-            df = df [df['Division'] == div].sort_values(by = 'Points', ascending = False)
-        team_list = []
-        max_gp = df['Games Played'].max()
-        for team in teams:
-            data = round((max_gp / team.game_played * team.points), 1)
-            team_list.append(data)
-        
-        df['GP Adjust'] = team_list
-        df = df.sort_values(by = 'GP Adjust', ascending = False)
-        return df    
+            data = [[team.name, team.win,
+                            team.loss, team.otloss,
+                            team.soloss, team.points,
+                            team.game_played, team.division]]
+            df = df.append (data)
+#             print (data)
+#         
+        return df
     
     def name_id (self):
         namestring = f"The team is {self.name} with id of {self.id}"
@@ -147,6 +136,8 @@ for i in range(1,max_game_ID):
     url='game/' + year + season_type +str(i).zfill(4) + '/linescore'
     gameID = int(year + season_type +str(i).zfill(4)); #print (gameID)
     data = read_API (url)
+    df = pd.DataFrame(data)
+    print(df) 
     if data['currentPeriod'] != 0:
         home_id = (data['teams']['home']['team']['id'])
         away_id = (data['teams']['away']['team']['id'])
@@ -161,10 +152,5 @@ for i in range(1,max_game_ID):
 #         print (index-1, " --", games[index-1].game_info())
         games[index-1].games_recorded()
         
-game_frame = Team.standings('all')
-# print (game_frame.info()) 
-# print (game_frame.head(10))
+game_frame = Team.standings()
 print (game_frame.to_string())
-# north_div = game_frame[game_frame['Division'] == 'Scotia North'].sort_values(by = 'Points', ascending = False)
-# max_gp = north_div['Games Played'].max() 
-# print (north_div.to_string())
