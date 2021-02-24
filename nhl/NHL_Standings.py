@@ -36,18 +36,21 @@ class Team:
                     team.points, team.division, 0)
             team_list.append(data)
         df = pd.DataFrame( team_list, columns=labels )
-#         if div == 'all':
-#             df = df.sort_values(by = 'Points', ascending = False)
-#         elif div in {'Scotia North', 'Honda West', 'Discover Central', 'MassMutual East'}:
-#             df = df [df['Division'] == div].sort_values(by = 'Points', ascending = False)
-#         team_list = []
-#         max_gp = df['Games Played'].max()
-#         for team in teams:
-#             data = round((max_gp / team.game_played * team.points), 1)
-#             team_list.append(data)
-#         
-#         df['GP Adjust'] = team_list
-#         df = df.sort_values(by = 'GP Adjust', ascending = False)
+        if div == 'all':
+            df = df.sort_values(by = 'Points', ascending = False)
+        elif div in {'Scotia North', 'Honda West', 'Discover Central', 'MassMutual East'}:
+            df = df [df['Division'] == div].sort_values(by = 'Points', ascending = False)
+        team_list = []
+        max_gp = df['Games Played'].max()
+        for team in teams:
+            if team.points > 0:
+                data = round((max_gp / team.game_played * team.points), 1)
+#                 print (f"GP_adjust {data} = max_gp {max_gp} / team.game_played {team.game_played} * team.points {team.points}")
+                team_list.append(data)
+        print (team_list)
+        
+        df['GP Adjust'] = team_list
+        df = df.sort_values(by = 'GP Adjust', ascending = False)
         return df    
     
     def name_id (self):
@@ -162,9 +165,6 @@ for i in range(1,max_game_ID):
         games[index-1].games_recorded()
         
 game_frame = Team.standings('Scotia North')
-print (game_frame.info()) 
-print (game_frame.head(10))
+# print (game_frame.info()) 
+# print (game_frame.head(10))
 print (game_frame.to_string())
-# north_div = game_frame[game_frame['Division'] == 'Scotia North'].sort_values(by = 'Points', ascending = False)
-# max_gp = north_div['Games Played'].max() 
-# print (north_div.to_string())
