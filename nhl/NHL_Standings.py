@@ -1,6 +1,7 @@
 from datetime import datetime
 import requests
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # Set up the API call variables
 year = '2020'
@@ -26,31 +27,28 @@ class Team:
         
     @staticmethod
     def standings (div):
-        team_list = []
-        labels = ['Team', 'Games Played', 'Win', 'Loss', 'OT Loss', 'SO Loss', 'Points', 'Division', 'GP adjust']
+        columns = ['Team', 'Games Played', 'Win', 'Loss', 'OT Loss', 'SO Loss', 'Points', 'Division']
+        dummy = [['', 0, 0, 0, 0, 0, 0, '']]
+        df = pd.DataFrame(columns=columns, data=dummy)
         for team in teams:
-            team.game_points()
-            data = (team.name, team.game_played,
-                    team.win, team.loss,
-                    team.otloss, team.soloss,
-                    team.points, team.division, 0)
-            team_list.append(data)
-        df = pd.DataFrame( team_list, columns=labels )
+            if team.name:  #see if the team is empty
+                team.game_points()
+                data = (team.name, team.game_played,
+                        team.win, team.loss,
+                        team.otloss, team.soloss,
+                        team.points, team.division)
+                a_series = pd.Series(data, index = df.columns)
+                df = df.append(a_series, ignore_index=True)
+        df = df.drop(0)
+        
         if div == 'all':
             df = df.sort_values(by = 'Points', ascending = False)
         elif div in {'Scotia North', 'Honda West', 'Discover Central', 'MassMutual East'}:
             df = df [df['Division'] == div].sort_values(by = 'Points', ascending = False)
-        team_list = []
+            
         max_gp = df['Games Played'].max()
-        for team in teams:
-            if team.points > 0:
-                data = round((max_gp / team.game_played * team.points), 1)
-#                 print (f"GP_adjust {data} = max_gp {max_gp} / team.game_played {team.game_played} * team.points {team.points}")
-                team_list.append(data)
-        print (team_list)
-        
-        df['GP Adjust'] = team_list
-        df = df.sort_values(by = 'GP Adjust', ascending = False)
+        df ['GP_adjust'] = round((max_gp / df['Games Played'] * df['Points']), 1)
+        df = df.sort_values(by = 'GP_adjust', ascending = False)
         return df    
     
     def name_id (self):
@@ -160,11 +158,13 @@ for i in range(1,max_game_ID):
         games[index-1].home_score = data['teams']['home']['goals']
         games[index-1].away_score = data['teams']['away']['goals']
         games[index-1].game_end = data['currentPeriodOrdinal']
-#         print (f'{index} On {datetime_object.strftime("%a, %b %d")} the {teams[team_manager (home_id)].teamName} ({games[index-1].home_score}) and the {teams[team_manager (away_id)].teamName} ({games[index-1].away_score})')
-#         print (index-1, " --", games[index-1].game_info())
         games[index-1].games_recorded()
         
-game_frame = Team.standings('Scotia North')
+game_frame = Team.standings('all')
+#Scotia North,Honda West,Discover Central,MassMutual East, all
+        
 # print (game_frame.info()) 
 # print (game_frame.head(10))
 print (game_frame.to_string())
+game_frame.plot.bar(x='Team', y='GP_adjust')
+plt.show()
