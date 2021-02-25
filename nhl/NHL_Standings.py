@@ -2,6 +2,7 @@ from datetime import datetime
 import requests
 import pandas as pd
 import matplotlib.pyplot as plt
+from pretty_html_table import build_table
 
 # Set up the API call variables
 year = '2020'
@@ -160,11 +161,26 @@ for i in range(1,max_game_ID):
         games[index-1].game_end = data['currentPeriodOrdinal']
         games[index-1].games_recorded()
         
-game_frame = Team.standings('all')
+game_frame = Team.standings('Scotia North')
 #Scotia North,Honda West,Discover Central,MassMutual East, all
         
 # print (game_frame.info()) 
 # print (game_frame.head(10))
-print (game_frame.to_string())
-game_frame.plot.bar(x='Team', y='GP_adjust')
-plt.show()
+# print (game_frame.to_string())
+# game_frame.plot.bar(x='Team', y='GP_adjust')
+# plt.show()
+
+html = game_frame.to_html()
+
+# #write html to file
+# text_file = open("index.html", "w")
+# text_file.write(html)
+# text_file.close()
+
+html_table = build_table(game_frame, 'blue_dark')
+# print(html_table_blue_light)
+
+#write html to file
+text_file = open("index.html", "w")
+text_file.write(html_table)
+text_file.close()
