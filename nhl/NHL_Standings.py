@@ -7,7 +7,7 @@ from pretty_html_table import build_table
 # Set up the API call variables
 year = '2020'
 season_type = '02' 
-max_game_ID = 300
+max_game_ID = 400
 base_URL = "https://statsapi.web.nhl.com/api/v1/"
 
 class Team:
@@ -181,6 +181,6 @@ html_table = build_table(game_frame, 'blue_dark')
 # print(html_table_blue_light)
 
 #write html to file
-text_file = open("index.html", "w")
+text_file = open("north_div.html", "w")
 text_file.write(html_table)
 text_file.close()
