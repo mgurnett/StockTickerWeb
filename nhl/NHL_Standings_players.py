@@ -68,57 +68,52 @@ def get_player_info (id):
     if data_splits != []:
         data_splits = data_stats['splits'][0]#; print ('data_splits', type(data_splits), data_splits)
         data_stat = data_splits['stat']#; print ('data_stat', type(data_stat), data_stat.keys())
-        print (data_stat.keys())
-        print ('============')
-#     players_stats_df = pd.json_normalize(data, ['stats'], errors='ignore')
-#     if players_stats_df['splits'][0] != []:
-#         temp_df = players_stats_df['splits'][0][0]['stat']
-#         url = base_URL + '/people/' + str(id)
-#         data = get_player_data (url)
-#         players_info_df = pd.json_normalize(data, ['people'], errors='ignore')
-#         
-#         temp_df = pd.DataFrame.from_dict(temp, orient='index')
-#             temp2_df = temp_df.transpose()
-#         
-#         player_info_dict = {'id': players_info_df['id'],
-#                             'firstName': players_info_df['firstName'],
-#                             'lastName': players_info_df['lastName'],
-#                             'primaryNumber': players_info_df['primaryNumber'],
-#                             'currentAge': players_info_df['currentAge'],
-#                             'nationality': players_info_df['nationality'],
-#                             'active': players_info_df['active'],
-#                             'alternateCaptain': players_info_df['alternateCaptain'],
-#                             'captain': players_info_df['captain'],
-#                             'rosterStatus': players_info_df['rosterStatus'],
-#                             'currentTeam.id': players_info_df['currentTeam.id'],
-#                             'primaryPosition.name': players_info_df['primaryPosition.name']  }
-#         
-#         player_stats_dict = {'assists': temp2_df['assists'],
-#                                 'goals': temp2_df['goals'],
-#                                 'pim': temp2_df['pim'],
-#                                 'shots': temp2_df['shots'],
-#                                 'games': temp2_df['games'],
-#                                 'powerPlayGoals': temp2_df['powerPlayGoals'],
-#                                 'powerPlayPoints': temp2_df['powerPlayPoints'],
-#                                 'penaltyMinutes': temp2_df['penaltyMinutes'],
-#                                 'plusMinus': temp2_df['plusMinus'],
-#                                 'points': temp2_df['points'] }
-# 
-#             temp3_df = pd.DataFrame.from_dict(player_part_dict, orient='index')
-# 
-#     player_details = pd.concat([player_info_df, temp3_df], axis=1)
-#     return player_details
-    return data
+        player_stats_dict = {'points': data_stat.get('points'),
+                             'goals': data_stat.get('goals'),
+                             'pim': data_stat.get('pim'),
+                             'shots': data_stat.get('shots'),
+                             'games': data_stat.get('games'),
+                             'powerPlayGoals': data_stat.get('powerPlayGoals'),
+                             'powerPlayPoints': data_stat.get('powerPlayPoints'),
+                             'penaltyMinutes': data_stat.get('penaltyMinutes'),
+                             'plusMinus': data_stat.get('plusMinus'),
+                             'points': data_stat.get('points') }
+#         print (player_stats_dict)
+        url = base_URL + '/people/' + str(id)
+        data = get_player_data (url)#; print ('data', type(data), data)
+        data_people = data['people'][0]#; print ('data_people', type(data_people), data_people)
+#         print (data_people.keys())#; print ('data_splits', type(data_splits), data_splits)
+        player_info_dict = {'id': data_people.get('id'),
+                            'firstName': data_people.get('firstName'),
+                            'lastName': data_people.get('lastName'),
+                            'primaryNumber': data_people.get('primaryNumber'),
+                            'currentAge': data_people.get('currentAge'),
+                            'nationality': data_people.get('nationality'),
+                            'active': data_people.get('active'),
+                            'alternateCaptain': data_people.get('alternateCaptain'),
+                            'captain': data_people.get('captain'),
+                            'rosterStatus': data_people.get('rosterStatus'),
+                            'currentTeam.id': data_people.get('currentTeam.id'),
+                            'primaryPosition.name': data_people.get('primaryPosition.name')  }
+        player_info_dict.update(player_stats_dict)#; print ('player_info_dict', type(player_info_dict), player_info_dict)
+#         print (player_info_dict.keys())
+        all_players_df = pd.DataFrame(player_info_dict, index=['i',])
+
+    else:
+        all_players_df = []
+    return all_players_df
         
 team_ids = get_teams(); print (f'Got the team ids for {len(team_ids)} teams')
 roster_ids = get_rosters (team_ids); print (f'Got the team roster ids for {len(roster_ids)} players')
 
-# player_stats =[]
+all_players_df = pd.DataFrame(columns=['id', 'firstName', 'lastName', 'primaryNumber',
+                                       'currentAge', 'nationality', 'active', 'alternateCaptain',
+                                       'captain', 'rosterStatus', 'currentTeam.id',
+                                       'primaryPosition.name', 'points', 'goals', 'pim',
+                                       'shots', 'games', 'powerPlayGoals', 'powerPlayPoints',
+                                       'penaltyMinutes', 'plusMinus'])
 for i, r in enumerate(roster_ids):
     print (i)
-    player_stats = (get_player_info (r))
-#     print (get_player_info (r))
-#     if i == 20:
-# #         print (player_stats)
-#         all_players = pd.DataFrame(player_stats)
-#         make_web ('players', all_players)
+    player_stats_df = (get_player_info (r))#; print ('player_stats_df', type(player_stats_df), player_stats_df)
+    all_players_df = all_players_df.append(player_stats_df)#; print ('all_players_df', type(all_players_df), all_players_df)
+make_web ('players', all_players_df)
