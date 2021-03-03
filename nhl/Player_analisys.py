@@ -17,22 +17,22 @@ def make_web (name, df):
     text_file.close()
 
 all_players_df = pd.read_pickle('players_df.pkl')
-# make_web ('players', all_players_df)
-# 
-# scorers = all_players_df.sort_values(by=['goals', 'assists'], ascending=False).head(10)
-# make_web ('scorers', scorers)
-# 
+make_web ('players', all_players_df)
+
+scorers = all_players_df.sort_values(by=['goals', 'assists'], ascending=False).head(10)
+make_web ('scorers', scorers)
+
 defence = all_players_df.groupby(["primaryPosition_name"]).get_group(("Defenseman"))
 d_points = defence.sort_values(by=['points', 'goals'], ascending=False).head(10)
 d_points_sub = d_points[['firstName', 'lastName', 'currentTeam', 'points', 'goals', 'assists']]
 make_web ('d_points_sub', d_points_sub)
-# 
-# points = all_players_df.sort_values(by=['points', 'goals'], ascending=False).head(10)
-# make_web ('points', points)
-# 
-# plusMinus = all_players_df.sort_values(by=['plusMinus'], ascending=False).head(10)
-# make_web ('plusMinus', plusMinus)
-print (all_players_df.dtypes)
-print (all_players_df.describe())
+
+points = all_players_df.sort_values(by=['points', 'goals'], ascending=False).head(10)
+make_web ('points', points)
+
+plusMinus = all_players_df.sort_values(by=['plusMinus'], ascending=False).head(10)
+make_web ('plusMinus', plusMinus)
+# print (all_players_df.dtypes)
+# print (all_players_df.describe())
 sub_df = all_players_df[['firstName', 'lastName', 'currentTeam', 'points', 'goals', 'assists']]
 make_web ('players_sub', sub_df)
