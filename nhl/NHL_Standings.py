@@ -161,7 +161,7 @@ for i in range(1,max_game_ID):
         games[index-1].game_end = data['currentPeriodOrdinal']
         games[index-1].games_recorded()
         
-game_frame = Team.standings('Scotia North')
+game_frame = Team.standings('all')
 #Scotia North,Honda West,Discover Central,MassMutual East, all
         
 # print (game_frame.info()) 

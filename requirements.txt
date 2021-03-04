@@ -4,6 +4,7 @@ requests
 pandas
 matplotlib
 requests_html
+django
 
 # run this: env $pip3 install -r requirements.txt
 

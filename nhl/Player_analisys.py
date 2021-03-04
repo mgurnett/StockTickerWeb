@@ -17,7 +17,7 @@ def make_web (name, df):
     text_file.close()
 
 all_players_df = pd.read_pickle('players_df.pkl')
-make_web ('players', all_players_df)
+# make_web ('players', all_players_df)
 
 scorers = all_players_df.sort_values(by=['goals', 'assists'], ascending=False).head(10)
 make_web ('scorers', scorers)
@@ -35,4 +35,4 @@ make_web ('plusMinus', plusMinus)
 # print (all_players_df.dtypes)
 # print (all_players_df.describe())
 sub_df = all_players_df[['firstName', 'lastName', 'currentTeam', 'points', 'goals', 'assists']]
-make_web ('players_sub', sub_df)
+# make_web ('players_sub', sub_df)

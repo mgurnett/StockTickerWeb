@@ -1,0 +1,43 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<title>Team standings</title>
+<html>
+<!-- Tab links -->
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'North')">{{nameN|safe}}</button>
+  <button class="tablinks" onclick="openCity(event, 'Central')">{{nameC|safe}}</button>
+  <button class="tablinks" onclick="openCity(event, 'West')">{{nameW|safe}}</button>
+  <button class="tablinks" onclick="openCity(event, 'East')">{{nameE|safe}}</button>
+  <button class="tablinks" onclick="openCity(event, 'League')">{{nameL|safe}}</button>
+</div>
+
+    <!-- Tab content -->
+
+    <div id="North" class="tabcontent">
+      <h3>{{nameN|safe}}</h3>
+      {{tableN|safe}}
+    </div>
+
+    <div id="East" class="tabcontent">
+      <h3>{{nameE|safe}}</h3>
+      {{tableE|safe}}
+    </div>
+
+    <div id="West" class="tabcontent">
+      <h3>{{nameW|safe}}</h3>
+      {{tableW|safe}}
+    </div>
+
+    <div id="Central" class="tabcontent">
+      <h3>{{nameC|safe}}</h3>
+      {{tableC|safe}}
+    </div>
+
+    <div id="League" class="tabcontent">
+      <h3>{{nameL|safe}}</h3>
+      {{tableL|safe}}
+    </div>
+
+</html>
+{% endblock %}
