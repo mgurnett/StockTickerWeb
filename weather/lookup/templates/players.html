@@ -5,38 +5,32 @@
 <html>
 <!-- Tab links -->
 <div class="tab">
-  <button class="tablinks" onclick="openCity(event, 'North')">{{nameN|safe}}</button>
-  <button class="tablinks" onclick="openCity(event, 'Central')">{{nameC|safe}}</button>
-  <button class="tablinks" onclick="openCity(event, 'West')">{{nameW|safe}}</button>
-  <button class="tablinks" onclick="openCity(event, 'East')">{{nameE|safe}}</button>
-  <button class="tablinks" onclick="openCity(event, 'League')">{{nameL|safe}}</button>
+  <button class="tablinks" onclick="openCity(event, 'Goals')">         {{nameS|safe}}</button>
+  <button class="tablinks" onclick="openCity(event, 'Points')">        {{nameP|safe}}</button>
+  <button class="tablinks" onclick="openCity(event, 'Defence_goals')"> {{nameD|safe}}</button>
+  <button class="tablinks" onclick="openCity(event, 'Plus_minus')">    {{namePM|safe}}</button>
 </div>
 
     <!-- Tab content -->
 
-    <div id="North" class="tabcontent">
-      <h3>{{nameN|safe}}</h3>
-      {{tableN|safe}}
+    <div id="Goals" class="tabcontent">
+      <h3>{{nameS|safe}}</h3>
+      {{tableS|safe}}
     </div>
 
-    <div id="East" class="tabcontent">
-      <h3>{{nameE|safe}}</h3>
-      {{tableE|safe}}
+    <div id="Points" class="tabcontent">
+      <h3>{{nameP|safe}}</h3>
+      {{tableP|safe}}
     </div>
 
-    <div id="West" class="tabcontent">
-      <h3>{{nameW|safe}}</h3>
-      {{tableW|safe}}
+    <div id="Defence_goals" class="tabcontent">
+      <h3>{{nameD|safe}}</h3>
+      {{tableD|safe}}
     </div>
 
-    <div id="Central" class="tabcontent">
-      <h3>{{nameC|safe}}</h3>
-      {{tableC|safe}}
-    </div>
-
-    <div id="League" class="tabcontent">
-      <h3>{{nameL|safe}}</h3>
-      {{tableL|safe}}
+    <div id="Plus_minus" class="tabcontent">
+      <h3>{{namePM|safe}}</h3>
+      {{tablePM|safe}}
     </div>
 
 </html>

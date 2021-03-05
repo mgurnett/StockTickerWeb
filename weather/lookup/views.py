@@ -167,32 +167,6 @@ def teams_view (request):
             games[index-1].away_score = data['teams']['away']['goals']
             games[index-1].game_end = data['currentPeriodOrdinal']
             games[index-1].games_recorded()
-#             
-#     divis_north = 'Scotia North'
-#     game_frame_north = Team.standings(divis_north)
-    #Scotia North,Honda West,Discover Central,MassMutual East, all
-            
-    # print (game_frame.info()) 
-    # print (game_frame.head(10))
-    # print (game_frame.to_string())
-    # game_frame.plot.bar(x='Team', y='GP_adjust')
-    # plt.show()
-
-#     html_table_north = game_frame_north.to_html()
-#     html_name_north = (f'<h1>{divis_north}</h1>')
-
-    # #write html to file
-    # text_file = open("index.html", "w")
-    # text_file.write(html)
-    # text_file.close()
-
-#     html_table_blue = build_table(game_frame_north, 'blue_dark')
-#     # print(html_table_blue_light)
-# 
-#     #write html to file
-#     text_file = open("north_div.html", "w")
-#     text_file.write(html_table)
-#     text_file.close()
 
     divis_north = 'Scotia North'
     game_frame_north = Team.standings(divis_north)
@@ -312,7 +286,7 @@ def get_player_info (id):
         all_players_df = []
     return all_players_df
         
-def players_view (request):
+def build_dataframe ():
     team_ids = get_teams(); print (f'Got the team ids for {len(team_ids)} teams')
     roster_ids = get_rosters (team_ids); print (f'Got the team roster ids for {len(roster_ids)} players')
 
@@ -326,10 +300,31 @@ def players_view (request):
         print (i)
         player_stats_df = (get_player_info (r))#; print ('player_stats_df', type(player_stats_df), player_stats_df)
         all_players_df = all_players_df.append(player_stats_df)#; print ('all_players_df', type(all_players_df), all_players_df)
+    return all_players_df
+
+def players_view (request):
+
+    all_players_df = build_dataframe()
+    
+    scorers_sub = all_players_df.sort_values(by=['goals', 'assists'], ascending=False).head(10)
+    scorers = scorers_sub[['firstName', 'lastName', 'currentTeam', 'points', 'goals', 'assists']]
+    html_table_scorers = build_table(scorers, 'blue_dark')
+    
+    defence = all_players_df.groupby(["primaryPosition_name"]).get_group(("Defenseman"))
+    d_points = defence.sort_values(by=['points', 'goals'], ascending=False).head(10)
+    d_points_sub = d_points[['firstName', 'lastName', 'currentTeam', 'points', 'goals', 'assists']]
+    html_table_d_points_sub = build_table(d_points_sub, 'blue_dark')
+
+    points_sub = all_players_df.sort_values(by=['points', 'goals'], ascending=False).head(10)
+    points = points_sub[['firstName', 'lastName', 'currentTeam', 'points', 'goals', 'assists']]
+    html_table_points = build_table(points, 'blue_dark')
+
+    plusMinus_sub = all_players_df.sort_values(by=['plusMinus'], ascending=False).head(10)
+    plusMinus = plusMinus_sub[['firstName', 'lastName', 'currentTeam', 'plusMinus', 'points', 'goals', 'assists']]
+    html_table_plusMinus = build_table(plusMinus, 'blue_dark')
 
     
-    return render (request, 'teams.html', {'tableN': html_table_blue_north, 'nameN': html_name_north,
-                                           'tableC': html_table_blue_central, 'nameC': html_name_central,
-                                           'tableE': html_table_blue_east, 'nameE': html_name_east,
-                                           'tableW': html_table_blue_west, 'nameW': html_name_west,
-                                           'tableL': html_table_blue_NHL, 'nameL': html_name_NHL})
+    return render (request, 'players.html', {'tableS': html_table_scorers,      'nameS': 'Goals',
+                                             'tableD': html_table_d_points_sub, 'nameD': 'Defence goals',
+                                             'tableP': html_table_points,       'nameP': 'Points',
+                                             'tablePM': html_table_plusMinus,   'namePM': 'Plus/minus'})
