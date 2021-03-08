@@ -167,7 +167,10 @@ def teams_view (request):
             games[index-1].away_score = data['teams']['away']['goals']
             games[index-1].game_end = data['currentPeriodOrdinal']
             games[index-1].games_recorded()
+            print (games[index-1])
 
+    all_games_df = pd.DataFrame (games)
+    
     divis_north = 'Scotia North'
     game_frame_north = Team.standings(divis_north)
     html_name_north = (f'<h1>{divis_north}</h1>')
@@ -193,11 +196,16 @@ def teams_view (request):
     html_name_NHL = (f'<h1>{divis_NHL}</h1>')
     html_table_blue_NHL = build_table(game_frame_NHL, 'blue_dark')
     
+    html_name_debug = (f'<h1>debug</h1>')
+    html_table_blue_debug = build_table(all_games_df, 'blue_dark')
+    
+    
     return render (request, 'teams.html', {'tableN': html_table_blue_north, 'nameN': html_name_north,
                                            'tableC': html_table_blue_central, 'nameC': html_name_central,
                                            'tableE': html_table_blue_east, 'nameE': html_name_east,
                                            'tableW': html_table_blue_west, 'nameW': html_name_west,
-                                           'tableL': html_table_blue_NHL, 'nameL': html_name_NHL})
+                                           'tableL': html_table_blue_NHL, 'nameL': html_name_NHL,
+                                           'tableDB': html_table_blue_debug, 'nameDB': html_name_debug})
 #===========================
 
 def get_teams ():    
