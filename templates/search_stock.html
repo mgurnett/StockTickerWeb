@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+      <h1></h1>
+    </div>
+    <p><h2>({{stock.symbol}}) {{stock.full_name()}} has current price of closing at {{Stock.smoney_str(stock.current_price())}}</h2></p>
+
+{% endblock %}

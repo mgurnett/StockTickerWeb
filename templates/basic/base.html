@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+    <head>  <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+        <!-- theme CSS -->
+        <link href="static/css/bootstrap.css" rel="stylesheet">
+
+        <title>Stock Ticker</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">  <!-- The navbar -->
+            <div class="container-fluid">  <!-- The Stock Ticker logo -->
+                <a class="navbar-brand" href="/">Stock Ticker</a>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+     
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false">Players</a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li><a class="dropdown-item" href="#">New player</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Portfolio</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('ledger')}}">Ledger</a></li>
+                            <li><a class="dropdown-item" href="#">Net worth</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false">Current players</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarStocks">
+                            {% for p in Player.player_list() %}
+                                <li><a class="dropdown-item" href="/{{ p }}">{{p}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false">Stocks</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarStocks">
+                            <li><a class="dropdown-item" href="#">Search</a></li>
+                            <li><a class="dropdown-item" href="#">buy</a></li>
+                            <li><a class="dropdown-item" href="#">sell</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">History</a></li>
+                        </ul>
+                    </li>
+                            
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false">Common stocks</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarStocks">
+                            {% for c in common %}
+                                <li><a class="dropdown-item" href="/stock={{c.0}}">{{c.0}} ( {{c.1}} )</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+                <p class="navbar-text navbar-right"> <b>{{player.name_balance_str()}} </b></p>
+            </div>
+        </div>
+    </nav>
+            <div class="container-sm">
+                {% block content %}
+
+                {% endblock %}
+            </div>
+            <div class="footer">
+                {% block footer %}
+
+                {% endblock %}
+                </div>
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+
+    </body>
+</html>

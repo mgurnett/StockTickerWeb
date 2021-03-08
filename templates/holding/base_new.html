@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!-- https://www.10bestdesign.com/dirtymarkup/-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    <link href="../../../../favicon.ico" rel="icon">
+    <title>Stock Ticker</title>
+    
+    <!--Template based on URL below
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/starter-template/">-->
+    
+    <!-- Bootstrap core CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- theme CSS -->
+    <!-- <link href="/home/michael/Flask_ST/static/css/bootstrap.css" rel="stylesheet">-->
+    <link href="/home/michael/Desktop/StockTickerWeb/static/css/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Stock Ticker</a> <button aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarsExampleDefault" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                
+                    <li class="nav-item dropdown">
+                        <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown01">Players</a>
+                        <div aria-labelledby="dropdown01" class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url_for('portfolio')}}">Portfolio</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('ledger')}}">Ledger</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('networth')}}">Net worth</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ url_for('newplayer')}}">New player</a></li>
+                        </div>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown02">Current players</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarStocks">
+                            {% for p in Player.player_list() %}
+                                <li><a class="dropdown-item" href="/?name={{ p }}">{{p}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown03">Stocks</a>
+                        <div aria-labelledby="dropdown03" class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url_for('plot')}}">Graph</a></li>
+                            <li><a class="dropdown-item" href="#">buy</a></li>
+                            <li><a class="dropdown-item" href="#">sell</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">history</a></li>
+                        </div>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown02">Common stocks</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarStocks">
+                            {% for c in common %}
+                                <li><a class="dropdown-item" href="/?stock={{ c.0 }}">{{c.0}} ( {{c.1}} )</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input aria-label="Search" class="form-control mr-sm-2" placeholder="Search" type="text"> <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <main class="container" role="main">
+        <div class="container">
+            <div class="jumbotron">
+                <h1 class="display-4">Hello, world!</h1>
+                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                <hr class="my-4">
+                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            </div>
+        </div>
+        <div class="container-sm">
+            {% block content %}
+            
+            {% endblock %}
+        </div>
+            
+        <div class="container">
+            <hr class="my-4">
+            <div class="row align-items-start">
+                <div class="col">
+                    One of three columns
+                </div>
+                <div class="col">
+                    One of three columns
+                </div>
+                <div class="col">
+                    One of three columns
+                </div>
+            </div>
+            <nav class="navbar fixed-bottom navbar-dark bg-dark">
+                <div class="container">
+                    <a class="navbar-brand" href="#">{{player.name_balance_str()}}</a>
+                    <span class="navbar-text"> <b>{{stock.full_name()}} ({{stock.symbol}} )</b></span>
+                </div>
+            </nav>
+        </div>
+    </main>
+    
+    <!-- /.container -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> 
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
