@@ -162,12 +162,12 @@ def teams_view (request):
             date_data = data['periods'][0]['startTime']
             datetime_object = datetime.strptime(date_data, '%Y-%m-%dT%H:%M:%SZ')
             games.append ( Game (gameID, teams[team_manager (home_id)], teams[team_manager (away_id)], datetime_object))
-            index = len(games)
-            games[index-1].home_score = data['teams']['home']['goals']
-            games[index-1].away_score = data['teams']['away']['goals']
-            games[index-1].game_end = data['currentPeriodOrdinal']
-            games[index-1].games_recorded()
-            print (games[index-1])
+            index = len(games)-1
+            games[index].home_score = data['teams']['home']['goals']
+            games[index].away_score = data['teams']['away']['goals']
+            games[index].game_end = data['currentPeriodOrdinal']
+            games[index].games_recorded()
+#             print (games[index].game_info())
 
     all_games_df = pd.DataFrame (games)
     
@@ -198,7 +198,7 @@ def teams_view (request):
     
     html_name_debug = (f'<h1>debug</h1>')
     html_table_blue_debug = build_table(all_games_df, 'blue_dark')
-    
+    print (all_games_df)    
     
     return render (request, 'teams.html', {'tableN': html_table_blue_north, 'nameN': html_name_north,
                                            'tableC': html_table_blue_central, 'nameC': html_name_central,
