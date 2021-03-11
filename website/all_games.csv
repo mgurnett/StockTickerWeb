@@ -1,0 +1,382 @@
+,home_team,away_team,home_score,away_score,date,home_point,away_point,Division
+136,Edmonton Oilers,Ottawa Senators,8,5,"Feb 01, 21",2,0,Scotia North
+135,Chicago Blackhawks,Columbus Blue Jackets,3,1,"Feb 01, 21",2,0,Discover Central
+132,Philadelphia Flyers,New York Islanders,4,3,"Feb 01, 21",2,1,MassMutual East
+137,Minnesota Wild,Colorado Avalanche,4,3,"Feb 01, 21",2,1,Honda West
+138,Anaheim Ducks,St. Louis Blues,1,4,"Feb 01, 21",0,2,Honda West
+140,Washington Capitals,Boston Bruins,3,5,"Feb 02, 21",0,2,MassMutual East
+141,Tampa Bay Lightning,Nashville Predators,5,2,"Feb 02, 21",2,0,Discover Central
+142,Montréal Canadiens,Vancouver Canucks,6,2,"Feb 02, 21",2,0,Scotia North
+143,Winnipeg Jets,Calgary Flames,3,4,"Feb 02, 21",1,2,Scotia North
+139,New York Rangers,Pittsburgh Penguins,3,1,"Feb 02, 21",2,0,MassMutual East
+155,Los Angeles Kings,Anaheim Ducks,1,3,"Feb 03, 21",0,2,Honda West
+147,Chicago Blackhawks,Carolina Hurricanes,3,4,"Feb 03, 21",1,2,Discover Central
+149,Montréal Canadiens,Vancouver Canucks,5,3,"Feb 03, 21",2,0,Scotia North
+150,Winnipeg Jets,Calgary Flames,3,2,"Feb 03, 21",2,0,Scotia North
+151,Edmonton Oilers,Ottawa Senators,4,2,"Feb 03, 21",2,0,Scotia North
+152,Colorado Avalanche,Minnesota Wild,2,1,"Feb 03, 21",2,0,Honda West
+154,Tampa Bay Lightning,Detroit Red Wings,5,1,"Feb 03, 21",2,0,Discover Central
+146,Columbus Blue Jackets,Dallas Stars,3,6,"Feb 03, 21",0,2,Discover Central
+148,St. Louis Blues,Arizona Coyotes,4,3,"Feb 03, 21",2,0,Honda West
+153,Philadelphia Flyers,Boston Bruins,3,4,"Feb 04, 21",1,2,MassMutual East
+158,Florida Panthers,Nashville Predators,5,6,"Feb 05, 21",1,2,Discover Central
+159,Columbus Blue Jackets,Dallas Stars,4,3,"Feb 05, 21",2,0,Discover Central
+160,Chicago Blackhawks,Carolina Hurricanes,6,4,"Feb 05, 21",2,0,Discover Central
+161,St. Louis Blues,Arizona Coyotes,3,4,"Feb 05, 21",0,2,Honda West
+162,Montréal Canadiens,Ottawa Senators,2,3,"Feb 05, 21",0,2,Scotia North
+163,Toronto Maple Leafs,Vancouver Canucks,7,3,"Feb 05, 21",2,0,Scotia North
+164,Winnipeg Jets,Calgary Flames,4,1,"Feb 05, 21",2,0,Scotia North
+157,New York Rangers,Washington Capitals,4,2,"Feb 05, 21",2,0,MassMutual East
+173,Ottawa Senators,Montréal Canadiens,1,2,"Feb 06, 21",0,2,Scotia North
+170,Anaheim Ducks,San Jose Sharks,4,5,"Feb 06, 21",1,2,Honda West
+166,Philadelphia Flyers,Boston Bruins,1,2,"Feb 06, 21",0,2,MassMutual East
+168,Florida Panthers,Nashville Predators,2,1,"Feb 06, 21",2,0,Discover Central
+167,Tampa Bay Lightning,Detroit Red Wings,3,1,"Feb 06, 21",2,0,Discover Central
+169,Vegas Golden Knights,Los Angeles Kings,5,2,"Feb 06, 21",2,0,Honda West
+180,Dallas Stars,Chicago Blackhawks,1,2,"Feb 07, 21",1,2,Discover Central
+181,Vegas Golden Knights,Los Angeles Kings,4,3,"Feb 07, 21",2,0,Honda West
+179,Columbus Blue Jackets,Carolina Hurricanes,5,6,"Feb 07, 21",0,2,Discover Central
+176,Anaheim Ducks,San Jose Sharks,2,1,"Feb 07, 21",2,1,Honda West
+178,Florida Panthers,Detroit Red Wings,1,4,"Feb 07, 21",0,2,Discover Central
+177,Washington Capitals,Philadelphia Flyers,4,7,"Feb 07, 21",0,2,MassMutual East
+172,New York Islanders,Pittsburgh Penguins,4,3,"Feb 07, 21",2,0,MassMutual East
+174,Toronto Maple Leafs,Vancouver Canucks,5,1,"Feb 07, 21",2,0,Scotia North
+175,Calgary Flames,Edmonton Oilers,6,4,"Feb 07, 21",2,0,Scotia North
+182,New York Rangers,New York Islanders,0,2,"Feb 09, 21",0,2,MassMutual East
+183,Columbus Blue Jackets,Carolina Hurricanes,3,2,"Feb 09, 21",2,0,Discover Central
+184,Nashville Predators,Tampa Bay Lightning,1,4,"Feb 09, 21",0,2,Discover Central
+185,Ottawa Senators,Edmonton Oilers,1,3,"Feb 09, 21",0,2,Scotia North
+186,Toronto Maple Leafs,Vancouver Canucks,3,1,"Feb 09, 21",2,0,Scotia North
+187,Florida Panthers,Detroit Red Wings,2,1,"Feb 10, 21",2,0,Discover Central
+188,Nashville Predators,Tampa Bay Lightning,1,6,"Feb 10, 21",0,2,Discover Central
+189,Ottawa Senators,Edmonton Oilers,2,3,"Feb 10, 21",0,2,Scotia North
+191,Dallas Stars,Chicago Blackhawks,1,2,"Feb 10, 21",1,2,Discover Central
+192,Vegas Golden Knights,Anaheim Ducks,5,4,"Feb 10, 21",2,0,Honda West
+193,Los Angeles Kings,San Jose Sharks,3,4,"Feb 10, 21",1,2,Honda West
+190,Calgary Flames,Winnipeg Jets,3,2,"Feb 10, 21",2,0,Scotia North
+194,New York Rangers,Boston Bruins,2,3,"Feb 11, 21",1,2,MassMutual East
+195,Montréal Canadiens,Toronto Maple Leafs,2,4,"Feb 11, 21",0,2,Scotia North
+198,Chicago Blackhawks,Columbus Blue Jackets,5,6,"Feb 12, 21",0,2,Discover Central
+205,Los Angeles Kings,San Jose Sharks,6,2,"Feb 12, 21",2,0,Honda West
+204,Vegas Golden Knights,Anaheim Ducks,0,1,"Feb 12, 21",0,2,Honda West
+203,Dallas Stars,Carolina Hurricanes,3,5,"Feb 12, 21",0,2,Discover Central
+201,Winnipeg Jets,Ottawa Senators,5,1,"Feb 12, 21",2,0,Scotia North
+202,Vancouver Canucks,Calgary Flames,1,3,"Feb 12, 21",0,2,Scotia North
+199,Nashville Predators,Detroit Red Wings,3,2,"Feb 12, 21",2,0,Discover Central
+197,Florida Panthers,Tampa Bay Lightning,5,2,"Feb 12, 21",2,0,Discover Central
+196,New York Islanders,Pittsburgh Penguins,3,4,"Feb 12, 21",1,2,MassMutual East
+200,Montréal Canadiens,Edmonton Oilers,0,3,"Feb 12, 21",0,2,Scotia North
+144,San Jose Sharks,Vegas Golden Knights,1,3,"Feb 13, 21",0,2,Honda West
+206,New York Rangers,Boston Bruins,0,1,"Feb 13, 21",0,2,MassMutual East
+212,Winnipeg Jets,Ottawa Senators,1,2,"Feb 13, 21",0,2,Scotia North
+213,Vancouver Canucks,Calgary Flames,3,1,"Feb 14, 21",2,0,Scotia North
+216,Pittsburgh Penguins,Washington Capitals,6,3,"Feb 14, 21",2,0,MassMutual East
+215,Arizona Coyotes,St. Louis Blues,4,5,"Feb 14, 21",1,2,Honda West
+214,Dallas Stars,Carolina Hurricanes,3,4,"Feb 14, 21",1,2,Discover Central
+208,Florida Panthers,Tampa Bay Lightning,1,6,"Feb 14, 21",0,2,Discover Central
+210,Nashville Predators,Detroit Red Wings,2,4,"Feb 14, 21",0,2,Discover Central
+209,Chicago Blackhawks,Columbus Blue Jackets,3,2,"Feb 14, 21",2,1,Discover Central
+207,New York Islanders,Boston Bruins,4,2,"Feb 14, 21",2,0,MassMutual East
+211,Toronto Maple Leafs,Montréal Canadiens,1,2,"Feb 14, 21",0,2,Scotia North
+217,Vegas Golden Knights,Colorado Avalanche,1,0,"Feb 15, 21",2,0,Honda West
+225,Arizona Coyotes,St. Louis Blues,1,0,"Feb 15, 21",2,0,Honda West
+223,Vancouver Canucks,Calgary Flames,3,4,"Feb 16, 21",1,2,Scotia North
+219,Buffalo Sabres,New York Islanders,1,3,"Feb 16, 21",0,2,MassMutual East
+220,Detroit Red Wings,Chicago Blackhawks,2,3,"Feb 16, 21",1,2,Discover Central
+221,Toronto Maple Leafs,Ottawa Senators,5,6,"Feb 16, 21",1,2,Scotia North
+222,Edmonton Oilers,Winnipeg Jets,5,6,"Feb 16, 21",0,2,Scotia North
+226,San Jose Sharks,Anaheim Ducks,3,2,"Feb 16, 21",2,0,Honda West
+228,Carolina Hurricanes,Columbus Blue Jackets,7,3,"Feb 16, 21",2,0,Discover Central
+229,Tampa Bay Lightning,Florida Panthers,4,6,"Feb 16, 21",0,2,Discover Central
+227,Buffalo Sabres,New York Islanders,0,3,"Feb 17, 21",0,2,MassMutual East
+331,New York Rangers,New Jersey Devils,2,5,"Feb 17, 21",0,2,MassMutual East
+232,Los Angeles Kings,Minnesota Wild,4,0,"Feb 17, 21",2,0,Honda West
+58,Carolina Hurricanes,Florida Panthers,3,4,"Feb 17, 21",1,2,Discover Central
+230,Pittsburgh Penguins,Washington Capitals,1,3,"Feb 17, 21",0,2,MassMutual East
+231,Vegas Golden Knights,Colorado Avalanche,2,3,"Feb 17, 21",0,2,Honda West
+233,Detroit Red Wings,Chicago Blackhawks,0,2,"Feb 18, 21",0,2,Discover Central
+234,Toronto Maple Leafs,Ottawa Senators,2,1,"Feb 18, 21",2,0,Scotia North
+235,Calgary Flames,Vancouver Canucks,1,5,"Feb 18, 21",0,2,Scotia North
+236,Edmonton Oilers,Winnipeg Jets,3,2,"Feb 18, 21",2,0,Scotia North
+244,Arizona Coyotes,Los Angeles Kings,2,3,"Feb 19, 21",1,2,Honda West
+245,Anaheim Ducks,Minnesota Wild,1,3,"Feb 19, 21",0,2,Honda West
+242,Toronto Maple Leafs,Ottawa Senators,7,3,"Feb 19, 21",2,0,Scotia North
+240,Columbus Blue Jackets,Nashville Predators,3,0,"Feb 19, 21",2,0,Discover Central
+239,Pittsburgh Penguins,New York Islanders,4,1,"Feb 19, 21",2,0,MassMutual East
+238,Philadelphia Flyers,New York Rangers,2,3,"Feb 19, 21",1,2,MassMutual East
+237,Boston Bruins,New Jersey Devils,2,3,"Feb 19, 21",0,2,MassMutual East
+241,St. Louis Blues,San Jose Sharks,3,2,"Feb 19, 21",2,1,Honda West
+257,Colorado Avalanche,Vegas Golden Knights,3,2,"Feb 20, 21",2,0,Honda West
+246,Carolina Hurricanes,Chicago Blackhawks,5,3,"Feb 20, 21",2,0,Discover Central
+247,Detroit Red Wings,Florida Panthers,2,7,"Feb 20, 21",0,2,Discover Central
+248,Calgary Flames,Edmonton Oilers,1,2,"Feb 20, 21",0,2,Scotia North
+249,Vancouver Canucks,Winnipeg Jets,0,2,"Feb 20, 21",0,2,Scotia North
+250,New Jersey Devils,Buffalo Sabres,2,3,"Feb 20, 21",0,2,MassMutual East
+251,Washington Capitals,New York Rangers,1,4,"Feb 20, 21",0,2,MassMutual East
+261,Detroit Red Wings,Florida Panthers,2,1,"Feb 20, 21",2,0,Discover Central
+258,Arizona Coyotes,Los Angeles Kings,2,4,"Feb 21, 21",0,2,Honda West
+358,Washington Capitals,New Jersey Devils,4,3,"Feb 21, 21",2,0,MassMutual East
+259,Anaheim Ducks,Minnesota Wild,1,5,"Feb 21, 21",0,2,Honda West
+255,Montréal Canadiens,Toronto Maple Leafs,3,5,"Feb 21, 21",0,2,Scotia North
+252,Pittsburgh Penguins,New York Islanders,3,2,"Feb 21, 21",2,0,MassMutual East
+256,Edmonton Oilers,Calgary Flames,7,1,"Feb 21, 21",2,0,Scotia North
+254,St. Louis Blues,San Jose Sharks,4,5,"Feb 21, 21",0,2,Honda West
+253,Columbus Blue Jackets,Nashville Predators,2,4,"Feb 21, 21",0,2,Discover Central
+260,Boston Bruins,Philadelphia Flyers,7,3,"Feb 22, 21",2,0,MassMutual East
+262,Ottawa Senators,Montréal Canadiens,3,2,"Feb 22, 21",2,1,Scotia North
+263,Vancouver Canucks,Winnipeg Jets,3,4,"Feb 22, 21",1,2,Scotia North
+93,Carolina Hurricanes,Tampa Bay Lightning,2,4,"Feb 23, 21",0,2,Discover Central
+266,St. Louis Blues,Los Angeles Kings,0,3,"Feb 23, 21",0,2,Honda West
+267,Toronto Maple Leafs,Calgary Flames,0,3,"Feb 23, 21",0,2,Scotia North
+268,Colorado Avalanche,Vegas Golden Knights,0,3,"Feb 23, 21",0,2,Honda West
+269,Arizona Coyotes,Anaheim Ducks,4,3,"Feb 23, 21",2,0,Honda West
+8,Florida Panthers,Dallas Stars,3,1,"Feb 23, 21",2,0,Discover Central
+145,New York Islanders,Buffalo Sabres,3,2,"Feb 23, 21",2,0,MassMutual East
+274,Detroit Red Wings,Nashville Predators,0,2,"Feb 24, 21",0,2,Discover Central
+264,New Jersey Devils,Buffalo Sabres,1,4,"Feb 24, 21",0,2,MassMutual East
+265,Tampa Bay Lightning,Carolina Hurricanes,3,0,"Feb 24, 21",2,0,Discover Central
+271,Washington Capitals,Pittsburgh Penguins,2,3,"Feb 24, 21",1,2,MassMutual East
+276,Vancouver Canucks,Edmonton Oilers,3,4,"Feb 24, 21",0,2,Scotia North
+275,Ottawa Senators,Montréal Canadiens,5,4,"Feb 24, 21",2,1,Scotia North
+273,Columbus Blue Jackets,Chicago Blackhawks,5,6,"Feb 24, 21",1,2,Discover Central
+272,Florida Panthers,Dallas Stars,0,3,"Feb 24, 21",0,2,Discover Central
+277,Philadelphia Flyers,New York Rangers,4,3,"Feb 25, 21",2,0,MassMutual East
+278,St. Louis Blues,Los Angeles Kings,1,2,"Feb 25, 21",0,2,Honda West
+279,Toronto Maple Leafs,Calgary Flames,2,1,"Feb 25, 21",2,1,Scotia North
+280,Arizona Coyotes,Anaheim Ducks,4,3,"Feb 25, 21",2,1,Honda West
+165,Colorado Avalanche,Minnesota Wild,2,6,"Feb 25, 21",0,2,Honda West
+289,Vancouver Canucks,Edmonton Oilers,0,3,"Feb 26, 21",0,2,Scotia North
+288,Winnipeg Jets,Montréal Canadiens,6,3,"Feb 26, 21",2,0,Scotia North
+286,Detroit Red Wings,Nashville Predators,5,2,"Feb 26, 21",2,0,Discover Central
+287,Ottawa Senators,Calgary Flames,6,1,"Feb 26, 21",2,0,Scotia North
+284,Florida Panthers,Dallas Stars,3,2,"Feb 26, 21",2,0,Discover Central
+282,Washington Capitals,Pittsburgh Penguins,5,2,"Feb 26, 21",2,0,MassMutual East
+285,Columbus Blue Jackets,Chicago Blackhawks,0,2,"Feb 26, 21",0,2,Discover Central
+281,New York Islanders,Boston Bruins,7,2,"Feb 26, 21",2,0,MassMutual East
+283,Tampa Bay Lightning,Carolina Hurricanes,3,1,"Feb 26, 21",2,0,Discover Central
+293,Minnesota Wild,Los Angeles Kings,3,1,"Feb 27, 21",2,0,Honda West
+292,New York Rangers,Boston Bruins,6,2,"Feb 27, 21",2,0,MassMutual East
+291,Buffalo Sabres,Philadelphia Flyers,0,3,"Feb 27, 21",0,2,MassMutual East
+300,Nashville Predators,Columbus Blue Jackets,2,1,"Feb 27, 21",2,0,Discover Central
+301,Ottawa Senators,Calgary Flames,3,6,"Feb 27, 21",0,2,Scotia North
+290,Arizona Coyotes,Colorado Avalanche,2,3,"Feb 27, 21",0,2,Honda West
+295,New Jersey Devils,Washington Capitals,2,5,"Feb 27, 21",0,2,MassMutual East
+312,Nashville Predators,Columbus Blue Jackets,3,1,"Feb 28, 21",2,0,Discover Central
+310,New York Rangers,Boston Bruins,1,4,"Feb 28, 21",0,2,MassMutual East
+309,New York Islanders,Pittsburgh Penguins,2,0,"Feb 28, 21",2,0,MassMutual East
+308,Buffalo Sabres,Philadelphia Flyers,0,3,"Feb 28, 21",0,2,MassMutual East
+314,New Jersey Devils,Washington Capitals,2,3,"Feb 28, 21",0,2,MassMutual East
+304,Minnesota Wild,Los Angeles Kings,4,3,"Feb 28, 21",2,1,Honda West
+306,Anaheim Ducks,Vegas Golden Knights,2,3,"Feb 28, 21",1,2,Honda West
+305,Arizona Coyotes,Colorado Avalanche,2,6,"Feb 28, 21",0,2,Honda West
+303,Edmonton Oilers,Toronto Maple Leafs,0,4,"Feb 28, 21",0,2,Scotia North
+302,Winnipeg Jets,Montréal Canadiens,2,1,"Feb 28, 21",2,1,Scotia North
+299,Chicago Blackhawks,Detroit Red Wings,3,5,"Feb 28, 21",0,2,Discover Central
+298,Florida Panthers,Carolina Hurricanes,3,4,"Feb 28, 21",1,2,Discover Central
+296,New York Islanders,Pittsburgh Penguins,3,4,"Feb 28, 21",1,2,MassMutual East
+307,San Jose Sharks,St. Louis Blues,6,7,"Feb 28, 21",0,2,Honda West
+297,Tampa Bay Lightning,Dallas Stars,5,0,"Feb 28, 21",2,0,Discover Central
+0,Philadelphia Flyers,Pittsburgh Penguins,6,3,"Jan 13, 21",2,0,MassMutual East
+3,Edmonton Oilers,Vancouver Canucks,3,5,"Jan 14, 21",0,2,Scotia North
+4,Colorado Avalanche,St. Louis Blues,1,4,"Jan 14, 21",0,2,Honda West
+2,Toronto Maple Leafs,Montréal Canadiens,5,4,"Jan 14, 21",2,1,Scotia North
+1,Tampa Bay Lightning,Chicago Blackhawks,5,1,"Jan 14, 21",2,0,Discover Central
+14,Vegas Golden Knights,Anaheim Ducks,5,2,"Jan 15, 21",2,0,Honda West
+5,Buffalo Sabres,Washington Capitals,4,6,"Jan 15, 21",0,2,MassMutual East
+6,New Jersey Devils,Boston Bruins,2,3,"Jan 15, 21",1,2,MassMutual East
+7,New York Rangers,New York Islanders,0,4,"Jan 15, 21",0,2,MassMutual East
+9,Detroit Red Wings,Carolina Hurricanes,0,3,"Jan 15, 21",0,2,Discover Central
+10,Nashville Predators,Columbus Blue Jackets,3,1,"Jan 15, 21",2,0,Discover Central
+11,Winnipeg Jets,Calgary Flames,4,3,"Jan 15, 21",2,1,Scotia North
+12,Edmonton Oilers,Vancouver Canucks,5,2,"Jan 15, 21",2,0,Scotia North
+13,Arizona Coyotes,San Jose Sharks,3,4,"Jan 15, 21",1,2,Honda West
+15,Los Angeles Kings,Minnesota Wild,3,4,"Jan 15, 21",1,2,Honda West
+21,New Jersey Devils,Boston Bruins,2,1,"Jan 16, 21",2,1,MassMutual East
+20,Colorado Avalanche,St. Louis Blues,8,0,"Jan 16, 21",2,0,Honda West
+19,Ottawa Senators,Toronto Maple Leafs,5,3,"Jan 16, 21",2,0,Scotia North
+17,Philadelphia Flyers,Pittsburgh Penguins,5,2,"Jan 16, 21",2,0,MassMutual East
+16,Buffalo Sabres,Washington Capitals,1,2,"Jan 16, 21",0,2,MassMutual East
+28,Arizona Coyotes,San Jose Sharks,5,3,"Jan 16, 21",2,0,Honda West
+18,Tampa Bay Lightning,Chicago Blackhawks,5,2,"Jan 16, 21",2,0,Discover Central
+32,Pittsburgh Penguins,Washington Capitals,4,3,"Jan 17, 21",2,1,MassMutual East
+29,Vegas Golden Knights,Anaheim Ducks,2,1,"Jan 17, 21",2,1,Honda West
+27,Edmonton Oilers,Montréal Canadiens,1,5,"Jan 17, 21",0,2,Scotia North
+30,Los Angeles Kings,Minnesota Wild,3,4,"Jan 17, 21",1,2,Honda West
+25,Ottawa Senators,Toronto Maple Leafs,2,3,"Jan 17, 21",0,2,Scotia North
+24,Nashville Predators,Columbus Blue Jackets,5,2,"Jan 17, 21",2,0,Discover Central
+23,Detroit Red Wings,Carolina Hurricanes,4,2,"Jan 17, 21",2,0,Discover Central
+22,New York Rangers,New York Islanders,5,0,"Jan 17, 21",2,0,MassMutual East
+26,Calgary Flames,Vancouver Canucks,3,0,"Jan 17, 21",2,0,Scotia North
+31,Florida Panthers,Chicago Blackhawks,5,2,"Jan 18, 21",2,0,Discover Central
+33,New York Islanders,Boston Bruins,1,0,"Jan 18, 21",2,0,MassMutual East
+35,Detroit Red Wings,Columbus Blue Jackets,2,3,"Jan 18, 21",0,2,Discover Central
+41,Vegas Golden Knights,Arizona Coyotes,4,2,"Jan 19, 21",2,0,Honda West
+42,Anaheim Ducks,Minnesota Wild,1,0,"Jan 19, 21",2,0,Honda West
+40,Edmonton Oilers,Montréal Canadiens,1,3,"Jan 19, 21",0,2,Scotia North
+36,St. Louis Blues,San Jose Sharks,5,4,"Jan 19, 21",2,0,Honda West
+38,Toronto Maple Leafs,Winnipeg Jets,3,1,"Jan 19, 21",2,0,Scotia North
+37,Nashville Predators,Carolina Hurricanes,2,4,"Jan 19, 21",0,2,Discover Central
+34,Philadelphia Flyers,Buffalo Sabres,1,6,"Jan 19, 21",0,2,MassMutual East
+39,Calgary Flames,Vancouver Canucks,5,2,"Jan 19, 21",2,0,Scotia North
+43,New York Rangers,New Jersey Devils,3,4,"Jan 20, 21",0,2,MassMutual East
+44,Philadelphia Flyers,Buffalo Sabres,3,0,"Jan 20, 21",2,0,MassMutual East
+45,Florida Panthers,Chicago Blackhawks,5,4,"Jan 20, 21",2,1,Discover Central
+46,Pittsburgh Penguins,Washington Capitals,5,4,"Jan 20, 21",2,1,MassMutual East
+47,Detroit Red Wings,Columbus Blue Jackets,3,2,"Jan 20, 21",2,1,Discover Central
+49,Ottawa Senators,Winnipeg Jets,3,4,"Jan 20, 21",1,2,Scotia North
+50,Los Angeles Kings,Colorado Avalanche,2,3,"Jan 20, 21",0,2,Honda West
+55,Anaheim Ducks,Minnesota Wild,2,3,"Jan 21, 21",0,2,Honda West
+54,Vegas Golden Knights,Arizona Coyotes,5,2,"Jan 21, 21",2,0,Honda West
+51,St. Louis Blues,San Jose Sharks,1,2,"Jan 21, 21",1,2,Honda West
+52,Toronto Maple Leafs,Edmonton Oilers,1,3,"Jan 21, 21",0,2,Scotia North
+53,Vancouver Canucks,Montréal Canadiens,6,5,"Jan 21, 21",2,1,Scotia North
+56,Boston Bruins,Philadelphia Flyers,5,4,"Jan 22, 21",2,1,MassMutual East
+57,New York Islanders,New Jersey Devils,4,1,"Jan 22, 21",2,0,MassMutual East
+59,Columbus Blue Jackets,Tampa Bay Lightning,2,3,"Jan 22, 21",1,2,Discover Central
+61,Vancouver Canucks,Montréal Canadiens,3,7,"Jan 22, 21",0,2,Scotia North
+62,Los Angeles Kings,Colorado Avalanche,4,2,"Jan 22, 21",2,0,Honda West
+60,Ottawa Senators,Winnipeg Jets,1,4,"Jan 22, 21",0,2,Scotia North
+69,Arizona Coyotes,Vegas Golden Knights,5,2,"Jan 23, 21",2,0,Honda West
+63,Washington Capitals,Buffalo Sabres,4,3,"Jan 23, 21",2,1,MassMutual East
+64,Pittsburgh Penguins,New York Rangers,4,3,"Jan 23, 21",2,1,MassMutual East
+73,Columbus Blue Jackets,Tampa Bay Lightning,5,2,"Jan 23, 21",2,0,Discover Central
+65,Chicago Blackhawks,Detroit Red Wings,4,1,"Jan 23, 21",2,0,Discover Central
+66,Toronto Maple Leafs,Edmonton Oilers,4,2,"Jan 23, 21",2,0,Scotia North
+67,Minnesota Wild,San Jose Sharks,4,1,"Jan 23, 21",2,0,Honda West
+70,Anaheim Ducks,Colorado Avalanche,2,3,"Jan 23, 21",1,2,Honda West
+68,Dallas Stars,Nashville Predators,7,0,"Jan 23, 21",2,0,Discover Central
+80,Chicago Blackhawks,Detroit Red Wings,6,2,"Jan 24, 21",2,0,Discover Central
+83,Calgary Flames,Toronto Maple Leafs,2,3,"Jan 24, 21",0,2,Scotia North
+71,Boston Bruins,Philadelphia Flyers,6,1,"Jan 24, 21",2,0,MassMutual East
+86,Arizona Coyotes,Vegas Golden Knights,0,1,"Jan 24, 21",0,2,Honda West
+78,Washington Capitals,Buffalo Sabres,3,4,"Jan 24, 21",1,2,MassMutual East
+74,St. Louis Blues,Los Angeles Kings,4,2,"Jan 24, 21",2,0,Honda West
+75,Winnipeg Jets,Ottawa Senators,6,3,"Jan 24, 21",2,0,Scotia North
+76,Vancouver Canucks,Montréal Canadiens,2,5,"Jan 24, 21",0,2,Scotia North
+85,Dallas Stars,Nashville Predators,3,2,"Jan 25, 21",2,0,Discover Central
+84,Minnesota Wild,San Jose Sharks,3,5,"Jan 25, 21",0,2,Honda West
+77,New Jersey Devils,New York Islanders,2,0,"Jan 25, 21",2,0,MassMutual East
+87,Anaheim Ducks,Colorado Avalanche,3,1,"Jan 25, 21",2,0,Honda West
+81,St. Louis Blues,Los Angeles Kings,3,6,"Jan 25, 21",0,2,Honda West
+79,Pittsburgh Penguins,New York Rangers,3,2,"Jan 25, 21",2,0,MassMutual East
+82,Winnipeg Jets,Edmonton Oilers,3,4,"Jan 25, 21",0,2,Scotia North
+88,Vancouver Canucks,Ottawa Senators,7,1,"Jan 26, 21",2,0,Scotia North
+102,Vegas Golden Knights,St. Louis Blues,4,5,"Jan 27, 21",1,2,Honda West
+101,Arizona Coyotes,Anaheim Ducks,0,1,"Jan 27, 21",0,2,Honda West
+100,Colorado Avalanche,San Jose Sharks,7,3,"Jan 27, 21",2,0,Honda West
+99,Dallas Stars,Detroit Red Wings,2,1,"Jan 27, 21",2,1,Discover Central
+98,Minnesota Wild,Los Angeles Kings,1,2,"Jan 27, 21",0,2,Honda West
+97,Calgary Flames,Toronto Maple Leafs,3,4,"Jan 27, 21",0,2,Scotia North
+96,Winnipeg Jets,Edmonton Oilers,6,4,"Jan 27, 21",2,0,Scotia North
+95,Nashville Predators,Chicago Blackhawks,3,2,"Jan 27, 21",2,1,Discover Central
+92,Washington Capitals,New York Islanders,3,2,"Jan 27, 21",2,0,MassMutual East
+91,New Jersey Devils,Philadelphia Flyers,3,5,"Jan 27, 21",0,2,MassMutual East
+90,Buffalo Sabres,New York Rangers,3,2,"Jan 27, 21",2,0,MassMutual East
+89,Boston Bruins,Pittsburgh Penguins,3,2,"Jan 27, 21",2,1,MassMutual East
+94,Columbus Blue Jackets,Florida Panthers,3,4,"Jan 27, 21",1,2,Discover Central
+103,Nashville Predators,Chicago Blackhawks,2,1,"Jan 28, 21",2,1,Discover Central
+104,Vancouver Canucks,Ottawa Senators,5,1,"Jan 28, 21",2,0,Scotia North
+113,Vancouver Canucks,Ottawa Senators,4,1,"Jan 29, 21",2,0,Scotia North
+112,Edmonton Oilers,Toronto Maple Leafs,3,4,"Jan 29, 21",0,2,Scotia North
+114,Minnesota Wild,Los Angeles Kings,5,3,"Jan 29, 21",2,0,Honda West
+115,Dallas Stars,Detroit Red Wings,7,3,"Jan 29, 21",2,0,Discover Central
+117,Arizona Coyotes,Anaheim Ducks,3,2,"Jan 29, 21",2,0,Honda West
+111,Montréal Canadiens,Calgary Flames,4,2,"Jan 29, 21",2,0,Scotia North
+116,Colorado Avalanche,San Jose Sharks,3,0,"Jan 29, 21",2,0,Honda West
+110,Columbus Blue Jackets,Florida Panthers,3,2,"Jan 29, 21",2,1,Discover Central
+109,Carolina Hurricanes,Tampa Bay Lightning,1,0,"Jan 29, 21",2,1,Discover Central
+106,Buffalo Sabres,New York Rangers,2,3,"Jan 29, 21",1,2,MassMutual East
+107,New Jersey Devils,Philadelphia Flyers,1,3,"Jan 29, 21",0,2,MassMutual East
+105,Boston Bruins,Pittsburgh Penguins,4,1,"Jan 29, 21",2,0,MassMutual East
+108,Washington Capitals,New York Islanders,6,3,"Jan 29, 21",2,0,MassMutual East
+118,Chicago Blackhawks,Columbus Blue Jackets,1,2,"Jan 30, 21",0,2,Discover Central
+119,Buffalo Sabres,New Jersey Devils,4,3,"Jan 30, 21",2,1,MassMutual East
+134,Detroit Red Wings,Florida Panthers,2,3,"Jan 31, 21",0,2,Discover Central
+133,Carolina Hurricanes,Dallas Stars,4,3,"Jan 31, 21",2,1,Discover Central
+131,Buffalo Sabres,New Jersey Devils,3,5,"Jan 31, 21",0,2,MassMutual East
+129,Minnesota Wild,Colorado Avalanche,1,5,"Jan 31, 21",0,2,Honda West
+128,Edmonton Oilers,Toronto Maple Leafs,4,3,"Jan 31, 21",2,1,Scotia North
+127,Winnipeg Jets,Vancouver Canucks,1,4,"Jan 31, 21",0,2,Scotia North
+126,Montréal Canadiens,Calgary Flames,0,2,"Jan 31, 21",0,2,Scotia North
+125,Detroit Red Wings,Florida Panthers,2,3,"Jan 31, 21",1,2,Discover Central
+124,Tampa Bay Lightning,Nashville Predators,4,3,"Jan 31, 21",2,0,Discover Central
+123,Carolina Hurricanes,Dallas Stars,4,1,"Jan 31, 21",2,0,Discover Central
+130,Anaheim Ducks,St. Louis Blues,1,6,"Jan 31, 21",0,2,Honda West
+121,Philadelphia Flyers,New York Islanders,3,2,"Jan 31, 21",2,1,MassMutual East
+120,New York Rangers,Pittsburgh Penguins,4,5,"Jan 31, 21",1,2,MassMutual East
+122,Washington Capitals,Boston Bruins,4,3,"Jan 31, 21",2,1,MassMutual East
+311,Chicago Blackhawks,Detroit Red Wings,7,2,"Mar 01, 21",2,0,Discover Central
+320,San Jose Sharks,Colorado Avalanche,6,2,"Mar 02, 21",2,0,Honda West
+319,Anaheim Ducks,St. Louis Blues,4,5,"Mar 02, 21",0,2,Honda West
+318,Vegas Golden Knights,Minnesota Wild,5,4,"Mar 02, 21",2,1,Honda West
+316,Ottawa Senators,Calgary Flames,5,1,"Mar 02, 21",2,0,Scotia North
+315,Florida Panthers,Carolina Hurricanes,2,3,"Mar 02, 21",1,2,Discover Central
+313,Winnipeg Jets,Vancouver Canucks,0,4,"Mar 02, 21",0,2,Scotia North
+317,Edmonton Oilers,Toronto Maple Leafs,0,3,"Mar 02, 21",0,2,Scotia North
+323,Columbus Blue Jackets,Detroit Red Wings,4,1,"Mar 03, 21",2,0,Discover Central
+270,New Jersey Devils,New York Islanders,1,2,"Mar 03, 21",0,2,MassMutual East
+48,Nashville Predators,Carolina Hurricanes,2,4,"Mar 03, 21",0,2,Discover Central
+243,Dallas Stars,Tampa Bay Lightning,0,2,"Mar 03, 21",0,2,Discover Central
+321,New York Rangers,Buffalo Sabres,3,2,"Mar 03, 21",2,0,MassMutual East
+322,Pittsburgh Penguins,Philadelphia Flyers,5,2,"Mar 03, 21",2,0,MassMutual East
+324,Montréal Canadiens,Ottawa Senators,3,1,"Mar 03, 21",2,0,Scotia North
+325,Winnipeg Jets,Vancouver Canucks,5,2,"Mar 03, 21",2,0,Scotia North
+330,San Jose Sharks,Colorado Avalanche,0,4,"Mar 04, 21",0,2,Honda West
+329,Anaheim Ducks,St. Louis Blues,2,3,"Mar 04, 21",0,2,Honda West
+328,Vegas Golden Knights,Minnesota Wild,5,1,"Mar 04, 21",2,0,Honda West
+327,Edmonton Oilers,Toronto Maple Leafs,1,6,"Mar 04, 21",0,2,Scotia North
+326,Boston Bruins,Washington Capitals,1,2,"Mar 04, 21",1,2,MassMutual East
+336,Montréal Canadiens,Winnipeg Jets,3,4,"Mar 05, 21",1,2,Scotia North
+337,Calgary Flames,Ottawa Senators,7,3,"Mar 05, 21",2,0,Scotia North
+335,Nashville Predators,Florida Panthers,4,5,"Mar 05, 21",0,2,Discover Central
+338,Vancouver Canucks,Toronto Maple Leafs,3,1,"Mar 05, 21",2,0,Scotia North
+339,Dallas Stars,Columbus Blue Jackets,2,3,"Mar 05, 21",0,2,Discover Central
+334,Chicago Blackhawks,Tampa Bay Lightning,2,3,"Mar 05, 21",1,2,Discover Central
+156,New York Islanders,Buffalo Sabres,5,2,"Mar 05, 21",2,0,MassMutual East
+332,Carolina Hurricanes,Detroit Red Wings,5,2,"Mar 05, 21",2,0,Discover Central
+171,New Jersey Devils,New York Rangers,1,6,"Mar 05, 21",0,2,MassMutual East
+333,Pittsburgh Penguins,Philadelphia Flyers,3,4,"Mar 05, 21",0,2,MassMutual East
+348,Nashville Predators,Florida Panthers,2,6,"Mar 06, 21",0,2,Discover Central
+347,San Jose Sharks,Vegas Golden Knights,4,5,"Mar 06, 21",1,2,Honda West
+346,Los Angeles Kings,St. Louis Blues,2,3,"Mar 06, 21",1,2,Honda West
+345,Arizona Coyotes,Minnesota Wild,1,5,"Mar 06, 21",0,2,Honda West
+344,Colorado Avalanche,Anaheim Ducks,3,2,"Mar 06, 21",2,1,Honda West
+343,Chicago Blackhawks,Tampa Bay Lightning,4,3,"Mar 06, 21",2,1,Discover Central
+342,New York Islanders,Buffalo Sabres,5,2,"Mar 06, 21",2,0,MassMutual East
+341,New Jersey Devils,New York Rangers,3,6,"Mar 06, 21",0,2,MassMutual East
+340,Boston Bruins,Washington Capitals,5,1,"Mar 06, 21",2,0,MassMutual East
+355,Los Angeles Kings,St. Louis Blues,4,3,"Mar 07, 21",2,1,Honda West
+356,San Jose Sharks,Vegas Golden Knights,0,4,"Mar 07, 21",0,2,Honda West
+360,Chicago Blackhawks,Tampa Bay Lightning,3,6,"Mar 07, 21",0,2,Discover Central
+354,Arizona Coyotes,Minnesota Wild,5,2,"Mar 07, 21",2,0,Honda West
+353,Colorado Avalanche,Anaheim Ducks,4,5,"Mar 07, 21",1,2,Honda West
+352,Dallas Stars,Columbus Blue Jackets,5,0,"Mar 07, 21",2,0,Discover Central
+357,New York Islanders,Buffalo Sabres,5,2,"Mar 07, 21",2,0,MassMutual East
+350,Edmonton Oilers,Calgary Flames,3,2,"Mar 07, 21",2,0,Scotia North
+349,Montréal Canadiens,Winnipeg Jets,7,1,"Mar 07, 21",2,0,Scotia North
+218,Boston Bruins,New Jersey Devils,0,1,"Mar 07, 21",0,2,MassMutual East
+72,Carolina Hurricanes,Florida Panthers,4,2,"Mar 07, 21",2,0,Discover Central
+351,Vancouver Canucks,Toronto Maple Leafs,4,2,"Mar 07, 21",2,0,Scotia North
+224,Dallas Stars,Nashville Predators,3,4,"Mar 08, 21",1,2,Discover Central
+359,Pittsburgh Penguins,New York Rangers,5,1,"Mar 08, 21",2,0,MassMutual East
+361,Calgary Flames,Ottawa Senators,3,4,"Mar 08, 21",1,2,Scotia North
+371,Pittsburgh Penguins,New York Rangers,4,2,"Mar 09, 21",2,0,MassMutual East
+365,Colorado Avalanche,Arizona Coyotes,2,3,"Mar 09, 21",0,2,Honda West
+364,Minnesota Wild,Vegas Golden Knights,2,0,"Mar 09, 21",2,0,Honda West
+366,Anaheim Ducks,Los Angeles Kings,6,5,"Mar 09, 21",2,1,Honda West
+362,Edmonton Oilers,Ottawa Senators,3,2,"Mar 09, 21",2,0,Scotia North
+294,San Jose Sharks,St. Louis Blues,3,2,"Mar 09, 21",2,1,Honda West
+363,Vancouver Canucks,Montréal Canadiens,2,1,"Mar 09, 21",2,1,Scotia North
+367,New York Islanders,Boston Bruins,2,1,"Mar 10, 21",2,1,MassMutual East
+368,Philadelphia Flyers,Buffalo Sabres,5,4,"Mar 10, 21",2,1,MassMutual East
+369,Washington Capitals,New Jersey Devils,5,4,"Mar 10, 21",2,1,MassMutual East
+370,Carolina Hurricanes,Nashville Predators,3,2,"Mar 10, 21",2,1,Discover Central
+372,Columbus Blue Jackets,Florida Panthers,2,4,"Mar 10, 21",0,2,Discover Central
+373,Detroit Red Wings,Tampa Bay Lightning,3,4,"Mar 10, 21",1,2,Discover Central
+374,Toronto Maple Leafs,Winnipeg Jets,3,4,"Mar 10, 21",0,2,Scotia North
+375,Dallas Stars,Chicago Blackhawks,6,1,"Mar 10, 21",2,0,Discover Central
+379,Colorado Avalanche,Arizona Coyotes,2,1,"Mar 11, 21",2,1,Honda West
+376,Edmonton Oilers,Ottawa Senators,7,1,"Mar 11, 21",2,0,Scotia North
+377,Vancouver Canucks,Montréal Canadiens,1,5,"Mar 11, 21",0,2,Scotia North
+378,Minnesota Wild,Vegas Golden Knights,4,3,"Mar 11, 21",2,0,Honda West
+380,Anaheim Ducks,Los Angeles Kings,1,5,"Mar 11, 21",0,2,Honda West

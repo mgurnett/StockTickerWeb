@@ -9,7 +9,7 @@ from pretty_html_table import build_table
 # Set up the API call variables
 year = '2020'
 season_type = '02' 
-max_game_ID = 400
+max_game_ID = 500
 base_URL = "https://statsapi.web.nhl.com/api/v1/"
 
 teams = []; games = []
@@ -83,11 +83,42 @@ class Game:
         self.home_score = 0
         self.away_score = 0
         self.game_end = ""
+        self.home_point = 0
+        self.away_point = 0
         
     def game_info(self):
         date = self.date.strftime("%a, %b %d, %y")
         game_string = f"{self.home_obj.name} played at home to the {self.away_obj.name} on {date}.  The game ended {self.home_score} - {self.away_score} {self.game_end}"
         return game_string
+        
+    def game_dict(self):
+        if self.home_score > self.away_score:
+            self.home_point = 2
+            if self.game_end == "OT":
+                self.away_point = 1
+            elif self.game_end == "SO":
+                self.away_point = 1
+            else:
+                self.away_point = 0
+        if self.home_score < self.away_score:
+            self.away_point = 2
+            if self.game_end == "OT":
+                self.home_point = 1
+            elif self.game_end == "SO":
+                self.home_point = 1
+            else:
+                self.home_point = 0 
+            
+        date = str(self.date.strftime("%b %d, %y"))
+        g_dict = {'home_team': self.home_obj.name,
+                  'away_team': self.away_obj.name,
+                  'home_score': self.home_score,
+                  'away_score': self.away_score,
+                  'date': date,
+                  'home_point': self.home_point,
+                  'away_point': self.away_point,
+                  'Division': self.home_obj.division, }
+        return g_dict
         
     def point_info(self):
         point_string = f"{self.home_obj.name} has {self.home_obj.points} and {self.away_obj.name} has {self.away_obj.points}"
@@ -150,7 +181,7 @@ def teams_view (request):
     #     teams [home_id].crazyname()
 
     # print (teams[team_manager (22)].name_id())
-
+    game_box = []
     # =======load the games into the Class Games===============
     for i in range(1,max_game_ID):
         url='game/' + year + season_type +str(i).zfill(4) + '/linescore'
@@ -167,9 +198,13 @@ def teams_view (request):
             games[index].away_score = data['teams']['away']['goals']
             games[index].game_end = data['currentPeriodOrdinal']
             games[index].games_recorded()
-#             print (games[index].game_info())
+            curr_game = games[index].game_dict()
+#             print (curr_game)
+            game_box.append(curr_game)
 
-    all_games_df = pd.DataFrame (games)
+    all_games_df = pd.DataFrame (game_box)
+    all_games_df_date = all_games_df.sort_values('date')
+    all_games_df_date.to_csv (r'all_games.csv', header=True)
     
     divis_north = 'Scotia North'
     game_frame_north = Team.standings(divis_north)
@@ -197,8 +232,9 @@ def teams_view (request):
     html_table_blue_NHL = build_table(game_frame_NHL, 'blue_dark')
     
     html_name_debug = (f'<h1>debug</h1>')
-    html_table_blue_debug = build_table(all_games_df, 'blue_dark')
-    print (all_games_df)    
+    html_table_blue_debug = build_table(all_games_df_date, 'blue_dark')
+    print (all_games_df)
+
     
     return render (request, 'teams.html', {'tableN': html_table_blue_north, 'nameN': html_name_north,
                                            'tableC': html_table_blue_central, 'nameC': html_name_central,
