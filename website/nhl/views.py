@@ -114,7 +114,7 @@ class Game:
                   'away_team': self.away_obj.name,
                   'home_score': self.home_score,
                   'away_score': self.away_score,
-                  'date': date,
+                  'date': self.date,
                   'home_point': self.home_point,
                   'away_point': self.away_point,
                   'Division': self.home_obj.division, }
