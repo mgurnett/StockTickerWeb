@@ -31,7 +31,9 @@ for index, row in North_Cube.games_df.iterrows():
     if row['home_point'] > row['away_point']:
         winner = 'home'
         print (f'The {ht} beat the {at} at home')
+        North_Cube.cube.at['ht', 'at'] = {'h':1, 'a':0}
     else:
         winner = 'away'
         print (f'The {ht} lost to the {at} at home')
+        North_Cube.cube.at['ht', 'at'] = {'h':0, 'a':1}
 
