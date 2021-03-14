@@ -9,7 +9,7 @@ from pretty_html_table import build_table
 # Set up the API call variables
 year = '2020'
 season_type = '02' 
-max_game_ID = 500
+max_game_ID = 600
 base_URL = "https://statsapi.web.nhl.com/api/v1/"
 
 teams = []; games = []

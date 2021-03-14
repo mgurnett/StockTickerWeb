@@ -6,7 +6,8 @@ class Cube:
         self.division = division
         self.games_df = self.get_games()
         self.teams_list = self.get_teams()
-        self.cube = pd.DataFrame ({'h':0, 'a':0},columns=self.teams_list, index=self.teams_list)
+        self.cube = pd.DataFrame ({'at': 0, 'ht': 0},columns=self.teams_list, index=self.teams_list)
+        # self.cube = pd.DataFrame (0,columns=self.teams_list, index=self.teams_list)
 
     def get_games (self):
         csv_df = pd.read_csv("all_games.csv")
@@ -30,10 +31,24 @@ for index, row in North_Cube.games_df.iterrows():
     ht = row['home_team']; at = row['away_team']
     if row['home_point'] > row['away_point']:
         winner = 'home'
-        print (f'The {ht} beat the {at} at home')
-        North_Cube.cube.at['ht', 'at'] = {'h':1, 'a':0}
+        print (f'Game # {index} - The {ht} beat the {at} at home and the winner was {winner}')
+        cell = North_Cube.cube.loc[ht, at]
+        if pd.isna(cell):
+            North_Cube.cube.at[ht, at] = {'at': 0, 'ht': 1}
+        else:
+            a_record = cell['at']
+            h_record = cell['ht'] + 1
+            North_Cube.cube.at[ht, at] = {'at': a_record, 'ht': h_record}
     else:
         winner = 'away'
-        print (f'The {ht} lost to the {at} at home')
-        North_Cube.cube.at['ht', 'at'] = {'h':0, 'a':1}
-
+        print (f'Game # {index} - The {ht} beat the {at} at home and the winner was {winner}')
+        cell = North_Cube.cube.loc[ht, at]
+        if pd.isna(cell):
+            North_Cube.cube.at[ht, at] = {'at': 1, 'ht': 0}
+        else:
+            a_record = cell['at'] + 1
+            h_record = cell['ht']
+            North_Cube.cube.at[ht, at] = {'at': a_record, 'ht': h_record}
+    print (North_Cube.cube)
+    if index == 10:
+        break
