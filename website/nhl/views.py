@@ -204,7 +204,7 @@ def teams_view (request):
 
     all_games_df = pd.DataFrame (game_box)
     all_games_df_date = all_games_df.sort_values('date')
-    all_games_df_date.to_csv (r'all_games.csv', header=True)
+    all_games_df_date.to_csv (r'/nhl/templates/all_games.csv', header=True)
     
     divis_north = 'Scotia North'
     game_frame_north = Team.standings(divis_north)
