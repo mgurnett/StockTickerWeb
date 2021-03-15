@@ -17,6 +17,71 @@ teams = []; games = []
 # Create your views here.
 def home (request):
     return render (request, 'home.html', {})
+#==================================================
+
+class Cube:
+    def __init__ (self, division):
+        self.division = division
+        self.games_df = self.get_games()
+        # self.games_df = games_df
+        self.teams_list = self.get_teams()
+        self.cube = pd.DataFrame ({'tt': 0, 'lt': 0},columns=self.teams_list, index=self.teams_list)
+        # self.cube = pd.DataFrame (0,columns=self.teams_list, index=self.teams_list)
+
+    def get_games (self):
+        csv_df = pd.read_csv("nhl/templates/all_games.csv")
+        temp_df = csv_df[csv_df['Division'] == self.division]
+        return temp_df
+
+    def get_teams (self):
+        temp_df = self.games_df.drop_duplicates(subset=['home_team'])
+        temp_list = temp_df[["home_team"]].values.tolist()
+        teams_list = []
+        for t in temp_list:
+            teams_list.append(t[0])
+        return teams_list
+
+    def make_cube (self):
+        #  the left is HOME and the TOP is AWAY
+        for index, row in self.games_df.iterrows(): 
+            lt = row['home_team']; tt = row['away_team']
+            if row['home_point'] > row['away_point']:
+                winner = 'home'
+                # print (f"Game # {index} - The home (left) {lt} ({row['home_point']}) beat the home (top) {tt} ({row['away_point']})")
+            else:
+                winner = 'away'
+                # print (f"Game # {index} - The home (left) {lt} ({row['home_point']}) lost to the away (top) {tt} ({row['away_point']})")
+            
+        # READ THE CELL & WRITE TO THE CELL for TOP
+            cell = self.cube.loc[lt, tt]  # FIND THE CELL
+            if pd.isna(cell):  #  if cell is empty
+                if winner == "home":
+                    self.cube.at[lt, tt] = {'lt': 1, 'tt': 0}
+                else:
+                    self.cube.at[lt, tt] = {'lt': 0, 'tt': 1}
+            else:  #  if cell is NOT empty
+                left_record = cell['lt']; top_record = cell['tt']
+                if winner == "home":
+                    left_record += 1
+                else:
+                    top_record += 1
+                self.cube.at[lt, tt] = {'lt': left_record, 'tt': top_record}
+
+        # READ THE CELL & WRITE TO THE CELL for LEFT
+            cell = self.cube.loc[tt, lt]  # FIND THE CELL
+            if pd.isna(cell):  #  if cell is empty
+                if winner == "home":
+                    self.cube.at[tt, lt] = {'lt': 0, 'tt': 1}
+                else:
+                    self.cube.at[tt, lt] = {'lt': 1, 'tt': 0}
+            else:
+                top_record = cell['lt']; left_record = cell['tt']
+                if winner == "home":
+                    left_record += 1
+                else:
+                    top_record += 1
+                self.cube.at[tt, lt] = {'lt': top_record, 'tt': left_record}
+        return self.cube
 
 #================================
 class Team:
@@ -204,42 +269,57 @@ def teams_view (request):
 
     all_games_df = pd.DataFrame (game_box)
     all_games_df_date = all_games_df.sort_values('date')
-    all_games_df_date.to_csv (r'/nhl/templates/all_games.csv', header=True)
+    all_games_df_date.to_csv (r'all_games.csv', header=True)
     
-    divis_north = 'Scotia North'
-    game_frame_north = Team.standings(divis_north)
-    html_name_north = (f'<h1>{divis_north}</h1>')
+    div_name = 'Scotia North'
+    game_frame_north = Team.standings(div_name)
+    html_name_north = (f'<h1>{div_name}</h1>')
     html_table_blue_north = build_table(game_frame_north, 'blue_dark')
+    Div_Cube = Cube (div_name)
+    cube_df = Div_Cube.make_cube()
+    div_table_blue_north = build_table(cube_df, 'blue_dark')
 
-    divis_central = 'Discover Central'
-    game_frame_central = Team.standings(divis_central)
-    html_name_central = (f'<h1>{divis_central}</h1>')
+    div_name = 'Discover Central'
+    game_frame_central = Team.standings(div_name)
+    html_name_central = (f'<h1>{div_name}</h1>')
     html_table_blue_central = build_table(game_frame_central, 'blue_dark')
+    Div_Cube = Cube (div_name)
+    cube_df = Div_Cube.make_cube()
+    div_table_blue_central = build_table(cube_df, 'blue_dark')
 
-    divis_east = 'MassMutual East'
-    game_frame_east = Team.standings(divis_east)
-    html_name_east = (f'<h1>{divis_east}</h1>')
+    div_name = 'MassMutual East'
+    game_frame_east = Team.standings(div_name)
+    html_name_east = (f'<h1>{div_name}</h1>')
     html_table_blue_east = build_table(game_frame_east, 'blue_dark')
+    Div_Cube = Cube (div_name)
+    cube_df = Div_Cube.make_cube()
+    div_table_blue_east = build_table(cube_df, 'blue_dark')
 
-    divis_west = 'Honda West'
-    game_frame_west = Team.standings(divis_west)
-    html_name_west = (f'<h1>{divis_west}</h1>')
+    div_name = 'Honda West'
+    game_frame_west = Team.standings(div_name)
+    html_name_west = (f'<h1>{div_name}</h1>')
     html_table_blue_west = build_table(game_frame_west, 'blue_dark')
+    Div_Cube = Cube (div_name)
+    cube_df = Div_Cube.make_cube()
+    div_table_blue_west = build_table(cube_df, 'blue_dark')
 
-    divis_NHL = 'NHL'
+    div_name = 'NHL'
     game_frame_NHL = Team.standings('all')
-    html_name_NHL = (f'<h1>{divis_NHL}</h1>')
+    html_name_NHL = (f'<h1>{div_name}</h1>')
     html_table_blue_NHL = build_table(game_frame_NHL, 'blue_dark')
     
     html_name_debug = (f'<h1>debug</h1>')
     html_table_blue_debug = build_table(all_games_df_date, 'blue_dark')
     print (all_games_df)
 
-    
-    return render (request, 'teams.html', {'tableN': html_table_blue_north, 'nameN': html_name_north,
+    return render (request, 'teams.html', {'tableN': html_table_blue_north, 'nameN': html_name_north, 
+                                            'divtableN': div_table_blue_north,
                                            'tableC': html_table_blue_central, 'nameC': html_name_central,
+                                            'divtableC': div_table_blue_central,
                                            'tableE': html_table_blue_east, 'nameE': html_name_east,
+                                            'divtableE': div_table_blue_east,
                                            'tableW': html_table_blue_west, 'nameW': html_name_west,
+                                            'divtableW': div_table_blue_west,
                                            'tableL': html_table_blue_NHL, 'nameL': html_name_NHL,
                                            'tableDB': html_table_blue_debug, 'nameDB': html_name_debug})
 #===========================
