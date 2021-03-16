@@ -5,208 +5,18 @@ import requests
 import pandas as pd
 import matplotlib.pyplot as plt
 from pretty_html_table import build_table
+from NHL_classes import *
+from div_record import *
 
 # Set up the API call variables
 year = '2020'
 season_type = '02' 
 max_game_ID = 600
 base_URL = "https://statsapi.web.nhl.com/api/v1/"
-
-teams = []; games = []
-        
+      
 # Create your views here.
 def home (request):
     return render (request, 'home.html', {})
-#==================================================
-
-class Cube:
-    def __init__ (self, division):
-        self.division = division
-        self.games_df = self.get_games()
-        # self.games_df = games_df
-        self.teams_list = self.get_teams()
-        self.cube = pd.DataFrame ({'tt': 0, 'lt': 0},columns=self.teams_list, index=self.teams_list)
-        # self.cube = pd.DataFrame (0,columns=self.teams_list, index=self.teams_list)
-
-    def get_games (self):
-        csv_df = pd.read_csv("nhl/templates/all_games.csv")
-        temp_df = csv_df[csv_df['Division'] == self.division]
-        return temp_df
-
-    def get_teams (self):
-        temp_df = self.games_df.drop_duplicates(subset=['home_team'])
-        temp_list = temp_df[["home_team"]].values.tolist()
-        teams_list = []
-        for t in temp_list:
-            teams_list.append(t[0])
-        return teams_list
-
-    def make_cube (self):
-        #  the left is HOME and the TOP is AWAY
-        for index, row in self.games_df.iterrows(): 
-            lt = row['home_team']; tt = row['away_team']
-            if row['home_point'] > row['away_point']:
-                winner = 'home'
-                # print (f"Game # {index} - The home (left) {lt} ({row['home_point']}) beat the home (top) {tt} ({row['away_point']})")
-            else:
-                winner = 'away'
-                # print (f"Game # {index} - The home (left) {lt} ({row['home_point']}) lost to the away (top) {tt} ({row['away_point']})")
-            
-        # READ THE CELL & WRITE TO THE CELL for TOP
-            cell = self.cube.loc[lt, tt]  # FIND THE CELL
-            if pd.isna(cell):  #  if cell is empty
-                if winner == "home":
-                    self.cube.at[lt, tt] = {'lt': 1, 'tt': 0}
-                else:
-                    self.cube.at[lt, tt] = {'lt': 0, 'tt': 1}
-            else:  #  if cell is NOT empty
-                left_record = cell['lt']; top_record = cell['tt']
-                if winner == "home":
-                    left_record += 1
-                else:
-                    top_record += 1
-                self.cube.at[lt, tt] = {'lt': left_record, 'tt': top_record}
-
-        # READ THE CELL & WRITE TO THE CELL for LEFT
-            cell = self.cube.loc[tt, lt]  # FIND THE CELL
-            if pd.isna(cell):  #  if cell is empty
-                if winner == "home":
-                    self.cube.at[tt, lt] = {'lt': 0, 'tt': 1}
-                else:
-                    self.cube.at[tt, lt] = {'lt': 1, 'tt': 0}
-            else:
-                top_record = cell['lt']; left_record = cell['tt']
-                if winner == "home":
-                    left_record += 1
-                else:
-                    top_record += 1
-                self.cube.at[tt, lt] = {'lt': top_record, 'tt': left_record}
-        return self.cube
-
-#================================
-class Team:
-    def __init__ (self, id):
-        self.id = id
-        self.name = ""
-        self.teamName = ""
-        self.abbreviation = ""
-        self.division = ""
-        self.conference = ""
-        self.venue = ""
-        self.win = 0
-        self.loss = 0
-        self.otloss = 0
-        self.soloss = 0
-        self.points = 0
-        self.game_played = 0
-        
-    @staticmethod
-    def standings (div):
-        columns = ['Team', 'Games Played', 'Win', 'Loss', 'OT Loss', 'SO Loss', 'Points', 'Division']
-        dummy = [['', 0, 0, 0, 0, 0, 0, '']]
-        df = pd.DataFrame(columns=columns, data=dummy)
-        for team in teams:
-            if team.name:  #see if the team is empty
-                team.game_points()
-                data = (team.name, team.game_played,
-                        team.win, team.loss,
-                        team.otloss, team.soloss,
-                        team.points, team.division)
-                a_series = pd.Series(data, index = df.columns)
-                df = df.append(a_series, ignore_index=True)
-        df = df.drop(0)
-        
-        if div == 'all':
-            df = df.sort_values(by = 'Points', ascending = False)
-        elif div in {'Scotia North', 'Honda West', 'Discover Central', 'MassMutual East'}:
-            df = df [df['Division'] == div].sort_values(by = 'Points', ascending = False)
-            
-        max_gp = df['Games Played'].max()
-        df ['GP_adjust'] = round((max_gp / df['Games Played'] * df['Points']), 1)
-        df = df.sort_values(by = 'GP_adjust', ascending = False)
-        return df    
-    
-    def name_id (self):
-        namestring = f"The team is {self.name} with id of {self.id}"
-        return namestring
-        
-    def crazyname (self):
-        print (f"The {self.name} or {self.teamName} of the {self.division} Division of the")
-        print (f"{self.conference} Conference play in the {self.venue}")
-        
-    def game_points (self):
-        self.points = self.win * 2 + self.otloss + self.soloss
-        self.game_played = self.win + self.otloss + self.soloss + self.loss
-        
-        
-class Game:
-    def __init__ (self, id, home_obj, away_obj, date):
-        self.id = id
-        self.date = date
-        self.home_obj = home_obj
-        self.away_obj = away_obj
-        self.home_score = 0
-        self.away_score = 0
-        self.game_end = ""
-        self.home_point = 0
-        self.away_point = 0
-        
-    def game_info(self):
-        date = self.date.strftime("%a, %b %d, %y")
-        game_string = f"{self.home_obj.name} played at home to the {self.away_obj.name} on {date}.  The game ended {self.home_score} - {self.away_score} {self.game_end}"
-        return game_string
-        
-    def game_dict(self):
-        if self.home_score > self.away_score:
-            self.home_point = 2
-            if self.game_end == "OT":
-                self.away_point = 1
-            elif self.game_end == "SO":
-                self.away_point = 1
-            else:
-                self.away_point = 0
-        if self.home_score < self.away_score:
-            self.away_point = 2
-            if self.game_end == "OT":
-                self.home_point = 1
-            elif self.game_end == "SO":
-                self.home_point = 1
-            else:
-                self.home_point = 0 
-            
-        date = str(self.date.strftime("%b %d, %y"))
-        g_dict = {'home_team': self.home_obj.name,
-                  'away_team': self.away_obj.name,
-                  'home_score': self.home_score,
-                  'away_score': self.away_score,
-                  'date': self.date,
-                  'home_point': self.home_point,
-                  'away_point': self.away_point,
-                  'Division': self.home_obj.division, }
-        return g_dict
-        
-    def point_info(self):
-        point_string = f"{self.home_obj.name} has {self.home_obj.points} and {self.away_obj.name} has {self.away_obj.points}"
-        return point_string
-    
-    def games_recorded (self):
-        if self.home_score > self.away_score:
-            self.home_obj.win += 1
-            if self.game_end == "OT":
-                self.away_obj.otloss += 1
-            elif self.game_end == "SO":
-                self.away_obj.soloss += 1
-            else:
-                self.away_obj.loss += 1
-        if self.home_score < self.away_score:
-            self.away_obj.win += 1
-            if self.game_end == "OT":
-                self.home_obj.otloss += 1
-            elif self.game_end == "SO":
-                self.home_obj.soloss += 1
-            else:
-                self.home_obj.loss += 1
-
                
 def read_API (section):
     url = base_URL + section
@@ -255,8 +65,8 @@ def teams_view (request):
         if data['currentPeriod'] != 0:
             home_id = (data['teams']['home']['team']['id'])
             away_id = (data['teams']['away']['team']['id'])
-            date_data = data['periods'][0]['startTime']
-            datetime_object = datetime.strptime(date_data, '%Y-%m-%dT%H:%M:%SZ')
+            date_data = data['periods'][0]['startTime']; print (date_data)
+            datetime_object = datetime.strptime(date_data, '%Y-%m-%dT%H:%M:%SZ'); print (datetime_object)
             games.append ( Game (gameID, teams[team_manager (home_id)], teams[team_manager (away_id)], datetime_object))
             index = len(games)-1
             games[index].home_score = data['teams']['home']['goals']
@@ -269,13 +79,13 @@ def teams_view (request):
 
     all_games_df = pd.DataFrame (game_box)
     all_games_df_date = all_games_df.sort_values('date')
-    all_games_df_date.to_csv (r'all_games.csv', header=True)
+    # all_games_df_date.to_csv (r'all_games.csv', header=True)
     
     div_name = 'Scotia North'
     game_frame_north = Team.standings(div_name)
     html_name_north = (f'<h1>{div_name}</h1>')
     html_table_blue_north = build_table(game_frame_north, 'blue_dark')
-    Div_Cube = Cube (div_name)
+    Div_Cube = Cube (div_name, all_games_df_date)
     cube_df = Div_Cube.make_cube()
     div_table_blue_north = build_table(cube_df, 'blue_dark')
 
@@ -283,7 +93,7 @@ def teams_view (request):
     game_frame_central = Team.standings(div_name)
     html_name_central = (f'<h1>{div_name}</h1>')
     html_table_blue_central = build_table(game_frame_central, 'blue_dark')
-    Div_Cube = Cube (div_name)
+    Div_Cube = Cube (div_name, all_games_df_date)
     cube_df = Div_Cube.make_cube()
     div_table_blue_central = build_table(cube_df, 'blue_dark')
 
@@ -291,7 +101,7 @@ def teams_view (request):
     game_frame_east = Team.standings(div_name)
     html_name_east = (f'<h1>{div_name}</h1>')
     html_table_blue_east = build_table(game_frame_east, 'blue_dark')
-    Div_Cube = Cube (div_name)
+    Div_Cube = Cube (div_name, all_games_df_date)
     cube_df = Div_Cube.make_cube()
     div_table_blue_east = build_table(cube_df, 'blue_dark')
 
@@ -299,7 +109,7 @@ def teams_view (request):
     game_frame_west = Team.standings(div_name)
     html_name_west = (f'<h1>{div_name}</h1>')
     html_table_blue_west = build_table(game_frame_west, 'blue_dark')
-    Div_Cube = Cube (div_name)
+    Div_Cube = Cube (div_name, all_games_df_date)
     cube_df = Div_Cube.make_cube()
     div_table_blue_west = build_table(cube_df, 'blue_dark')
 
@@ -308,9 +118,8 @@ def teams_view (request):
     html_name_NHL = (f'<h1>{div_name}</h1>')
     html_table_blue_NHL = build_table(game_frame_NHL, 'blue_dark')
     
-    html_name_debug = (f'<h1>debug</h1>')
+    html_name_debug = (f'<h1>All Games</h1>')
     html_table_blue_debug = build_table(all_games_df_date, 'blue_dark')
-    print (all_games_df)
 
     return render (request, 'teams.html', {'tableN': html_table_blue_north, 'nameN': html_name_north, 
                                             'divtableN': div_table_blue_north,
@@ -411,8 +220,8 @@ def get_player_info (id):
     return all_players_df
         
 def build_dataframe ():
-    team_ids = get_teams(); print (f'Got the team ids for {len(team_ids)} teams')
-    roster_ids = get_rosters (team_ids); print (f'Got the team roster ids for {len(roster_ids)} players')
+    team_ids = get_teams(); #print (f'Got the team ids for {len(team_ids)} teams')
+    roster_ids = get_rosters (team_ids); #print (f'Got the team roster ids for {len(roster_ids)} players')
 
     all_players_df = pd.DataFrame(columns=['id', 'firstName', 'lastName', 'primaryNumber',
                                            'currentAge', 'nationality', 'alternateCaptain',
@@ -421,7 +230,7 @@ def build_dataframe ():
                                            'shots', 'games', 'powerPlayGoals', 'powerPlayPoints',
                                            'penaltyMinutes', 'plusMinus'])
     for i, r in enumerate(roster_ids):
-        print (i)
+        #print (i)
         player_stats_df = (get_player_info (r))#; print ('player_stats_df', type(player_stats_df), player_stats_df)
         all_players_df = all_players_df.append(player_stats_df)#; print ('all_players_df', type(all_players_df), all_players_df)
     return all_players_df
