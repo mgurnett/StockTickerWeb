@@ -2,15 +2,16 @@ import pandas as pd
 from makeweb import make_web
 
 class Cube:
-    def __init__ (self, division):
+    def __init__ (self, division, all_the_games_df):
         self.division = division
+        self.all_the_games_df = all_the_games_df
         self.games_df = self.get_games()
         self.teams_list = self.get_teams()
         self.cube = pd.DataFrame ({'tt': 0, 'lt': 0},columns=self.teams_list, index=self.teams_list)
-        # self.cube = pd.DataFrame (0,columns=self.teams_list, index=self.teams_list)
 
     def get_games (self):
-        csv_df = pd.read_csv("nhl/templates/all_games.csv")
+        # csv_df = pd.read_csv("nhl/templates/all_games.csv")
+        csv_df = self.all_the_games_df
         temp_df = csv_df[csv_df['Division'] == self.division]
         return temp_df
 
