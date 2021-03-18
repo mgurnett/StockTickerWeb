@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from datetime import datetime
+import pytz
 import requests
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -65,8 +66,8 @@ def teams_view (request):
         if data['currentPeriod'] != 0:
             home_id = (data['teams']['home']['team']['id'])
             away_id = (data['teams']['away']['team']['id'])
-            date_data = data['periods'][0]['startTime']; print (date_data)
-            datetime_object = datetime.strptime(date_data, '%Y-%m-%dT%H:%M:%SZ'); print (datetime_object)
+            date_data = data['periods'][0]['startTime']
+            datetime_object = datetime.strptime(date_data, '%Y-%m-%dT%H:%M:%SZ')
             games.append ( Game (gameID, teams[team_manager (home_id)], teams[team_manager (away_id)], datetime_object))
             index = len(games)-1
             games[index].home_score = data['teams']['home']['goals']
