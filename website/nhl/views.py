@@ -85,10 +85,11 @@ def teams_view (request):
     div_name = 'Scotia North'
     game_frame_north = Team.standings(div_name)
     html_name_north = (f'<h1>{div_name}</h1>')
-    html_table_blue_north = build_table(game_frame_north, 'blue_dark')
+    html_table_blue_north = build_table(game_frame_north, 'blue_dark', text_align = 'centre')
     Div_Cube = Cube (div_name, all_games_df_date)
     cube_df = Div_Cube.make_cube()
     div_table_blue_north = build_table(cube_df, 'blue_dark')
+    print (cube_df)
 
     div_name = 'Discover Central'
     game_frame_central = Team.standings(div_name)

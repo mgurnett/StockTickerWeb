@@ -65,6 +65,7 @@ class Cube:
                 self.cube.at[tt, lt] = {'lt': top_record, 'tt': left_record}
         return self.cube
 
-# North_Cube = Cube ('Scotia North')
-# cube_df = North_Cube.make_cube()
-# make_web ('nhl/templates/cube', cube_df)
+# if __name__ == '__main__':
+#     North_Cube = Cube ('Scotia North')
+#     cube_df = North_Cube.make_cube()
+#     make_web ('nhl/templates/cube', cube_df)

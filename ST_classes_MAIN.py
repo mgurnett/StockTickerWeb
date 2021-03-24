@@ -308,3 +308,29 @@ class Stock ():
         except:
             large_name = ""
         return large_name
+    
+# This allows me to run and test the above code, but still have it accessable to import without running the below code.
+    
+if __name__ == '__main__':
+    COMMON = [("aapl", "Apple Inc"),
+                ("ac", "Air Canada"),
+                ("amzn", "Amazon.com, Inc."),
+                ("ba", "Boeing Co"),
+                ("ccl", "Carnival Corp"),
+                ("coke", "Coca-Cola Consolidated Inc"),
+                ("f", "Ford"),
+                ("fb", "Facebook, Inc. Common Stock"),
+                ("goog", "Alphabet Inc Class C"),
+                ("gme", "Gamestop"),
+                ("mar", "Marriott International"),
+                ("msft", "Microsoft"),
+                ("nflx", "Netflix Inc"),
+                ("su", "Suncor Energy Inc."),
+                ("tsla", "Tesla Inc"),
+                ("zm", "Zoom Video Com")]
+
+    for c in COMMON:
+        current_stock = Stock(c[0])
+        name  = current_stock.full_name()
+        print (name)
+    
