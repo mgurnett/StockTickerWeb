@@ -1,0 +1,105 @@
+import cPickle
+import traceback
+
+class someClass():
+    def __init__(self):
+        #set name from variable name. http://stackoverflow.com/questions/1690400/getting-an-instance-name-inside-class-init
+        (filename,line_number,function_name,text)=traceback.extract_stack()[-2]
+        def_name = text[:text.find('=')].strip()
+        self.name = def_name
+
+        try:
+            self.load()
+        except:
+            ##############
+            #to demonstrate
+            self.someAttribute = 'bla'
+            self.someAttribute2 = ['more']
+            ##############
+
+            self.save()
+
+    def save(self):
+        """save class as self.name.txt"""
+        file = open(self.name+'.txt','w')
+        file.write(cPickle.dumps(self.__dict__))
+        file.close()
+
+    def load(self):
+        """try load self.name.txt"""
+        file = open(self.name+'.txt','r')
+        dataPickle = file.read()
+        file.close()
+
+        self.__dict__ = cPickle.loads(dataPickle)
+
+
+        import pickle
+class Student:
+    def __init__(self, name, age, grade):
+        self.name = name
+        self.age = age
+        self.grade = grade # 0 - 100
+    def get_grade(self):
+        print (self.grade)
+s1 = Student("Tim", 19, 95)
+
+#save it
+with open(f'test.pickle', 'wb') as file:
+    pickle.dump(s1, file) 
+
+#load it
+with open(f'test.pickle', 'rb') as file2:
+    s1_new = pickle.load(file2)
+
+#check it
+s1_new.get_grade()
+# it prints 95
+=========================================================================================================
+
+
+This is the idea of  class of the list of single class.
+
+class Single():
+    def __init__(self, left, right):
+        self.left=left
+        self.right=right
+
+class CollectionOfSingles():
+    def __init__(self, SingleObjects):
+        self.singles = list(SingleObjects) #the cast here is to indicate that some checks would be nice
+        Here is where you could put the save function like pickle.
+
+        which used would look something like:
+
+>>> a = Single("a", "b")
+>>> b = Single("c", "d")
+>>> c = Single("e", "f")
+>>> objectarray = CollectionOfSingles([a, b, c])
+>>> objectarray.singles
+[<__main__.Single object at 0x00000000034F7D68>, <__main__.Single object at 0x00000000035592E8>, <__main__.Single object at 0x0000000003786588>]
+and you could also append additional ones directly:
+
+>>> objectarray.singles.append(Single("g", "d"))
+>>> objectarray.singles
+[<__main__.Single object at 0x00000000034F7D68>, <__main__.Single object at 0x00000000035592E8>, <__main__.Single object at 0x0000000003786588>, <__main__.Single object at 0x0000000003786828>]
+implementing __repr__ or __str__ helps make the print nicer.
+
+===============================================================================================
+class SuperHero(object): #superclass, inherits from default object
+    def getName(self):
+        raise NotImplementedError #you want to override this on the child classes
+
+class SuperMan(SuperHero): #subclass, inherits from SuperHero
+    def getName(self):
+        return "Clark Kent"
+
+class SuperManII(SuperHero): #another subclass
+    def getName(self):
+       return "Clark Kent, Jr."
+
+if __name__ == "__main__":
+    sm = SuperMan()
+    print sm.getName()
+    sm2 = SuperManII()
+    print sm2.getName()
