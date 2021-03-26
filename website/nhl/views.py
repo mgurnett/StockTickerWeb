@@ -32,7 +32,8 @@ def read_API(section):
         return data
 
 
-def team_manager(team_id):
+def team_manager(team_id): 
+    #converts the API id to the list id.  If it can't find the team ID then it makes a new one.
     global teams
     index = 0
     for i, t in enumerate(teams):

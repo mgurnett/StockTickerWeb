@@ -1,0 +1,39 @@
+    {
+      "id": 22,
+      "name": "Edmonton Oilers",
+      "link": "/api/v1/teams/22",
+      "venue": {
+        "id": 5100,
+        "name": "Rogers Place",
+        "link": "/api/v1/venues/5100",
+        "city": "Edmonton",
+        "timeZone": {
+          "id": "America/Edmonton",
+          "offset": -6,
+          "tz": "MDT"
+        }
+      },
+      "abbreviation": "EDM",
+      "teamName": "Oilers",
+      "locationName": "Edmonton",
+      "firstYearOfPlay": "1979",
+      "division": {
+        "id": 28,
+        "name": "Scotia North",
+        "link": "/api/v1/divisions/28"
+      },
+      "conference": {
+        "id": 5,
+        "name": "Western",
+        "link": "/api/v1/conferences/5"
+      },
+      "franchise": {
+        "franchiseId": 25,
+        "teamName": "Oilers",
+        "link": "/api/v1/franchises/25"
+      },
+      "shortName": "Edmonton",
+      "officialSiteUrl": "http://www.edmontonoilers.com/",
+      "franchiseId": 25,
+      "active": true
+    },
