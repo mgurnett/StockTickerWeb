@@ -1,0 +1,280 @@
+{
+    "copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. \u00a9 NHL 2021. All Rights Reserved.",
+    "totalItems": 5,
+    "totalEvents": 0,
+    "totalGames": 5,
+    "totalMatches": 0,
+    "wait": 10,
+    "dates": [
+      {
+        "date": "2021-03-26",
+        "totalItems": 5,
+        "totalEvents": 0,
+        "totalGames": 5,
+        "totalMatches": 0,
+        "games": [
+          {
+            "gamePk": 2020020528,
+            "link": "/api/v1/game/2020020528/feed/live",
+            "gameType": "R",
+            "season": "20202021",
+            "gameDate": "2021-03-27T02:00:00Z",
+            "status": {
+              "abstractGameState": "Live",
+              "codedGameState": "3",
+              "detailedState": "In Progress",
+              "statusCode": "3",
+              "startTimeTBD": false
+            },
+            "teams": {
+              "away": {
+                "leagueRecord": {
+                  "wins": 13,
+                  "losses": 14,
+                  "ot": 4,
+                  "type": "league"
+                },
+                "score": 1,
+                "team": {
+                  "id": 28,
+                  "name": "San Jose Sharks",
+                  "link": "/api/v1/teams/28"
+                }
+              },
+              "home": {
+                "leagueRecord": {
+                  "wins": 14,
+                  "losses": 14,
+                  "ot": 5,
+                  "type": "league"
+                },
+                "score": 2,
+                "team": {
+                  "id": 53,
+                  "name": "Arizona Coyotes",
+                  "link": "/api/v1/teams/53"
+                }
+              }
+            },
+            "venue": {
+              "id": 5043,
+              "name": "Gila River Arena",
+              "link": "/api/v1/venues/5043"
+            },
+            "content": {
+              "link": "/api/v1/game/2020020528/content"
+            }
+          },
+          {
+            "gamePk": 2020020527,
+            "link": "/api/v1/game/2020020527/feed/live",
+            "gameType": "R",
+            "season": "20202021",
+            "gameDate": "2021-03-27T02:00:00Z",
+            "status": {
+              "abstractGameState": "Live",
+              "codedGameState": "3",
+              "detailedState": "In Progress",
+              "statusCode": "3",
+              "startTimeTBD": false
+            },
+            "teams": {
+              "away": {
+                "leagueRecord": {
+                  "wins": 20,
+                  "losses": 11,
+                  "ot": 2,
+                  "type": "league"
+                },
+                "score": 2,
+                "team": {
+                  "id": 52,
+                  "name": "Winnipeg Jets",
+                  "link": "/api/v1/teams/52"
+                }
+              },
+              "home": {
+                "leagueRecord": {
+                  "wins": 15,
+                  "losses": 16,
+                  "ot": 3,
+                  "type": "league"
+                },
+                "score": 0,
+                "team": {
+                  "id": 20,
+                  "name": "Calgary Flames",
+                  "link": "/api/v1/teams/20"
+                }
+              }
+            },
+            "venue": {
+              "id": 5075,
+              "name": "Scotiabank Saddledome",
+              "link": "/api/v1/venues/5075"
+            },
+            "content": {
+              "link": "/api/v1/game/2020020527/content"
+            }
+          },
+          {
+            "gamePk": 2020020524,
+            "link": "/api/v1/game/2020020524/feed/live",
+            "gameType": "R",
+            "season": "20202021",
+            "gameDate": "2021-03-26T23:00:00Z",
+            "status": {
+              "abstractGameState": "Final",
+              "codedGameState": "7",
+              "detailedState": "Final",
+              "statusCode": "7",
+              "startTimeTBD": false
+            },
+            "teams": {
+              "away": {
+                "leagueRecord": {
+                  "wins": 12,
+                  "losses": 16,
+                  "ot": 4,
+                  "type": "league"
+                },
+                "score": 0,
+                "team": {
+                  "id": 1,
+                  "name": "New Jersey Devils",
+                  "link": "/api/v1/teams/1"
+                }
+              },
+              "home": {
+                "leagueRecord": {
+                  "wins": 22,
+                  "losses": 7,
+                  "ot": 4,
+                  "type": "league"
+                },
+                "score": 4,
+                "team": {
+                  "id": 15,
+                  "name": "Washington Capitals",
+                  "link": "/api/v1/teams/15"
+                }
+              }
+            },
+            "venue": {
+              "id": 5094,
+              "name": "Capital One Arena",
+              "link": "/api/v1/venues/5094"
+            },
+            "content": {
+              "link": "/api/v1/game/2020020524/content"
+            }
+          },
+          {
+            "gamePk": 2020020525,
+            "link": "/api/v1/game/2020020525/feed/live",
+            "gameType": "R",
+            "season": "20202021",
+            "gameDate": "2021-03-27T00:00:00Z",
+            "status": {
+              "abstractGameState": "Final",
+              "codedGameState": "7",
+              "detailedState": "Final",
+              "statusCode": "7",
+              "startTimeTBD": false
+            },
+            "teams": {
+              "away": {
+                "leagueRecord": {
+                  "wins": 10,
+                  "losses": 19,
+                  "ot": 6,
+                  "type": "league"
+                },
+                "score": 4,
+                "team": {
+                  "id": 24,
+                  "name": "Anaheim Ducks",
+                  "link": "/api/v1/teams/24"
+                }
+              },
+              "home": {
+                "leagueRecord": {
+                  "wins": 16,
+                  "losses": 13,
+                  "ot": 5,
+                  "type": "league"
+                },
+                "score": 1,
+                "team": {
+                  "id": 19,
+                  "name": "St. Louis Blues",
+                  "link": "/api/v1/teams/19"
+                }
+              }
+            },
+            "venue": {
+              "id": 5076,
+              "name": "Enterprise Center",
+              "link": "/api/v1/venues/5076"
+            },
+            "content": {
+              "link": "/api/v1/game/2020020525/content"
+            }
+          },
+          {
+            "gamePk": 2020020526,
+            "link": "/api/v1/game/2020020526/feed/live",
+            "gameType": "R",
+            "season": "20202021",
+            "gameDate": "2021-03-26T23:00:00Z",
+            "status": {
+              "abstractGameState": "Preview",
+              "codedGameState": "9",
+              "detailedState": "Postponed",
+              "statusCode": "9",
+              "startTimeTBD": false
+            },
+            "teams": {
+              "away": {
+                "leagueRecord": {
+                  "wins": 21,
+                  "losses": 13,
+                  "ot": 0,
+                  "type": "league"
+                },
+                "score": 0,
+                "team": {
+                  "id": 22,
+                  "name": "Edmonton Oilers",
+                  "link": "/api/v1/teams/22"
+                }
+              },
+              "home": {
+                "leagueRecord": {
+                  "wins": 14,
+                  "losses": 8,
+                  "ot": 9,
+                  "type": "league"
+                },
+                "score": 0,
+                "team": {
+                  "id": 8,
+                  "name": "Montr\u00e9al Canadiens",
+                  "link": "/api/v1/teams/8"
+                }
+              }
+            },
+            "venue": {
+              "name": "Centre Bell",
+              "link": "/api/v1/venues/null"
+            },
+            "content": {
+              "link": "/api/v1/game/2020020526/content"
+            }
+          }
+        ],
+        "events": [],
+        "matches": []
+      }
+    ]
+  }

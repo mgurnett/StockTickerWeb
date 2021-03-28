@@ -1,0 +1,99 @@
+{
+    "copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. \u00a9 NHL 2021. All Rights Reserved.",
+    "stats": [
+      {
+        "type": {
+          "displayName": "statsSingleSeason",
+          "gameType": {
+            "id": "R",
+            "description": "Regular season",
+            "postseason": false
+          }
+        },
+        "splits": [
+          {
+            "stat": {
+              "gamesPlayed": 35,
+              "wins": 21,
+              "losses": 13,
+              "ot": 1,
+              "pts": 43,
+              "ptPctg": "61.4",
+              "goalsPerGame": 3.4,
+              "goalsAgainstPerGame": 2.886,
+              "evGGARatio": 1.1268,
+              "powerPlayPercentage": "26.8",
+              "powerPlayGoals": 30.0,
+              "powerPlayGoalsAgainst": 24.0,
+              "powerPlayOpportunities": 112.0,
+              "penaltyKillPercentage": "76.5",
+              "shotsPerGame": 30.9714,
+              "shotsAllowed": 31.0,
+              "winScoreFirst": 0.875,
+              "winOppScoreFirst": 0.368,
+              "winLeadFirstPer": 0.867,
+              "winLeadSecondPer": 0.889,
+              "winOutshootOpp": 0.529,
+              "winOutshotByOpp": 0.625,
+              "faceOffsTaken": 1900.0,
+              "faceOffsWon": 966.0,
+              "faceOffsLost": 934.0,
+              "faceOffWinPercentage": "50.8",
+              "shootingPctg": 11.0,
+              "savePctg": 0.907
+            },
+            "team": {
+              "id": 22,
+              "name": "Edmonton Oilers",
+              "link": "/api/v1/teams/22"
+            }
+          }
+        ]
+      },
+      {
+        "type": {
+          "displayName": "regularSeasonStatRankings",
+          "gameType": null
+        },
+        "splits": [
+          {
+            "stat": {
+              "wins": "11th",
+              "losses": "15th",
+              "ot": "30th",
+              "pts": "12th",
+              "ptPctg": "13th",
+              "goalsPerGame": "4th",
+              "goalsAgainstPerGame": "17th",
+              "evGGARatio": "12th",
+              "powerPlayPercentage": "4th",
+              "powerPlayGoals": "3rd",
+              "powerPlayGoalsAgainst": "20th",
+              "powerPlayOpportunities": "7th",
+              "penaltyKillOpportunities": "14th",
+              "penaltyKillPercentage": "21st",
+              "shotsPerGame": "7th",
+              "shotsAllowed": "20th",
+              "winScoreFirst": "9th",
+              "winOppScoreFirst": "11th",
+              "winLeadFirstPer": "4th",
+              "winLeadSecondPer": "17th",
+              "winOutshootOpp": "14th",
+              "winOutshotByOpp": "14th",
+              "faceOffsTaken": "17th",
+              "faceOffsWon": "12th",
+              "faceOffsLost": "12th",
+              "faceOffWinPercentage": "13th",
+              "savePctRank": "15th",
+              "shootingPctRank": "4th"
+            },
+            "team": {
+              "id": 22,
+              "name": "Edmonton Oilers",
+              "link": "/api/v1/teams/22"
+            }
+          }
+        ]
+      }
+    ]
+  }

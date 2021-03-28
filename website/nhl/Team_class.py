@@ -1,12 +1,6 @@
-import json
-import requests
 import pickle
-
-# Set up the API call variables
-year = '2020'
-season_type = '02'
-max_game_ID = 600
-base_URL = "https://statsapi.web.nhl.com/api/v1/"
+import json
+from API_read import read_API
 
 class Team:
     ''' The Team class for a single team '''
@@ -23,18 +17,35 @@ class Team:
         self.win = 0
         self.loss = 0
         self.otloss = 0
-        self.soloss = 0
         self.points = 0
         self.games_played = 0
+        self.point_percent = 0
 
     def __str__ (self):
-        return (f'{self.name} of the {self.division} who play in {self.venue} and have played {self.games_played} games')
+        return (f'{self.name} of the {self.division} who play in {self.venue} and have played {self.games_played} games and have {self.points} points')
     
 class AllTeams:
     ''' The class for all teams.  This is what gets pickeled. 
     print (AllTeams.__doc__)'''
     def __init__ (self, TeamObjects):
         self.teams = list(TeamObjects)
+
+    def __str__ (self):
+        for x in self.teams:
+            print (x)
+
+    def team_stats (self):
+        for team in self.teams:
+            url = (f'teams/{team.id}/stats')
+            team_json = read_API (url)
+            # packages_str = json.dumps (team_json['stats'][0]['splits'][0]['stat'], indent =2)
+            # print (packages_str)
+            team.games_played = team_json['stats'][0]['splits'][0]['stat']['gamesPlayed']
+            team.win = team_json['stats'][0]['splits'][0]['stat']['wins']
+            team.loss = team_json['stats'][0]['splits'][0]['stat']['losses']
+            team.otloss = team_json['stats'][0]['splits'][0]['stat']['ot']
+            team.points = team_json['stats'][0]['splits'][0]['stat']['pts']
+            team.point_percent = team_json['stats'][0]['splits'][0]['stat']['ptPctg']
 
 def load_teams ():
     '''load the teams data from the file if it is there, or get it from the API if it isn't.'''
@@ -45,8 +56,6 @@ def load_teams ():
             print ('loaded teams from the file')
     except IOError:
         packages_json = read_API ('teams')
-        packages_str = json.dumps (packages_json['teams'][0], indent =2)
-        # print (packages_str)
         team_list = []
         for index in range (len(packages_json['teams'])):
             team_id = packages_json['teams'][index]['id']
@@ -70,25 +79,17 @@ def load_teams ():
             print ('loaded teams from the API and then saved them to the file')
     return (leag)
 
-def read_API(section):
-    data = []
-    url = base_URL + section
-    r = requests.get(url)
-    if r.status_code != 200:
-        return print(f"status code is {r.status_code}")
-    else:
-        data = r.json()
-        return data
-
-
 if __name__ == '__main__':
     league = load_teams ()
     if league != []:
-        # for team in league.teams:
-        #     print (team)
+        for team in league.teams:
+            packages_json = read_API ('teams')
         pass
     else:
         print ('FAILURE')
 
-print (AllTeams.__doc__)
-print (load_teams.__doc__)
+# print (AllTeams.__doc__)
+# print (load_teams.__doc__)
+
+league.team_stats()
+print (league)
