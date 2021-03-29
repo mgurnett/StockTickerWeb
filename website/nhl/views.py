@@ -6,7 +6,7 @@ import requests
 import pandas as pd
 import matplotlib.pyplot as plt
 from pretty_html_table import build_table
-from NHL_classes import *
+# from NHL_classes import *
 from Team_class import *
 from div_record import *
 from API_read import read_API
@@ -34,60 +34,68 @@ def home(request):
 #         return data
 
 
-def team_manager(team_id): 
-    #converts the API id to the list id.  If it can't find the team ID then it makes a new one.
-    global teams
-    index = 0
-    for i, t in enumerate(teams):
-        if t.id == team_id:
-            index = i
-    if index == 0:
-        teams.append(Team(team_id))
-        index = len(teams)-1
-    return (index)
+# def team_manager(team_id): 
+#     #converts the API id to the list id.  If it can't find the team ID then it makes a new one.
+#     global teams
+#     index = 0
+#     for i, t in enumerate(teams):
+#         if t.id == team_id:
+#             index = i
+#     if index == 0:
+#         teams.append(Team(team_id))
+#         index = len(teams)-1
+#     return (index)
 
 
 def teams_view(request):
-    teams.append(Team(0))
+    # teams.append(Team(0))
     # =======load the teams into the Class Teams===============
-    df_teams = read_API("teams")
-    dict_teams = df_teams['teams']
-    for row in dict_teams:
-        id = row['id']
-        home_id = team_manager(id)
-        teams[home_id].name = row['name']
-        teams[home_id].teamName = row['teamName']
-        teams[home_id].division = row['division']['name']
-        teams[home_id].conference = row['conference']['name']
-        teams[home_id].venue = row['venue']['name']
-        teams[home_id].abbreviation = row['abbreviation']
-    #     teams [home_id].crazyname()
+#     df_teams = read_API("teams")
+#     dict_teams = df_teams['teams']
+#     for row in dict_teams:
+#         id = row['id']
+#         home_id = team_manager(id)
+#         teams[home_id].name = row['name']
+#         teams[home_id].teamName = row['teamName']
+#         teams[home_id].division = row['division']['name']
+#         teams[home_id].conference = row['conference']['name']
+#         teams[home_id].venue = row['venue']['name']
+#         teams[home_id].abbreviation = row['abbreviation']
+#     #     teams [home_id].crazyname()
 
-    # print (teams[team_manager (22)].name_id())
-    game_box = []
-    # =======load the games into the Class Games===============
-    for i in range(1, max_game_ID):
-        url = 'game/' + year + season_type + str(i).zfill(4) + '/linescore'
-        gameID = int(year + season_type + str(i).zfill(4))  # print (gameID)
-        data = read_API(url)
-        if data['currentPeriod'] != 0:
-            home_id = (data['teams']['home']['team']['id'])
-            away_id = (data['teams']['away']['team']['id'])
-            date_data = data['periods'][0]['startTime']
-            datetime_object = datetime.strptime(
-                date_data, '%Y-%m-%dT%H:%M:%SZ')
-            games.append(Game(gameID, teams[team_manager(
-                home_id)], teams[team_manager(away_id)], datetime_object))
-            index = len(games)-1
-            games[index].home_score = data['teams']['home']['goals']
-            games[index].away_score = data['teams']['away']['goals']
-            games[index].game_end = data['currentPeriodOrdinal']
-            games[index].games_recorded()
-            curr_game = games[index].game_dict()
-#             print (curr_game)
-            game_box.append(curr_game)
+#     # print (teams[team_manager (22)].name_id())
+#     game_box = []
+#     # =======load the games into the Class Games===============
+#     for i in range(1, max_game_ID):
+#         url = 'game/' + year + season_type + str(i).zfill(4) + '/linescore'
+#         gameID = int(year + season_type + str(i).zfill(4))  # print (gameID)
+#         data = read_API(url)
+#         if data['currentPeriod'] != 0:
+#             home_id = (data['teams']['home']['team']['id'])
+#             away_id = (data['teams']['away']['team']['id'])
+#             date_data = data['periods'][0]['startTime']
+#             datetime_object = datetime.strptime(
+#                 date_data, '%Y-%m-%dT%H:%M:%SZ')
+#             games.append(Game(gameID, teams[team_manager(
+#                 home_id)], teams[team_manager(away_id)], datetime_object))
+#             index = len(games)-1
+#             games[index].home_score = data['teams']['home']['goals']
+#             games[index].away_score = data['teams']['away']['goals']
+#             games[index].game_end = data['currentPeriodOrdinal']
+#             games[index].games_recorded()
+#             curr_game = games[index].game_dict()
+# #             print (curr_game)
+#             game_box.append(curr_game)
 
-    all_games_df = pd.DataFrame(game_box)
+    league = load_teams ()
+    if league != []:
+        for team in league.teams:
+            packages_json = read_API ('teams')
+        pass
+    else:
+        print ('FAILURE')
+        
+    all_games_df = league.convert_to_df ()
     all_games_df_date = all_games_df.sort_values('date')
     # all_games_df_date.to_csv (r'all_games.csv', header=True)
 

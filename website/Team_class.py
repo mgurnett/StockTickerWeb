@@ -23,7 +23,6 @@ class Team:
         self.point_percent = 0
 
     def __str__ (self):
-        print (f'{self.name} of the {self.division}')
         return (f'{self.name} of the {self.division} who play in {self.venue} and have played {self.games_played} games and have {self.points} points')
     
 class AllTeams:
@@ -74,6 +73,12 @@ class AllTeams:
             team.points = team_json['stats'][0]['splits'][0]['stat']['pts']
             team.point_percent = team_json['stats'][0]['splits'][0]['stat']['ptPctg']
 
+    def convert_to_df (self):
+        df = pd.DataFrame([team.__dict__ for team in self.teams ])
+        # for team in self.teams:
+        #     print (team)
+        return df
+
 def load_teams ():
     '''load the teams data from the file if it is there, or get it from the API if it isn't.'''
     leag = []
@@ -114,10 +119,11 @@ if __name__ == '__main__':
         pass
     else:
         print ('FAILURE')
+    print (type (league))
+    # print (AllTeams.__doc__)
+    # print (load_teams.__doc__)
+    df = league.convert_to_df ()
 
-# print (AllTeams.__doc__)
-# print (load_teams.__doc__)
-
-league.team_stats()
-# print (league)
-print (AllTeams.standings(league.teams, 'Scotia North'))
+    # league.team_stats()
+    # # print (league)
+    # print (AllTeams.standings(league.teams, 'Scotia North'))

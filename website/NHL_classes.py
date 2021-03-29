@@ -122,7 +122,7 @@ class Game:
             if self.game_end == "OT":
                 self.away_obj.otloss += 1
             elif self.game_end == "SO":
-                self.away_obj.soloss += 1
+                self.away_obj.otloss += 1
             else:
                 self.away_obj.loss += 1
         if self.home_score < self.away_score:
@@ -130,6 +130,6 @@ class Game:
             if self.game_end == "OT":
                 self.home_obj.otloss += 1
             elif self.game_end == "SO":
-                self.home_obj.soloss += 1
+                self.home_obj.otloss += 1
             else:
                 self.home_obj.loss += 1
