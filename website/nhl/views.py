@@ -7,7 +7,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pretty_html_table import build_table
 from NHL_classes import *
+from Team_class import *
 from div_record import *
+from API_read import read_API
 
 # Set up the API call variables
 year = '2020'
@@ -21,15 +23,15 @@ def home(request):
     return render(request, 'home.html', {})
 
 
-def read_API(section):
-    url = base_URL + section
-#     print (url)
-    r = requests.get(url)
-    if r.status_code != 200:
-        return print(f"status code is {r.status_code}")
-    else:
-        data = r.json()
-        return data
+# def read_API(section):
+#     url = base_URL + section
+# #     print (url)
+#     r = requests.get(url)
+#     if r.status_code != 200:
+#         return print(f"status code is {r.status_code}")
+#     else:
+#         data = r.json()
+#         return data
 
 
 def team_manager(team_id): 
