@@ -9,6 +9,7 @@ from pretty_html_table import build_table
 import pickle
 # from NHL_classes import *
 from Team_class import *
+from Game_class import *
 from div_record import *
 from API_read import read_API
 
@@ -23,18 +24,18 @@ base_URL = "https://statsapi.web.nhl.com/api/v1/"
 def home(request):
     return render(request, 'home.html', {})
 
-    def team_stats (self):
-        for team in self.teams:
-            url = (f'teams/{team.id}/stats')
-            team_json = read_API (url)
-            # packages_str = json.dumps (team_json['stats'][0]['splits'][0]['stat'], indent =2)
-            # print (packages_str)
-            team.games_played = team_json['stats'][0]['splits'][0]['stat']['gamesPlayed']
-            team.win = team_json['stats'][0]['splits'][0]['stat']['wins']
-            team.loss = team_json['stats'][0]['splits'][0]['stat']['losses']
-            team.otloss = team_json['stats'][0]['splits'][0]['stat']['ot']
-            team.points = team_json['stats'][0]['splits'][0]['stat']['pts']
-            team.point_percent = team_json['stats'][0]['splits'][0]['stat']['ptPctg']
+def team_stats (self):
+    for team in self.teams:
+        url = (f'teams/{team.id}/stats')
+        team_json = read_API (url)
+        # packages_str = json.dumps (team_json['stats'][0]['splits'][0]['stat'], indent =2)
+        # print (packages_str)
+        team.games_played = team_json['stats'][0]['splits'][0]['stat']['gamesPlayed']
+        team.win = team_json['stats'][0]['splits'][0]['stat']['wins']
+        team.loss = team_json['stats'][0]['splits'][0]['stat']['losses']
+        team.otloss = team_json['stats'][0]['splits'][0]['stat']['ot']
+        team.points = team_json['stats'][0]['splits'][0]['stat']['pts']
+        team.point_percent = team_json['stats'][0]['splits'][0]['stat']['ptPctg']
 
 def load_teams ():
     '''load the teams data from the file if it is there, or get it from the API if it isn't.'''
@@ -68,69 +69,7 @@ def load_teams ():
             print ('loaded teams from the API and then saved them to the file')
     return (leag)
 
-# def read_API(section):
-#     url = base_URL + section
-# #     print (url)
-#     r = requests.get(url)
-#     if r.status_code != 200:
-#         return print(f"status code is {r.status_code}")
-#     else:
-#         data = r.json()
-#         return data
-
-
-# def team_manager(team_id): 
-#     #converts the API id to the list id.  If it can't find the team ID then it makes a new one.
-#     global teams
-#     index = 0
-#     for i, t in enumerate(teams):
-#         if t.id == team_id:
-#             index = i
-#     if index == 0:
-#         teams.append(Team(team_id))
-#         index = len(teams)-1
-#     return (index)
-
-
 def teams_view(request):
-    # teams.append(Team(0))
-    # =======load the teams into the Class Teams===============
-#     df_teams = read_API("teams")
-#     dict_teams = df_teams['teams']
-#     for row in dict_teams:
-#         id = row['id']
-#         home_id = team_manager(id)
-#         teams[home_id].name = row['name']
-#         teams[home_id].teamName = row['teamName']
-#         teams[home_id].division = row['division']['name']
-#         teams[home_id].conference = row['conference']['name']
-#         teams[home_id].venue = row['venue']['name']
-#         teams[home_id].abbreviation = row['abbreviation']
-#     #     teams [home_id].crazyname()
-
-#     # print (teams[team_manager (22)].name_id())
-#     game_box = []
-#     # =======load the games into the Class Games===============
-#     for i in range(1, max_game_ID):
-#         url = 'game/' + year + season_type + str(i).zfill(4) + '/linescore'
-#         gameID = int(year + season_type + str(i).zfill(4))  # print (gameID)
-#         data = read_API(url)
-#         if data['currentPeriod'] != 0:
-#             home_id = (data['teams']['home']['team']['id'])
-#             away_id = (data['teams']['away']['team']['id'])
-#             date_data = data['periods'][0]['startTime']
-#             datetime_object = datetime.strptime(
-#                 date_data, '%Y-%m-%dT%H:%M:%SZ')
-#             games.append(Game(gameID, teams[team_manager(
-#                 home_id)], teams[team_manager(away_id)], datetime_object))
-#             index = len(games)-1
-#             games[index].home_score = data['teams']['home']['goals']
-#             games[index].away_score = data['teams']['away']['goals']
-#             games[index].game_end = data['currentPeriodOrdinal']
-#             games[index].games_recorded()
-#             curr_game = games[index].game_dict()
-# #             print (curr_game)
-#             game_box.append(curr_game)
 
     league = load_teams ()
     if league != []:
@@ -193,9 +132,9 @@ def teams_view(request):
                                         #   'divtableC': div_table_blue_central,
                                           'tableE': html_table_blue_east, 'nameE': html_name_east,
                                         #   'divtableE': div_table_blue_east,
-                                          'tableW': html_table_blue_west, 'nameW': html_name_west,})
+                                          'tableW': html_table_blue_west, 'nameW': html_name_west,
                                         #   'divtableW': div_table_blue_west,})
-                                        #   'tableL': html_table_blue_NHL, 'nameL': html_name_NHL,
+                                          'tableL': html_table_blue_NHL, 'nameL': html_name_NHL,})
                                         #   'tableDB': html_table_blue_debug, 'nameDB': html_name_debug})
 # ===========================
 
