@@ -41,13 +41,12 @@ class AllTeams:
         dummy = [['', 0, 0, 0, 0, 0, 0, '']]
         df = pd.DataFrame(columns=columns, data=dummy)
         for team in teams:
-            if team.name:  #see if the team is empty
-                data = (team.name, team.games_played,
-                        team.win, team.loss,
-                        team.otloss, team.point_percent,
-                        team.points, team.division)
-                a_series = pd.Series(data, index = df.columns)
-                df = df.append(a_series, ignore_index=True)
+            data = (team.teamName, team.games_played,
+                    team.win, team.loss,
+                    team.otloss, team.point_percent,
+                    team.points, team.division)
+            a_series = pd.Series(data, index = df.columns)
+            df = df.append(a_series, ignore_index=True)
         df = df.drop(0)
         
         if div == 'all':
@@ -122,8 +121,8 @@ if __name__ == '__main__':
     print (type (league))
     # print (AllTeams.__doc__)
     # print (load_teams.__doc__)
-    df = league.convert_to_df ()
+    # df = league.convert_to_df ()
 
-    # league.team_stats()
+    league.team_stats()
     # # print (league)
-    # print (AllTeams.standings(league.teams, 'Scotia North'))
+    print (AllTeams.standings(league.teams, 'Scotia North'))

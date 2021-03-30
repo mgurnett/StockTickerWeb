@@ -6,6 +6,7 @@ import requests
 import pandas as pd
 import matplotlib.pyplot as plt
 from pretty_html_table import build_table
+import pickle
 # from NHL_classes import *
 from Team_class import *
 from div_record import *
@@ -22,6 +23,50 @@ base_URL = "https://statsapi.web.nhl.com/api/v1/"
 def home(request):
     return render(request, 'home.html', {})
 
+    def team_stats (self):
+        for team in self.teams:
+            url = (f'teams/{team.id}/stats')
+            team_json = read_API (url)
+            # packages_str = json.dumps (team_json['stats'][0]['splits'][0]['stat'], indent =2)
+            # print (packages_str)
+            team.games_played = team_json['stats'][0]['splits'][0]['stat']['gamesPlayed']
+            team.win = team_json['stats'][0]['splits'][0]['stat']['wins']
+            team.loss = team_json['stats'][0]['splits'][0]['stat']['losses']
+            team.otloss = team_json['stats'][0]['splits'][0]['stat']['ot']
+            team.points = team_json['stats'][0]['splits'][0]['stat']['pts']
+            team.point_percent = team_json['stats'][0]['splits'][0]['stat']['ptPctg']
+
+def load_teams ():
+    '''load the teams data from the file if it is there, or get it from the API if it isn't.'''
+    leag = []
+    try:
+        with open(f'teams.pickle', 'rb') as file:
+            leag = pickle.load(file)
+            print ('loaded teams from the file')
+    except IOError:
+        packages_json = read_API ('teams')
+        team_list = []
+        for index in range (len(packages_json['teams'])):
+            team_id = packages_json['teams'][index]['id']
+            current_team = Team (team_id)
+            current_team.name = packages_json['teams'][index]['name']
+            current_team.abbreviation = packages_json['teams'][index]['abbreviation']
+            current_team.teamName = packages_json['teams'][index]['teamName']
+            current_team.locationName = packages_json['teams'][index]['locationName']
+            current_team.shortName = packages_json['teams'][index]['shortName']
+            current_team.division = packages_json['teams'][index]['division']['name']
+            current_team.venue = packages_json['teams'][index]['venue']['name']
+            team_list.append (current_team)
+            # print (current_team)
+
+        leag = AllTeams (team_list)
+        # for team in league.teams:
+        #     print (team)
+
+        with open(f'teams.pickle', 'wb') as file:
+            pickle.dump(leag, file)
+            print ('loaded teams from the API and then saved them to the file')
+    return (leag)
 
 # def read_API(section):
 #     url = base_URL + section
@@ -95,62 +140,63 @@ def teams_view(request):
     else:
         print ('FAILURE')
         
-    all_games_df = league.convert_to_df ()
-    all_games_df_date = all_games_df.sort_values('date')
+    # all_teams_df = league.convert_to_df ()
+    # all_games_df_date = all_games_df.sort_values('date')
     # all_games_df_date.to_csv (r'all_games.csv', header=True)
 
+    league.team_stats()
     div_name = 'Scotia North'
-    game_frame_north = Team.standings(div_name)
+    game_frame_north = AllTeams.standings(league.teams, div_name)
     html_name_north = (f'<h1>{div_name}</h1>')
     html_table_blue_north = build_table(
         game_frame_north, 'blue_dark', text_align='centre')
-    Div_Cube = Cube(div_name, all_games_df_date)
-    cube_df = Div_Cube.make_cube()
-    div_table_blue_north = build_table(cube_df, 'blue_dark')
-    print(cube_df)
+    # Div_Cube = Cube(div_name, all_games_df_date)
+    # cube_df = Div_Cube.make_cube()
+    # div_table_blue_north = build_table(cube_df, 'blue_dark')
+    # print(cube_df)
 
     div_name = 'Discover Central'
-    game_frame_central = Team.standings(div_name)
+    game_frame_central = AllTeams.standings(league.teams, div_name)
     html_name_central = (f'<h1>{div_name}</h1>')
     html_table_blue_central = build_table(game_frame_central, 'blue_dark')
-    Div_Cube = Cube(div_name, all_games_df_date)
-    cube_df = Div_Cube.make_cube()
-    div_table_blue_central = build_table(cube_df, 'blue_dark')
+    # Div_Cube = Cube(div_name, all_games_df_date)
+    # cube_df = Div_Cube.make_cube()
+    # div_table_blue_central = build_table(cube_df, 'blue_dark')
 
     div_name = 'MassMutual East'
-    game_frame_east = Team.standings(div_name)
+    game_frame_east = AllTeams.standings(league.teams, div_name)
     html_name_east = (f'<h1>{div_name}</h1>')
     html_table_blue_east = build_table(game_frame_east, 'blue_dark')
-    Div_Cube = Cube(div_name, all_games_df_date)
-    cube_df = Div_Cube.make_cube()
-    div_table_blue_east = build_table(cube_df, 'blue_dark')
+    # Div_Cube = Cube(div_name, all_games_df_date)
+    # cube_df = Div_Cube.make_cube()
+    # div_table_blue_east = build_table(cube_df, 'blue_dark')
 
     div_name = 'Honda West'
-    game_frame_west = Team.standings(div_name)
+    game_frame_west = AllTeams.standings(league.teams, div_name)
     html_name_west = (f'<h1>{div_name}</h1>')
     html_table_blue_west = build_table(game_frame_west, 'blue_dark')
-    Div_Cube = Cube(div_name, all_games_df_date)
-    cube_df = Div_Cube.make_cube()
-    div_table_blue_west = build_table(cube_df, 'blue_dark')
+    # Div_Cube = Cube(div_name, all_games_df_date)
+    # cube_df = Div_Cube.make_cube()
+    # div_table_blue_west = build_table(cube_df, 'blue_dark')
 
     div_name = 'NHL'
-    game_frame_NHL = Team.standings('all')
+    game_frame_NHL = AllTeams.standings(league.teams, div_name)
     html_name_NHL = (f'<h1>{div_name}</h1>')
     html_table_blue_NHL = build_table(game_frame_NHL, 'blue_dark')
 
-    html_name_debug = (f'<h1>All Games</h1>')
-    html_table_blue_debug = build_table(all_games_df_date, 'blue_dark')
+    # html_name_debug = (f'<h1>All Games</h1>')
+    # html_table_blue_debug = build_table(all_games_df_date, 'blue_dark')
 
     return render(request, 'teams.html', {'tableN': html_table_blue_north, 'nameN': html_name_north,
-                                          'divtableN': div_table_blue_north,
+                                        #   'divtableN': div_table_blue_north,
                                           'tableC': html_table_blue_central, 'nameC': html_name_central,
-                                          'divtableC': div_table_blue_central,
+                                        #   'divtableC': div_table_blue_central,
                                           'tableE': html_table_blue_east, 'nameE': html_name_east,
-                                          'divtableE': div_table_blue_east,
-                                          'tableW': html_table_blue_west, 'nameW': html_name_west,
-                                          'divtableW': div_table_blue_west,
-                                          'tableL': html_table_blue_NHL, 'nameL': html_name_NHL,
-                                          'tableDB': html_table_blue_debug, 'nameDB': html_name_debug})
+                                        #   'divtableE': div_table_blue_east,
+                                          'tableW': html_table_blue_west, 'nameW': html_name_west,})
+                                        #   'divtableW': div_table_blue_west,})
+                                        #   'tableL': html_table_blue_NHL, 'nameL': html_name_NHL,
+                                        #   'tableDB': html_table_blue_debug, 'nameDB': html_name_debug})
 # ===========================
 
 
