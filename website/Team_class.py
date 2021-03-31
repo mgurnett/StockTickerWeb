@@ -118,7 +118,6 @@ if __name__ == '__main__':
         pass
     else:
         print ('FAILURE')
-    print (type (league))
     # print (AllTeams.__doc__)
     # print (load_teams.__doc__)
     # df = league.convert_to_df ()

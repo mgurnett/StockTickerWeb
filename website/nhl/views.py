@@ -79,44 +79,41 @@ def teams_view(request):
     else:
         print ('FAILURE')
         
-    # all_teams_df = league.convert_to_df ()
-    # all_games_df_date = all_games_df.sort_values('date')
-    # all_games_df_date.to_csv (r'all_games.csv', header=True)
-
     league.team_stats()
+    schedule = load_api_games ()
     div_name = 'Scotia North'
     game_frame_north = AllTeams.standings(league.teams, div_name)
     html_name_north = (f'<h1>{div_name}</h1>')
     html_table_blue_north = build_table(
         game_frame_north, 'blue_dark', text_align='centre')
-    # Div_Cube = Cube(div_name, all_games_df_date)
-    # cube_df = Div_Cube.make_cube()
-    # div_table_blue_north = build_table(cube_df, 'blue_dark')
-    # print(cube_df)
+    Div_Cube = Cube(div_name, league, schedule)
+    cube_df = Div_Cube.make_cube()
+    div_table_blue_north = build_table(cube_df, 'blue_dark')
+
 
     div_name = 'Discover Central'
     game_frame_central = AllTeams.standings(league.teams, div_name)
     html_name_central = (f'<h1>{div_name}</h1>')
     html_table_blue_central = build_table(game_frame_central, 'blue_dark')
-    # Div_Cube = Cube(div_name, all_games_df_date)
-    # cube_df = Div_Cube.make_cube()
-    # div_table_blue_central = build_table(cube_df, 'blue_dark')
+    Div_Cube = Cube(div_name, league, schedule)
+    cube_df = Div_Cube.make_cube()
+    div_table_blue_central = build_table(cube_df, 'blue_dark')
 
     div_name = 'MassMutual East'
     game_frame_east = AllTeams.standings(league.teams, div_name)
     html_name_east = (f'<h1>{div_name}</h1>')
     html_table_blue_east = build_table(game_frame_east, 'blue_dark')
-    # Div_Cube = Cube(div_name, all_games_df_date)
-    # cube_df = Div_Cube.make_cube()
-    # div_table_blue_east = build_table(cube_df, 'blue_dark')
+    Div_Cube = Cube(div_name, league, schedule)
+    cube_df = Div_Cube.make_cube()
+    div_table_blue_east = build_table(cube_df, 'blue_dark')
 
     div_name = 'Honda West'
     game_frame_west = AllTeams.standings(league.teams, div_name)
     html_name_west = (f'<h1>{div_name}</h1>')
     html_table_blue_west = build_table(game_frame_west, 'blue_dark')
-    # Div_Cube = Cube(div_name, all_games_df_date)
-    # cube_df = Div_Cube.make_cube()
-    # div_table_blue_west = build_table(cube_df, 'blue_dark')
+    Div_Cube = Cube(div_name, league, schedule)
+    cube_df = Div_Cube.make_cube()
+    div_table_blue_west = build_table(cube_df, 'blue_dark')
 
     div_name = 'NHL'
     game_frame_NHL = AllTeams.standings(league.teams, div_name)
@@ -127,13 +124,13 @@ def teams_view(request):
     # html_table_blue_debug = build_table(all_games_df_date, 'blue_dark')
 
     return render(request, 'teams.html', {'tableN': html_table_blue_north, 'nameN': html_name_north,
-                                        #   'divtableN': div_table_blue_north,
+                                          'divtableN': div_table_blue_north,
                                           'tableC': html_table_blue_central, 'nameC': html_name_central,
-                                        #   'divtableC': div_table_blue_central,
+                                          'divtableC': div_table_blue_central,
                                           'tableE': html_table_blue_east, 'nameE': html_name_east,
-                                        #   'divtableE': div_table_blue_east,
+                                          'divtableE': div_table_blue_east,
                                           'tableW': html_table_blue_west, 'nameW': html_name_west,
-                                        #   'divtableW': div_table_blue_west,})
+                                          'divtableW': div_table_blue_west,
                                           'tableL': html_table_blue_NHL, 'nameL': html_name_NHL,})
                                         #   'tableDB': html_table_blue_debug, 'nameDB': html_name_debug})
 # ===========================
