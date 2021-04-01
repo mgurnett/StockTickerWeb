@@ -112,7 +112,7 @@ if __name__ == '__main__':
     if schedule != []:
         for game in schedule.games:
             game.live_games()
-            game.today_games()
+            # game.today_games()
         print (schedule)
         
     else:
