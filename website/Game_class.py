@@ -36,8 +36,10 @@ class Game:
         # today = datetime.now().date()
         # print (today)
         if datetime.strptime(self.date, '%Y-%m-%dT%H:%M:%SZ').date() == datetime.now().date():
-            print (f"{datetime.strptime(self.date, '%Y-%m-%dT%H:%M:%SZ').strftime('%Y-%m-%d @ %-I:%M %p')} ({self.id}) {self.home} are home to the {self.away}.  The score is {self.home_score} - {self.away_score} {self.status}")
-        return
+            # print (f"{datetime.strptime(self.date, '%Y-%m-%dT%H:%M:%SZ').strftime('%Y-%m-%d @ %-I:%M %p')} ({self.id}) {self.home} are home to the {self.away}.  The score is {self.home_score} - {self.away_score} {self.status}")
+            return (f"{datetime.strptime(self.date, '%Y-%m-%dT%H:%M:%SZ').strftime('%Y-%m-%d @ %-I:%M %p')} ({self.id}) {self.home} are home to the {self.away}.  The score is {self.home_score} - {self.away_score} {self.status}")
+        else:
+            return (f'No games for {datetime.now().date()}')
 
 class AllGames:
     def __init__ (self, GameObjects):
@@ -111,8 +113,8 @@ if __name__ == '__main__':
     schedule = load_api_games ()
     if schedule != []:
         for game in schedule.games:
-            game.live_games()
-            # game.today_games()
+            # game.live_games()
+            game.today_games()
         print (schedule)
         
     else:

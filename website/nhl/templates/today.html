@@ -1,0 +1,8 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<title>Today's games</title>
+<html>
+     {{todays_games||safe}}
+</html>
+{% endblock %}

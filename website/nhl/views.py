@@ -90,7 +90,6 @@ def teams_view(request):
     cube_df = Div_Cube.make_cube()
     div_table_blue_north = build_table(cube_df, 'blue_dark')
 
-
     div_name = 'Discover Central'
     game_frame_central = AllTeams.standings(league.teams, div_name)
     html_name_central = (f'<h1>{div_name}</h1>')
@@ -290,3 +289,18 @@ def players_view(request):
                                             'tableD': html_table_d_points_sub, 'nameD': 'Defence goals',
                                             'tableP': html_table_points,       'nameP': 'Points',
                                             'tablePM': html_table_plusMinus,   'namePM': 'Plus/minus'})
+
+
+def today_view(request):
+    today_gm = []
+    columns = ['Time','Game','Score','Status',]
+    schedule = load_api_games ()
+    if schedule != []:
+        for game in schedule.games:
+            print (game.today_games(), ' ', type (game.today_games()))
+            today_gm.append(game.today_games())
+        today_games_df = pd.DataFrame (today_gm, columns)
+        html_table_today_games = build_table(today_gm, 'blue_dark')
+    else:
+        html_table_today_games = "<h1>No games today</h1>"
+    return render(request, 'today.html', {'todays_games': html_table_today_games})
