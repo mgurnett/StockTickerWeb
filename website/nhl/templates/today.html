@@ -3,6 +3,7 @@
 {% block content %}
 <title>Today's games</title>
 <html>
-     {{todays_games||safe}}
+     <h3>The games for: {{today_date|safe}}</h3>
+     {{todays_games|safe}}
 </html>
 {% endblock %}

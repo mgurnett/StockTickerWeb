@@ -84,6 +84,21 @@ class AllGames:
                 types.append (game_type)
         return types
 
+    def games_on_a_day (self, targ_date=datetime.now().date()):
+        games_otd = []
+        for game in self.games:
+            game_date = datetime.strptime(game.date, '%Y-%m-%dT%H:%M:%SZ').date()
+            if game_date == targ_date:
+                print (f'The game_date is {game_date}.  The targ_date is {targ_date} {game}')
+                game_dict = {'date': game_date,
+                    'home':game.home,
+                    'home_score':game.home_score,
+                    'away_score':game.away_score,
+                    'away':game.away,
+                    'status':game.status}
+                games_otd.append(game_dict)
+        return (games_otd)
+
 def load_api_games ():
     '''get all games from API'''
     schedule = []
@@ -111,11 +126,14 @@ def load_api_games ():
 
 if __name__ == '__main__':
     schedule = load_api_games ()
-    if schedule != []:
-        for game in schedule.games:
-            # game.live_games()
-            game.today_games()
-        print (schedule)
+    # if schedule != []:
+    #     for game in schedule.games:
+    #         game.live_games()
+    #         game.today_games()
+    #     print (schedule)
         
-    else:
-        print ('FAILURE')
+    # else:
+    #     print ('FAILURE')
+
+    print (datetime.now().date())
+    print (schedule.games_on_a_day())

@@ -292,15 +292,13 @@ def players_view(request):
 
 
 def today_view(request):
-    today_gm = []
-    columns = ['Time','Game','Score','Status',]
     schedule = load_api_games ()
+    the_date = datetime.now().date()
+    print (f'The date we are looking for is: {the_date}')
     if schedule != []:
-        for game in schedule.games:
-            print (game.today_games(), ' ', type (game.today_games()))
-            today_gm.append(game.today_games())
-        today_games_df = pd.DataFrame (today_gm, columns)
-        html_table_today_games = build_table(today_gm, 'blue_dark')
+        today_games_df = pd.DataFrame.from_dict(schedule.games_on_a_day(), orient='columns')
+        html_table_today_games = build_table(today_games_df, 'blue_dark')
     else:
         html_table_today_games = "<h1>No games today</h1>"
-    return render(request, 'today.html', {'todays_games': html_table_today_games})
+    return render(request, 'today.html', {'todays_games': html_table_today_games,
+                                            'today_date': the_date})
