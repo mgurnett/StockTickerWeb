@@ -20,5 +20,4 @@ urlpatterns = [
     path('', views.home, name = "home"),
     path('teams', views.teams_view, name = "teams"),    
     path('players', views.players_view, name = "players"),    
-    path('today', views.today_view, name = "today"),
 ]
