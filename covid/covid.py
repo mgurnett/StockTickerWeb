@@ -3,6 +3,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import json
+from datetime import datetime
 pd.options.mode.chained_assignment = None  # default='warn'
 
 url="https://api.opencovid.ca/timeseries?stat=cases&loc=AB"
@@ -59,7 +61,14 @@ def data_fill (first, last):
     return
 
 #===============================
-data = get_data (url)
+data = get_data (url) #<class 'pandas.core.frame.DataFrame'>
+data['date_fixed'] = pd.to_datetime(data['date_report'], format="%d-%m-%Y")
+data_new = data.set_index ('date_fixed')
+data_new = data_new.drop ('province', axis='columns')
+data_new = data_new.drop ('cumulative_cases', axis='columns')
+data_new = data_new.drop ('date_report', axis='columns')
+result = data_new.to_json(r'covid_data.json',orient="index")
+
 data_P = data
 data_T = data
 

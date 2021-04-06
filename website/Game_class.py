@@ -32,21 +32,15 @@ class AllGames:
         self.games = list(GameObjects)
 
     @staticmethod
-    def fix_time (api_dt): 
-        print (f" api_dt is {type (api_dt)}")
-        # print (f" current_game.date is {type (current_game.date)}")
-        # print (f" API_games is {api_games['gameDate']} but after fix time it is {current_game.date}")
-        # print (f"API_game is {current_game.date.date()} and the time is {current_game.date.time()} in the timezone of {current_game.date.tzinfo}")
-        # print (f'api_dt {api_dt} of {type(api_dt)}')
-        datetime_object = datetime.strptime(api_dt, '%Y-%m-%dT%H:%M:%SZ')
-        print (f" datetime_object is {type (datetime_object)} and is date:{datetime_object.date()} time:{datetime_object.time()} time:{datetime_object.tzinfo}")
+    def fix_time (api_dt): #api_dt is <class 'str'>
+        datetime_object = datetime.strptime(api_dt, '%Y-%m-%dT%H:%M:%SZ') # datetime_object is <class 'datetime.datetime'>
+        # time is now an object with NO timezone
+        UTC_time = pytz.timezone("UTC").localize(datetime_object)  #UTC_time is <class 'datetime.datetime'> WITH A UTC timezone
 
-        UTC_time = pytz.timezone("UTC").localize(datetime_object)
-        d = UTC_time.astimezone()
-        # Edmonton_time = d.strftime("%d %b %Y (%I:%M %p) %Z") #Print it with a directive of choice
-        Edmonton_time = d.strftime("%Y-%m-%dT%H:%M:%SZ") #Print it with a directive of choice
-        print (f" Edmonton_time is {type (Edmonton_time)} ")
-        return (Edmonton_time)
+        d = UTC_time.astimezone() #d is <class 'datetime.datetime'>
+        Edmonton_time = d.strftime("%Y-%m-%dT%H:%M:%SZ") # Edmonton_time is <class 'str'>  - NOT USED Can be done locally
+        # print (f"d is {d.date()} and the time is {d.time()} in the timezone of {d.tzinfo}")
+        return (d) # d is <class 'datetime.datetime'> 2021-05-11 and the time is 17:00:00 in the timezone of MDT
 
     def __str__ (self):
         schedule_status = {'Final': 0, 'Postponed': 0, 'Scheduled': 0, 'Pre-Game': 0, 'In Progress':0, 'total':0}
@@ -81,7 +75,7 @@ class AllGames:
         games_otd = []
         print (f'Today is {targ_date.date()} and the time is {targ_date.time()} in the timezone of {targ_date.tzinfo}')
         for game in self.games:
-            game_date = datetime.strptime(game.date, '%Y-%m-%dT%H:%M:%SZ').date()
+            game_date = game.date.date()
             if game_date == targ_date:
                 print (f'The game_date is {game_date}.  The targ_date is {targ_date} {game}')
                 game_dict = {'date': game_date,
@@ -101,7 +95,8 @@ def load_api_games ():
     for api_dates in data['dates']:
         for api_games in api_dates['games']:
             current_game = Game (api_games['gamePk'])
-            current_game.date = AllGames.fix_time(api_games['gameDate'])
+            date_object = AllGames.fix_time(api_games['gameDate']) # current_game is <class 'datetime.datetime'>
+            current_game.date = date_object.strftime("%Y-%m-%dT%H:%M:%SZ")
             current_game.home = api_games['teams']['home']['team']['name']
             current_game.away = api_games['teams']['away']['team']['name']
             current_game.status = api_games['status']['detailedState']
