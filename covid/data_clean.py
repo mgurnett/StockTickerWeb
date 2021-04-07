@@ -1,13 +1,21 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import timedelta
 
 def fill_zeros (data, first, last):
-    for x in range (len(first)):
-        num_of_days = ((last[x] - first[x]).days) + 1
-        total_date = last[x]
-        total_amount = data.at[total_date,'cases']
-        amount = int (total_amount / num_of_days)
-        print (f'first zero {first[x]} and ends at {total_date} or {num_of_days} days and the total is {total_amount} amount {amount}')
-        for y in range (number_of_days+1)
+    #get the full data dataframe, and a list of all the first zeros and a list of the total amounts at the end.
+    #55, 0, 0, 150, 60   The list gives #1 for start and #3 for last.  Div 150 by 3 and put it in the 2 0s and the 150
+    #now 55, 50, 50, 50, 60
+    for x in range (len(first)): #loop though the list of firsts.  The lasts will have the same number
+        num_of_days = ((last[x] - first[x]).days) #find number of days in question
+        total_date = last[x] # figure out which date has the total (150)
+        total_amount = data.at[total_date,'cases'] #find the total amount (150)
+        amount = int (total_amount / (num_of_days + 1)) #figure out the 50s
+        day_to_fix = first[x].date() # copy the first date
+        for y in range (num_of_days): #loop through the number of effected days BUT NOT the final day
+            data.loc[str(day_to_fix), 'cases'] = amount #make the cell now have the 50
+            day_to_fix = day_to_fix + timedelta(days=1) #increase the date by one day
+        data.loc[str(total_date.date()), 'cases'] = amount #put the 50 in the place of the 150
     return (data)
 
 def remove_zeros (data):
@@ -27,3 +35,25 @@ def remove_zeros (data):
 if __name__ == '__main__':
     json_data = pd.read_json (r'covid_data.json', orient="index")# <class 'pandas.core.frame.DataFrame'>
     cleaned_data = remove_zeros (json_data)
+    ewm_data = cleaned_data.iloc[:,0].ewm(span=20,adjust=False).mean()
+    cleaned_data.insert(1, 'ewm', ewm_data)
+    sma3_data = cleaned_data.iloc[:,1].rolling(window=3).mean()
+    cleaned_data.insert(1, 'sma3', sma3_data)
+    sma10_data = cleaned_data.iloc[:,1].rolling(window=10).mean()
+    cleaned_data.insert(1, 'sma10', sma10_data)
+
+    max_cases = cleaned_data["cases"].describe().max(); print (f'max_cases {max_cases}')
+    last_day = cleaned_data["cases"].iloc[-1]; print (f'last_day {last_day}')
+    latest_cases = cleaned_data["cases"].iloc[-1]; print (f'latest_cases {latest_cases}')
+
+    # one of the characters {'b', 'g', 'r', 'c', 'm', 'y', 'k', 'w'}, 
+    # which are short-hand notations for shades of blue, green, red, cyan, magenta, yellow, black, and white
+    plt.title (f'the latest number is {latest_cases} on {last_day} and the high was {max_cases}')
+    plt.xlabel('Dates')
+    plt.ylabel('Cases')
+    plt.plot(cleaned_data['cases'], label="Raw data", color='g')
+    plt.plot(cleaned_data['ewm'], label="EWM average", color='b')
+    plt.plot(cleaned_data['sma3'], label="SMA 3 average", color='m')
+    plt.plot(cleaned_data['sma10'], label="SMA 10 average", color='r')
+    plt.legend(loc=2)
+    plt.show()
