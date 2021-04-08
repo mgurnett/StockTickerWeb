@@ -1,6 +1,21 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import timedelta
+import json
+
+url="https://api.opencovid.ca/timeseries?stat=cases&loc=AB"
+
+def get_data (u):
+    url_data = pd.read_json(u)
+    url_data = pd.json_normalize(url_data['cases'])
+    
+    url_data['date_fixed'] = pd.to_datetime(url_data['date_report'], format="%d-%m-%Y")
+    data_new = url_data.set_index ('date_fixed')
+    data_new = data_new.drop ('province', axis='columns')
+    data_new = data_new.drop ('cumulative_cases', axis='columns')
+    data_new = data_new.drop ('date_report', axis='columns')
+    # result = data_new.to_json(r'covid_data.json',orient="index")
+    return data_new
 
 def fill_zeros (data, first, last):
     #get the full data dataframe, and a list of all the first zeros and a list of the total amounts at the end.
@@ -33,7 +48,8 @@ def remove_zeros (data):
     return data
 
 if __name__ == '__main__':
-    json_data = pd.read_json (r'covid_data.json', orient="index")# <class 'pandas.core.frame.DataFrame'>
+    json_data = get_data (url) #<class 'pandas.core.frame.DataFrame'>
+    # json_data = pd.read_json (r'covid_data.json', orient="index")# <class 'pandas.core.frame.DataFrame'>
     cleaned_data = remove_zeros (json_data)
     ewm_data = cleaned_data.iloc[:,0].ewm(span=20,adjust=False).mean()
     cleaned_data.insert(1, 'ewm', ewm_data)
@@ -48,12 +64,13 @@ if __name__ == '__main__':
 
     # one of the characters {'b', 'g', 'r', 'c', 'm', 'y', 'k', 'w'}, 
     # which are short-hand notations for shades of blue, green, red, cyan, magenta, yellow, black, and white
+    plt.figure (figsize=(18,10))
     plt.title (f'the latest number is {latest_cases} on {last_day} and the high was {max_cases}')
     plt.xlabel('Dates')
     plt.ylabel('Cases')
-    plt.plot(cleaned_data['cases'], label="Raw data", color='g')
-    plt.plot(cleaned_data['ewm'], label="EWM average", color='b')
-    plt.plot(cleaned_data['sma3'], label="SMA 3 average", color='m')
+    plt.plot(cleaned_data['cases'], label="Raw data", color='k')
+    plt.plot(cleaned_data['ewm'], label="EWM average", color='g')
+    plt.plot(cleaned_data['sma3'], label="SMA 3 average", color='b')
     plt.plot(cleaned_data['sma10'], label="SMA 10 average", color='r')
     plt.legend(loc=2)
     plt.show()
