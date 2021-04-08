@@ -75,7 +75,9 @@ class AllGames:
         games_otd = []
         print (f'Today is {targ_date.date()} and the time is {targ_date.time()} in the timezone of {targ_date.tzinfo}')
         for game in self.games:
-            game_date = game.date.date()
+            print (f'The game.date is {type(game.date)}')
+            game_date = game.date.strftime("%Y-%m-%dT%H:%M:%SZ") # game_date is <class 'str'>
+            # game_date = game.date.date()
             if game_date == targ_date:
                 print (f'The game_date is {game_date}.  The targ_date is {targ_date} {game}')
                 game_dict = {'date': game_date,
@@ -124,4 +126,5 @@ if __name__ == '__main__':
     # else:
     #     print ('FAILURE')
 
-    schedule.games_on_a_day()
+    # schedule.games_on_a_day()
+    print (schedule)
