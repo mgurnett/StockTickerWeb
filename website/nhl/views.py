@@ -120,14 +120,14 @@ def teams_view(request):
 
     # html_name_debug = (f'<h1>All Games</h1>')
     # html_table_blue_debug = build_table(all_games_df_date, 'blue_dark')
-
+    
     html_name_ytt = (f'<h1>YTT Games</h1>')
     schedule = load_api_games ()
     the_date = datetime.now().date()
     print (f'The date we are looking for is: {the_date}')
     today_games_df = pd.DataFrame.from_dict(schedule.games_on_a_day(), orient='columns')
     html_table_today_games = build_table(today_games_df, 'blue_dark')
-
+    
     return render(request, 'teams.html', {'tableN': html_table_blue_north, 'nameN': html_name_north,
                                           'divtableN': div_table_blue_north,
                                           'tableC': html_table_blue_central, 'nameC': html_name_central,
@@ -139,6 +139,7 @@ def teams_view(request):
                                           'tableL': html_table_blue_NHL, 'nameL': html_name_NHL,
                                           'ytt_games': html_table_today_games, 'nameytt': html_name_ytt,
                                             'today_date': the_date})
+                                            
                                         #   'tableDB': html_table_blue_debug, 'nameDB': html_name_debug})
 # ===========================
 

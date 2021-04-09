@@ -75,11 +75,13 @@ class AllGames:
         games_otd = []
         print (f'Today is {targ_date.date()} and the time is {targ_date.time()} in the timezone of {targ_date.tzinfo}')
         for game in self.games:
-            print (f'The game.date is {type(game.date)}')
-            game_date = game.date.strftime("%Y-%m-%dT%H:%M:%SZ") # game_date is <class 'str'>
+            # print (f'The game.date is {game.date.date()}')
+            # game_date = game.date.strftime("%Y-%m-%dT%H:%M:%SZ") # game_date is <class 'str'>
             # game_date = game.date.date()
-            if game_date == targ_date:
-                print (f'The game_date is {game_date}.  The targ_date is {targ_date} {game}')
+            
+            print (f'The game_date is {game.date.date()}.  The targ_date is {targ_date.date()}')
+            if game.date.date() == targ_date.date():
+
                 game_dict = {'date': game_date,
                     'home':game.home,
                     'home_score':game.home_score,
@@ -97,8 +99,9 @@ def load_api_games ():
     for api_dates in data['dates']:
         for api_games in api_dates['games']:
             current_game = Game (api_games['gamePk'])
-            date_object = AllGames.fix_time(api_games['gameDate']) # current_game is <class 'datetime.datetime'>
-            current_game.date = date_object.strftime("%Y-%m-%dT%H:%M:%SZ")
+            # date_object = AllGames.fix_time(api_games['gameDate']) # current_game is <class 'datetime.datetime'>
+            # current_game.date = date_object.strftime("%Y-%m-%dT%H:%M:%SZ")
+            current_game.date = AllGames.fix_time(api_games['gameDate']) # current_game is <class 'datetime.datetime'>
             current_game.home = api_games['teams']['home']['team']['name']
             current_game.away = api_games['teams']['away']['team']['name']
             current_game.status = api_games['status']['detailedState']
@@ -126,5 +129,5 @@ if __name__ == '__main__':
     # else:
     #     print ('FAILURE')
 
-    # schedule.games_on_a_day()
-    print (schedule)
+    print (schedule.games_on_a_day())
+    # print (schedule)
