@@ -58,9 +58,9 @@ if __name__ == '__main__':
     sma10_data = cleaned_data.iloc[:,1].rolling(window=10).mean()
     cleaned_data.insert(1, 'sma10', sma10_data)
 
-    max_cases = cleaned_data["cases"].describe().max(); print (f'max_cases {max_cases}')
-    last_day = cleaned_data["cases"].iloc[-1]; print (f'last_day {last_day}')
-    latest_cases = cleaned_data["cases"].iloc[-1]; print (f'latest_cases {latest_cases}')
+    max_cases = int(cleaned_data["cases"].describe().max())
+    last_day = cleaned_data.index[-1].date()
+    latest_cases = cleaned_data["cases"].iloc[-1]
 
     # one of the characters {'b', 'g', 'r', 'c', 'm', 'y', 'k', 'w'}, 
     # which are short-hand notations for shades of blue, green, red, cyan, magenta, yellow, black, and white
