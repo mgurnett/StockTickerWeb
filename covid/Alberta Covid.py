@@ -58,11 +58,7 @@ if __name__ == '__main__':
     sma10_data = cleaned_data.iloc[:,1].rolling(window=10).mean()
     cleaned_data.insert(1, 'sma10', sma10_data)
 
-<<<<<<< HEAD
     max_cases = int(cleaned_data["cases"].describe().max())
-=======
-    max_cases = cleaned_data["cases"].describe().max()
->>>>>>> 7216487bbeaaad3e1e47daae1c75544c88c760c5
     last_day = cleaned_data.index[-1].date()
     latest_cases = cleaned_data["cases"].iloc[-1]
 
