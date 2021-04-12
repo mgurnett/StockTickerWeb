@@ -1,7 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import timedelta
-import json
 
 url="https://api.opencovid.ca/timeseries?stat=cases&loc=AB"
 

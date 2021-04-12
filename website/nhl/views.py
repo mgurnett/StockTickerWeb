@@ -122,9 +122,9 @@ def teams_view(request):
     # html_table_blue_debug = build_table(all_games_df_date, 'blue_dark')
     
     html_name_ytt = (f'<h1>YTT Games</h1>')
-    schedule = load_api_games ()
-    the_date = datetime.now().date()
-    print (f'The date we are looking for is: {the_date}')
+    # schedule = load_api_games ()
+    the_date = datetime.now() -  timedelta(hours=6); the_date = the_date.date()
+    debug_var ('the_date', the_date)
     today_games_df = pd.DataFrame.from_dict(schedule.games_on_a_day(), orient='columns')
     html_table_today_games = build_table(today_games_df, 'blue_dark')
     
