@@ -10,29 +10,23 @@ import matplotlib.pyplot as plt
 url="https://services9.arcgis.com/pJENMVYPQqZZe20v/arcgis/rest/services/province_daily_totals/FeatureServer/0/query?where=Province%20%3D%20'ALBERTA'&outFields=Province,Abbreviation,DailyTotals,SummaryDate,DailyDeaths,DailyHospitalized,DailyICU,DailyTested&outSR=4326&f=json"
 
 def get_data (u):
-    try:
-        to_unicode = unicode
-    except NameError:
-        to_unicode = str
-
     # Define data
-
-    data_loaded = json.loads(requests.get(u).text)
-    # url_data = pd.json_normalize(data_loaded['features'])
-
-    # Write JSON file
-    # with io.open('alberta_covid_data.json', 'w', encoding='utf8') as outfile:
-    #     str_ = json.dumps(data_loaded,
-    #                     indent=4, sort_keys=True,
-    #                     separators=(',', ': '), ensure_ascii=False)
-    #     outfile.write(to_unicode(str_))
-
-    # Read JSON file
-    # with open('alberta_covid_data.json') as data_file:
-    #     data_loaded = json.load(data_file)
-
     url_data_df = pd.json_normalize(data_loaded['features'])
     return url_data_df
+
+def load_json(data):
+    Read JSON file
+    with open('alberta_covid_data.json') as data_file:
+        data_loaded = json.load(data_file)
+    return data_loaded
+
+def save_json(data):
+    Write JSON file
+    with io.open('alberta_covid_data.json', 'w', encoding='utf8') as outfile:
+        str_ = json.dumps(data_loaded,
+                        indent=4, sort_keys=True,
+                        separators=(',', ': '), ensure_ascii=False)
+        outfile.write(to_unicode(str_))
 
 def fill_zeros (data, first, last):
     #get the full data dataframe, and a list of all the first zeros and a list of the total amounts at the end.
@@ -63,6 +57,9 @@ def remove_zeros (data):
     ends.pop(0) #remove the first one as it is the end of the initial zeros.
     data = fill_zeros (data, starts, ends)
     return data
+
+def refine_data(data):
+    
 
 '''
 ['attributes.Province', 'attributes.Abbreviation', 'attributes.DailyTotals', 
