@@ -5,23 +5,22 @@ import pandas as pd
 import requests
 import matplotlib.pyplot as plt
 
-# https://resources-covid19canada.hub.arcgis.com/datasets/provincial-daily-totals/geoservice?orderBy=Province&page=45
-
 url="https://services9.arcgis.com/pJENMVYPQqZZe20v/arcgis/rest/services/province_daily_totals/FeatureServer/0/query?where=Province%20%3D%20'ALBERTA'&outFields=Province,Abbreviation,DailyTotals,SummaryDate,DailyDeaths,DailyHospitalized,DailyICU,DailyTested&outSR=4326&f=json"
 
 def get_data (u):
-    # Define data
+    data_loaded = json.loads(requests.get(u).text)
     url_data_df = pd.json_normalize(data_loaded['features'])
+    # url_data['date_fixed'] = pd.to_datetime(url_data['date_report'], format="%d-%m-%Y")
     return url_data_df
 
 def load_json(data):
-    Read JSON file
+    # Read JSON file
     with open('alberta_covid_data.json') as data_file:
         data_loaded = json.load(data_file)
     return data_loaded
 
 def save_json(data):
-    Write JSON file
+    # Write JSON file
     with io.open('alberta_covid_data.json', 'w', encoding='utf8') as outfile:
         str_ = json.dumps(data_loaded,
                         indent=4, sort_keys=True,
@@ -58,7 +57,7 @@ def remove_zeros (data):
     data = fill_zeros (data, starts, ends)
     return data
 
-def refine_data(data):
+# def refine_data(data):
     
 
 '''
@@ -68,7 +67,7 @@ def refine_data(data):
 '''
 
 if __name__ == '__main__':
-    cleaned_data = get_data (url) #<class 'pandas.core.frame.DataFrame'>
+    json_data = get_data (url) #<class 'pandas.core.frame.DataFrame'>
     # json_data = pd.read_json (r'covid_data.json', orient="index")# <class 'pandas.core.frame.DataFrame'>
     # cleaned_data = remove_zeros (json_data)
     # ewm_data = cleaned_data.iloc[:,0].ewm(span=20,adjust=False).mean()
@@ -89,8 +88,8 @@ if __name__ == '__main__':
     plt.xlabel('Dates')
     plt.ylabel('Cases')
     # plt.plot(cleaned_data['cases'], label="Raw data", color='k')
-    plt.plot(cleaned_data['attributes.DailyICU'], label="DailyICU", color='k')
-    plt.plot(cleaned_data['attributes.DailyHospitalized'], label="DailyHospitalized", color='g')
+    plt.plot(json_data['attributes.DailyICU'], label="DailyICU", color='k')
+    plt.plot(json_data['attributes.DailyHospitalized'], label="DailyHospitalized", color='g')
     # plt.plot(cleaned_data['sma3'], label="SMA 3 average", color='b')
     # plt.plot(cleaned_data['sma10'], label="SMA 10 average", color='r')
     plt.legend(loc=2)
