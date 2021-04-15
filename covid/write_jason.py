@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
+import io
 import json
 from datetime import timedelta
 import pandas as pd
 import requests
 import matplotlib.pyplot as plt
+
+to_unicode = str
 
 url="https://services9.arcgis.com/pJENMVYPQqZZe20v/arcgis/rest/services/province_daily_totals/FeatureServer/0/query?where=Province%20%3D%20'ALBERTA'&outFields=Province,Abbreviation,DailyTotals,SummaryDate,DailyDeaths,DailyHospitalized,DailyICU,DailyTested&outSR=4326&f=json"
 
@@ -22,11 +25,7 @@ def load_json(data):
 
 def save_json(data):
     # Write JSON file
-    with io.open('alberta_covid_data.json', 'w', encoding='utf8') as outfile:
-        str_ = json.dumps(data_loaded,
-                        indent=4, sort_keys=True,
-                        separators=(',', ': '), ensure_ascii=False)
-        outfile.write(to_unicode(str_))
+    data.to_json (r'alberta_covid_data.json', orient="index")# <class 'pandas.core.frame.DataFrame'>
 
 def fill_zeros (data, first, last):
     #get the full data dataframe, and a list of all the first zeros and a list of the total amounts at the end.
@@ -59,7 +58,6 @@ def remove_zeros (data):
     return data
 
 # def refine_data(data):
-    
 
 '''
 ['attributes.Province', 'attributes.Abbreviation', 'attributes.DailyTotals', 
@@ -69,7 +67,6 @@ def remove_zeros (data):
 
 if __name__ == '__main__':
     json_data = get_data (url) #<class 'pandas.core.frame.DataFrame'>
-    # json_data = pd.read_json (r'covid_data.json', orient="index")# <class 'pandas.core.frame.DataFrame'>
     cleaned_data = remove_zeros (json_data)
     ewm_data = cleaned_data.iloc[:,2].ewm(span=20,adjust=False).mean()
     cleaned_data.insert(1, 'ewm', ewm_data)
@@ -91,22 +88,18 @@ if __name__ == '__main__':
     plt.xlabel('Dates')
     plt.ylabel('Cases')
     plt.plot(cleaned_data['attributes.DailyTotals'], label="Raw data", color='k')
-    # plt.plot(json_data['attributes.DailyICU'], label="DailyICU", color='k')
-    # plt.plot(json_data['attributes.DailyHospitalized'], label="DailyHospitalized", color='g')
     plt.plot(cleaned_data['ewm'], label="EWM average", color='r')
     plt.plot(cleaned_data['sma3'], label="SMA 3 average", color='b')
     plt.plot(cleaned_data['sma10'], label="SMA 10 average", color='g')
     plt.legend(loc=2)
     plt.show()
     plt.figure (figsize=(18,10))
-    plt.title (f'the latest number is {latest_cases} on {last_day} and the high was {max_cases}')
+    plt.title (f'Hopitalization and ICU')
     plt.xlabel('Dates')
     plt.ylabel('Cases')
-    # plt.plot(cleaned_data['attributes.DailyTotals'], label="Raw data", color='k')
-    plt.plot(json_data['attributes.DailyICU'], label="DailyICU", color='k')
-    plt.plot(json_data['attributes.DailyHospitalized'], label="DailyHospitalized", color='g')
-    # plt.plot(cleaned_data['ewm'], label="EWM average", color='r')
-    # plt.plot(cleaned_data['sma3'], label="SMA 3 average", color='b')
-    # plt.plot(cleaned_data['sma10'], label="SMA 10 average", color='g')
+    plt.plot(cleaned_data['attributes.DailyICU'], label="Daily ICU", color='k')
+    plt.plot(cleaned_data['attributes.DailyHospitalized'], label="Daily Hospitalized", color='g')
     plt.legend(loc=2)
     plt.show()
+
+    
