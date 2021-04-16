@@ -8,16 +8,16 @@ import matplotlib.pyplot as plt
 
 to_unicode = str
 
-url="https://services9.arcgis.com/pJENMVYPQqZZe20v/arcgis/rest/services/province_daily_totals/FeatureServer/0/query?where=Province%20%3D%20'ALBERTA'&outFields=Province,Abbreviation,DailyTotals,SummaryDate,DailyDeaths,DailyHospitalized,DailyICU,DailyTested&outSR=4326&f=json"
+URL="https://services9.arcgis.com/pJENMVYPQqZZe20v/arcgis/rest/services/province_daily_totals/FeatureServer/0/query?where=Province%20%3D%20'ALBERTA'&outFields=Province,Abbreviation,DailyTotals,SummaryDate,DailyDeaths,DailyHospitalized,DailyICU,DailyTested&outSR=4326&f=json"
 
-def get_data (u):
-    data_loaded = json.loads(requests.get(u).text)
+def get_data ():
+    data_loaded = json.loads(requests.get(URL).text)
     url_data_df = pd.json_normalize(data_loaded['features'])
     url_data_df['date_fixed'] = pd.to_datetime(url_data_df['attributes.SummaryDate'], unit='ms')
     data_new = url_data_df.set_index ('date_fixed')
     return data_new
 
-def load_json(data):
+def load_json():
     # Read JSON file
     with open('alberta_covid_data.json') as data_file:
         data_loaded = json.load(data_file)
@@ -57,30 +57,7 @@ def remove_zeros (data):
     data = fill_zeros (data, starts, ends)
     return data
 
-def menu (data):
-    choice = input ("Do you want to: Enter more data, Load data, Save data, show New cases, show Icu cases or Quit?")
-    if choice = "E" or "e":
-        get_new_data (data):
-    elif choice = "L" or "l":
-        load_json(data)
-    elif choice = "S" or "s":
-        save_json(data)
-    elif choice = "L" or "l":
-        load_json(data)
-    print (f"you have entered {value}")
-    value = input ("New cases number")
-    print (f"you have entered {value}")
-
-
-'''
-['attributes.Province', 'attributes.Abbreviation', 'attributes.DailyTotals', 
-'attributes.SummaryDate', 'attributes.DailyDeaths', 'attributes.DailyHospitalized', 
-'attributes.DailyICU', 'attributes.DailyTested']
-'''
-
-if __name__ == '__main__':
-    json_data = get_data (url) #<class 'pandas.core.frame.DataFrame'>
-    cleaned_data = remove_zeros (json_data)
+def find_averages (data):
     ewm_data = cleaned_data.iloc[:,2].ewm(span=50,adjust=False).mean()
     cleaned_data.insert(1, 'ewm', ewm_data)
     sma3_data = cleaned_data.iloc[:,1].rolling(window=3).mean()
@@ -91,9 +68,23 @@ if __name__ == '__main__':
     max_cases = int(cleaned_data["attributes.DailyTotals"].describe().max())
     last_day = cleaned_data.index[-1].date()
     latest_cases = cleaned_data["attributes.DailyTotals"].iloc[-1]
+    return (cleaned_data)
 
-    # print (json_data.head())
+def hosp (cleaned_data):
+    cleaned_data['current_icu'] = cleaned_data['attributes.DailyICU'].cumsum()
+    cleaned_data['current_hosp'] = cleaned_data['attributes.DailyHospitalized'].cumsum()
+    plt.figure (figsize=(18,10))
+    plt.title (f'Hopitalization and ICU')
+    plt.xlabel('Dates')
+    plt.ylabel('Cases')
+    plt.plot(cleaned_data['current_icu'], label="Current ICU", color='k')
+    plt.plot(cleaned_data['current_hosp'], label="Current Hospitalized", color='r')
+    plt.legend(loc=2)
+    plt.show()
 
+def cases (json_data):
+    zero_data = remove_zeros (json_data)
+    cleaned_data = find_averages (zero_data)
     # one of the characters {'b', 'g', 'r', 'c', 'm', 'y', 'k', 'w'}, 
     # which are short-hand notations for shades of blue, green, red, cyan, magenta, yellow, black, and white
     plt.figure (figsize=(18,10))
@@ -106,15 +97,32 @@ if __name__ == '__main__':
     plt.plot(cleaned_data['sma10'], label="SMA 10 average", color='g')
     plt.legend(loc=2)
     plt.show()
-    cleaned_data['current_icu'] = cleaned_data['attributes.DailyICU'].cumsum()
-    cleaned_data['current_hosp'] = cleaned_data['attributes.DailyHospitalized'].cumsum()
-    plt.figure (figsize=(18,10))
-    plt.title (f'Hopitalization and ICU')
-    plt.xlabel('Dates')
-    plt.ylabel('Cases')
-    # plt.plot(cleaned_data['attributes.DailyICU'], label="Daily ICU", color='r')
-    # plt.plot(cleaned_data['attributes.DailyHospitalized'], label="Daily Hospitalized", color='g')
-    plt.plot(cleaned_data['current_icu'], label="Current ICU", color='k')
-    plt.plot(cleaned_data['current_hosp'], label="Current Hospitalized", color='r')
-    plt.legend(loc=2)
-    plt.show()
+
+'''
+['attributes.Province', 'attributes.Abbreviation', 'attributes.DailyTotals', 
+'attributes.SummaryDate', 'attributes.DailyDeaths', 'attributes.DailyHospitalized', 
+'attributes.DailyICU', 'attributes.DailyTested']
+'''
+
+if __name__ == '__main__':
+    while True:
+        choice = input ("Do you want to: Download new data, Enter more data, Load data, Save data, show New cases, show Icu cases or Quit?")
+        if choice == "E" or "e":
+            pass
+        elif choice == "L" or "l":
+            print ('load data')
+            data = load_json()
+        elif choice == "D" or "d":
+            print ('load data')
+            data = get_data()
+        elif choice == "S" or "s":
+            print ('load data')
+            save_json(data)
+        elif choice == "N" or "n":
+            print ('load data')
+            cases(data)
+        elif choice == "I" or "i":
+            print ('load data')
+            hosp(data)
+        elif choice == "Q" or "q":
+            break
