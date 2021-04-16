@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import io
 import json
-from datetime import timedelta
+from datetime import timedelta, datetime
 import pandas as pd
 import requests
 import matplotlib.pyplot as plt
@@ -19,9 +19,17 @@ def get_data ():
 
 def load_json():
     # Read JSON file
-    with open('alberta_covid_data.json') as data_file:
-        data_loaded = json.load(data_file)
-    return data_loaded
+    try:
+        with open('alberta_covid_data.json') as data_file:
+            data_loaded = json.load(data_file)
+        data_df = pd.DataFrame.from_dict(data_loaded, orient="index")
+        data_df['date_fixed'] = pd.to_datetime(data_df['attributes.SummaryDate'], unit='ms')
+        data_new = data_df.set_index ('date_fixed')
+        print ("loaded data from file")
+    except Exception:
+        data_new = get_data()
+        print ("downloaded data from API")
+    return data_new
 
 def save_json(data):
     # Write JSON file
@@ -57,18 +65,33 @@ def remove_zeros (data):
     data = fill_zeros (data, starts, ends)
     return data
 
-def find_averages (data):
+def find_averages (cleaned_data):
     ewm_data = cleaned_data.iloc[:,2].ewm(span=50,adjust=False).mean()
     cleaned_data.insert(1, 'ewm', ewm_data)
     sma3_data = cleaned_data.iloc[:,1].rolling(window=3).mean()
     cleaned_data.insert(1, 'sma3', sma3_data)
     sma10_data = cleaned_data.iloc[:,1].rolling(window=10).mean()
     cleaned_data.insert(1, 'sma10', sma10_data)
-
-    max_cases = int(cleaned_data["attributes.DailyTotals"].describe().max())
-    last_day = cleaned_data.index[-1].date()
-    latest_cases = cleaned_data["attributes.DailyTotals"].iloc[-1]
     return (cleaned_data)
+
+def manual_data (data):
+    # man_date = input ("date (yyyy-mm-dd)")
+    timestamp = int(datetime.now().timestamp()) * 1000
+    index_date = pd.to_datetime(timestamp, unit='ms')
+    man_cases = input ("number of cases")
+    man_hosp = input ("number of new ICU")
+    man_icu = input ("number of new hospitalizations")
+    row = pd.Series ({'attributes.DailyTotals': man_cases,
+                      'attributes.Province': 'ALBERTA',
+                      'attributes.Abbreviation': 'AB', 
+                      'attributes.SummaryDate': timestamp,
+                      'attributes.DailyDeaths': 0,
+                      'attributes.DailyHospitalized': man_hosp,
+                      'attributes.DailyICU': man_icu,
+                      'attributes.DailyTested': 0,
+                      },name=index_date)
+    data = data.append(row)
+    return (data)
 
 def hosp (cleaned_data):
     cleaned_data['current_icu'] = cleaned_data['attributes.DailyICU'].cumsum()
@@ -85,6 +108,9 @@ def hosp (cleaned_data):
 def cases (json_data):
     zero_data = remove_zeros (json_data)
     cleaned_data = find_averages (zero_data)
+    max_cases = int(cleaned_data["attributes.DailyTotals"].describe().max())
+    last_day = cleaned_data.index[-1].date()
+    latest_cases = cleaned_data["attributes.DailyTotals"].iloc[-1]
     # one of the characters {'b', 'g', 'r', 'c', 'm', 'y', 'k', 'w'}, 
     # which are short-hand notations for shades of blue, green, red, cyan, magenta, yellow, black, and white
     plt.figure (figsize=(18,10))
@@ -105,24 +131,26 @@ def cases (json_data):
 '''
 
 if __name__ == '__main__':
-    while True:
+    choice = ""; data = None
+    while choice != "Q":
         choice = input ("Do you want to: Download new data, Enter more data, Load data, Save data, show New cases, show Icu cases or Quit?")
-        if choice == "E" or "e":
-            pass
-        elif choice == "L" or "l":
-            print ('load data')
+        if choice == "E" or choice == "e":
+            if data is None:
+                data = load_json()
+            data = manual_data(data)
+        elif choice == "L" or choice == "l":
             data = load_json()
-        elif choice == "D" or "d":
-            print ('load data')
+        elif choice == "D" or choice == "d":
             data = get_data()
-        elif choice == "S" or "s":
-            print ('load data')
+        elif choice == "S" or choice == "s":
             save_json(data)
-        elif choice == "N" or "n":
-            print ('load data')
+        elif choice == "N" or choice == "n":
+            if data is None:
+                data = load_json()
             cases(data)
-        elif choice == "I" or "i":
-            print ('load data')
+        elif choice == "I" or choice == "i":
+            if data is None:
+                data = load_json()
             hosp(data)
-        elif choice == "Q" or "q":
+        elif choice == "Q" or choice == "q":
             break
