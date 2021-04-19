@@ -117,28 +117,34 @@ def teams_view(request):
     game_frame_NHL = AllTeams.standings(league.teams, div_name)
     html_name_NHL = (f'<h1>{div_name}</h1>')
     html_table_blue_NHL = build_table(game_frame_NHL, 'blue_dark')
-
-    # html_name_debug = (f'<h1>All Games</h1>')
-    # html_table_blue_debug = build_table(all_games_df_date, 'blue_dark')
     
-    html_name_ytt = (f'<h1>YTT Games</h1>')
-    # schedule = load_api_games ()
-    the_date = datetime.now() -  timedelta(hours=6); the_date = the_date.date()
-    debug_var ('the_date', the_date)
-    today_games_df = pd.DataFrame.from_dict(schedule.games_on_a_day(), orient='columns')
+    the_date_yest = datetime.now() -  timedelta(hours=30)#; the_date = the_date.date()
+    # debug_var ('the_date', the_date)
+    yest_games_df = pd.DataFrame.from_dict(schedule.games_on_a_day(the_date_yest), orient='columns')
+    html_name_yest = (f'<h1>Yesterday</h1>')
+    html_table_yest_games = build_table(yest_games_df, 'blue_dark')
+    
+    the_date_today = datetime.now() -  timedelta(hours=6)#; the_date = the_date.date()
+    # debug_var ('the_date', the_date)
+    today_games_df = pd.DataFrame.from_dict(schedule.games_on_a_day(the_date_today), orient='columns')
+    html_name_today = (f'<h1>Today</h1>')
     html_table_today_games = build_table(today_games_df, 'blue_dark')
     
-    return render(request, 'teams.html', {'tableN': html_table_blue_north, 'nameN': html_name_north,
-                                          'divtableN': div_table_blue_north,
-                                          'tableC': html_table_blue_central, 'nameC': html_name_central,
-                                          'divtableC': div_table_blue_central,
-                                          'tableE': html_table_blue_east, 'nameE': html_name_east,
-                                          'divtableE': div_table_blue_east,
-                                          'tableW': html_table_blue_west, 'nameW': html_name_west,
-                                          'divtableW': div_table_blue_west,
+    the_date_tom = datetime.now() +  timedelta(hours=18)#; the_date = the_date.date()
+    # debug_var ('the_date', the_date)
+    tom_games_df = pd.DataFrame.from_dict(schedule.games_on_a_day(the_date_tom), orient='columns')
+    html_name_tom = (f'<h1>Tomorrow</h1>')
+    html_table_tom_games = build_table(tom_games_df, 'blue_dark')
+    
+    return render(request, 'teams.html', {'tableN': html_table_blue_north, 'nameN': html_name_north, 'divtableN': div_table_blue_north,
+                                          'tableC': html_table_blue_central, 'nameC': html_name_central, 'divtableC': div_table_blue_central,
+                                          'tableE': html_table_blue_east, 'nameE': html_name_east, 'divtableE': div_table_blue_east,
+                                          'tableW': html_table_blue_west, 'nameW': html_name_west, 'divtableW': div_table_blue_west,
                                           'tableL': html_table_blue_NHL, 'nameL': html_name_NHL,
-                                          'ytt_games': html_table_today_games, 'nameytt': html_name_ytt,
-                                            'today_date': the_date})
+                                          'yest_games': html_table_yest_games, 'nameyest': html_name_yest, 'yest_date': the_date_yest.date,
+                                          'today_games': html_table_today_games, 'nametoday': html_name_today, 'today_date': the_date_today.date,
+                                          'tom_games': html_table_tom_games, 'nametom': html_name_tom, 'tom_date': the_date_tom.date
+                                            })
                                             
                                         #   'tableDB': html_table_blue_debug, 'nameDB': html_name_debug})
 # ===========================

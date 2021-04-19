@@ -10,7 +10,9 @@
   <button class="tablinks" onclick="openCity(event, 'West')">{{nameW|safe}}</button>
   <button class="tablinks" onclick="openCity(event, 'East')">{{nameE|safe}}</button>
   <button class="tablinks" onclick="openCity(event, 'League')">{{nameL|safe}}</button>
-  <button class="tablinks" onclick="openCity(event, 'YTT games')">{{nameytt|safe}}</button>
+  <button class="tablinks" onclick="openCity(event, 'nameyest')">{{nameyest|safe}}</button>
+  <button class="tablinks" onclick="openCity(event, 'nametoday')">{{nametoday|safe}}</button>
+  <button class="tablinks" onclick="openCity(event, 'nametom')">{{nametom|safe}}</button>
 <!--
   <button class="tablinks" onclick="openCity(event, 'Debug')">{{nameDB|safe}}</button>
 -->
@@ -47,9 +49,19 @@
       {{tableL|safe}}
     </div>
 
-    <div id="YTT games" class="tabcontent">
+    <div id="nameyest" class="tabcontent">
+      <h3>The games for: {{yest_date|safe}}</h3>
+      {{yest_games|safe}}
+    </div>
+
+    <div id="nametoday" class="tabcontent">
       <h3>The games for: {{today_date|safe}}</h3>
-      {{ytt_games|safe}}
+      {{today_games|safe}}
+    </div>
+
+    <div id="nametom" class="tabcontent">
+      <h3>The games for: {{tom_date|safe}}</h3>
+      {{tom_games|safe}}
     </div>
 <!--
     <div id="Debug" class="tabcontent">

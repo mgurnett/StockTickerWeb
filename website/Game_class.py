@@ -70,7 +70,7 @@ class AllGames:
         return types
 
     def games_on_a_day (self, targ_date = datetime.now()):
-        targ_date = targ_date -  timedelta(hours=6)
+        # targ_date = targ_date -  timedelta(hours=6)
         games_otd = []
         for game in self.games:
             game_date = game.date
