@@ -5,11 +5,23 @@ from datetime import timedelta, datetime
 import pandas as pd
 import requests
 import matplotlib.pyplot as plt
+from pretty_html_table import build_table
 
 to_unicode = str
 
 URL="https://services9.arcgis.com/pJENMVYPQqZZe20v/arcgis/rest/services/province_daily_totals/FeatureServer/0/query?where=Province%20%3D%20'ALBERTA'&outFields=Province,Abbreviation,DailyTotals,SummaryDate,DailyDeaths,DailyHospitalized,DailyICU,DailyTested&outSR=4326&f=json"
 
+def make_web (name, df):
+    # html_table = build_table(df, 'blue_dark')
+    # file_name = ('games_folder/' + name + ".html")
+    file_name = (name + ".html")
+    # text_file = open(file_name, "w")
+    # text_file.write(html_table)
+    # text_file.close()
+    with open(file_name, 'w') as fo:
+        df.to_html(fo)
+    print (f'Saved as {file_name}')
+        
 def get_data ():
     data_loaded = json.loads(requests.get(URL).text)
     url_data_df = pd.json_normalize(data_loaded['features'])
@@ -66,6 +78,10 @@ def remove_zeros (data):
     return data
 
 def find_averages (cleaned_data):
+    if 'ewm' in cleaned_data.columns:
+        cleaned_data = cleaned_data.drop('ewm', 1)
+        cleaned_data = cleaned_data.drop('sma3', 1)
+        cleaned_data = cleaned_data.drop('sma10', 1)
     ewm_data = cleaned_data.iloc[:,2].ewm(span=50,adjust=False).mean()
     cleaned_data.insert(1, 'ewm', ewm_data)
     sma3_data = cleaned_data.iloc[:,1].rolling(window=3).mean()
@@ -81,21 +97,26 @@ def manual_data (data):
     man_cases = input ("number of cases")
     man_hosp = input ("number of new ICU")
     man_icu = input ("number of new hospitalizations")
-    row = pd.Series ({'attributes.DailyTotals': man_cases,
+    row = pd.Series ({'attributes.DailyTotals': int(man_cases),
                       'attributes.Province': 'ALBERTA',
                       'attributes.Abbreviation': 'AB', 
                       'attributes.SummaryDate': timestamp,
                       'attributes.DailyDeaths': 0,
-                      'attributes.DailyHospitalized': man_hosp,
-                      'attributes.DailyICU': man_icu,
+                      'attributes.DailyHospitalized': int(man_hosp),
+                      'attributes.DailyICU': int(man_icu),
                       'attributes.DailyTested': 0,
                       },name=index_date)
     data = data.append(row)
+    make_web ('enterdata', data)
     return (data)
 
 def hosp (cleaned_data):
+    if 'current_hosp' in cleaned_data.columns:
+        cleaned_data = cleaned_data.drop('current_hosp', 1)
+        cleaned_data = cleaned_data.drop('current_icu', 1)
     cleaned_data['current_icu'] = cleaned_data['attributes.DailyICU'].cumsum()
     cleaned_data['current_hosp'] = cleaned_data['attributes.DailyHospitalized'].cumsum()
+    print (cleaned_data.tail(5))
     plt.figure (figsize=(18,10))
     plt.title (f'Hopitalization and ICU')
     plt.xlabel('Dates')
@@ -151,6 +172,7 @@ if __name__ == '__main__':
         elif choice == "I" or choice == "i":
             if data is None:
                 data = load_json()
+            make_web ('hosp', data)
             hosp(data)
         elif choice == "Q" or choice == "q":
             break
