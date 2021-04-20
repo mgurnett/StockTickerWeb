@@ -56,6 +56,8 @@ class AllTeams:
             
         max_gp = df['Games Played'].max()
         df ['GP_adjust'] = round((max_gp / df['Games Played'] * df['Points']), 1)
+            
+        df ['real_points'] = df['Win'] * 3 + df['OT & SO Loss']
         df = df.sort_values(by = 'GP_adjust', ascending = False)
         return df
 
