@@ -95,8 +95,8 @@ def manual_data (data):
     timestamp = int(datetime.now().timestamp()) * 1000
     index_date = pd.to_datetime(timestamp, unit='ms')
     man_cases = input ("number of cases")
-    man_hosp = input ("number of new ICU")
-    man_icu = input ("number of new hospitalizations")
+    man_icu = input ("number of new ICU")
+    man_hosp = input ("number of new hospitalizations")
     row = pd.Series ({'attributes.DailyTotals': int(man_cases),
                       'attributes.Province': 'ALBERTA',
                       'attributes.Abbreviation': 'AB', 
