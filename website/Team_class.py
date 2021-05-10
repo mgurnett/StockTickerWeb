@@ -3,6 +3,8 @@ import json
 import pandas as pd
 from API_read import read_API
 
+base_URL = "https://statsapi.web.nhl.com/api/v1/"
+
 class Team:
     ''' The Team class for a single team '''
     def __init__ (self, id):
@@ -21,9 +23,13 @@ class Team:
         self.points = 0
         self.games_played = 0
         self.point_percent = 0
+        self.roster = []
 
     def __str__ (self):
         return (f'{self.name} of the {self.division} who play in {self.venue} and have played {self.games_played} games and have {self.points} points')
+    
+    def print_roster (self):
+        return (f'{self.name} have a roster of {self.roster}')
     
 class AllTeams:
     ''' The class for all teams.  This is what gets pickeled. 
@@ -79,6 +85,19 @@ class AllTeams:
         # for team in self.teams:
         #     print (team)
         return df
+    
+
+def get_roster(t_id):
+    roster = []
+    active_roster = []
+    url = (f'teams/{str(t_id)}/roster')
+    data = read_API (url)
+    roster_df = pd.json_normalize(data, ['roster'],  errors='ignore')
+    # ; print (roster_df['person.id'])
+    roster.append(roster_df['person.id'])
+    for r in roster_df['person.id']:
+        active_roster.append(r)
+    return active_roster
 
 def load_teams ():
     '''load the teams data from the file if it is there, or get it from the API if it isn't.'''
@@ -90,7 +109,7 @@ def load_teams ():
     except IOError:
         packages_json = read_API ('teams')
         team_list = []
-        for index in range (len(packages_json['teams'])):
+        for index in range (len(packages_json['teams'])-1):
             team_id = packages_json['teams'][index]['id']
             current_team = Team (team_id)
             current_team.name = packages_json['teams'][index]['name']
@@ -100,8 +119,9 @@ def load_teams ():
             current_team.shortName = packages_json['teams'][index]['shortName']
             current_team.division = packages_json['teams'][index]['division']['name']
             current_team.venue = packages_json['teams'][index]['venue']['name']
+            current_team.roster = get_roster (team_id)
             team_list.append (current_team)
-            # print (current_team)
+            # print (current_team.print_roster())
 
         leag = AllTeams (team_list)
         # for team in league.teams:
@@ -114,14 +134,15 @@ def load_teams ():
 
 if __name__ == '__main__':
     league = load_teams ()
+
     if league != []:
         for team in league.teams:
             packages_json = read_API ('teams')
         pass
     else:
         print ('FAILURE')
-    # print (AllTeams.__doc__)
-    # print (load_teams.__doc__)
+    print (AllTeams.__doc__)
+    print (load_teams.__doc__)
     # df = league.convert_to_df ()
 
     league.team_stats()
