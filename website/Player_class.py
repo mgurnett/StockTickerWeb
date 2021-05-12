@@ -26,8 +26,6 @@ class Player:
         self.nationality = ''
         self.rookie = ''
         self.shootsCatches = ''
-
-
         self.load_player_data()
 
     def __str__ (self):
@@ -52,21 +50,139 @@ class Player:
         self.nationality = data_people.get('nationality')
         self.rookie = data_people.get('rookie')
         self.shootsCatches = data_people.get('shootsCatches')
-        # print (data_people)
 
-        # url = (f'people/{str(self.id)}/stats?stats=statsSingleSeason&season=20202021')
-        # player_json = read_API (url)
-        # data_stats = player_json['stats'][0]
-        # data_splits = data_stats['splits']
+class Skater (Player):
+    #https://statsapi.web.nhl.com/api/v1/people/8478402 McDavid
+    def __init__(self, id):
+        super.__init__(self, id)
+        self.timeOnIce = ''
+        self.assists = ''
+        self.goals = ''
+        self.pim = ''
+        self.shots = ''
+        self.games = ''
+        self.hits = ''
+        self.powerPlayGoals = ''
+        self.powerPlayPoints = ''
+        self.powerPlayTimeOnIce = ''
+        self.evenTimeOnIce = ''
+        self.penaltyMinutes = ''
+        self.faceOffPct = ''
+        self.shotPct = ''
+        self.gameWinningGoals = ''
+        self.overTimeGoals = ''
+        self.shortHandedGoals = ''
+        self.shortHandedPoints = ''
+        self.shortHandedTimeOnIce = ''
+        self.blocked = ''
+        self.plusMinus = ''
+        self.points = ''
+        self.shifts = ''
+        self.timeOnIcePerGame = ''
+        self.evenTimeOnIcePerGame = ''
+        self.shortHandedTimeOnIcePerGame = ''
+        self.powerPlayTimeOnIcePerGame = ''
+        self.load_skater_data()
 
-        # if data_splits != []:
-        #     # ; print ('data_splits', type(data_splits), data_splits)
-        #     data_splits = data_stats['splits'][0]
-        #     # ; print ('data_stat', type(data_stat), data_stat.keys())
-        #     data_stat = data_splits['stat']
-        #     print (data_stat)
+    def __str__ (self):
+        return (f'{self.first_name} {self.lastName} (#{self.primaryNumber}) {self.primaryPosition_name} and has {self.points} points.')
+
+    def load_skater_data (self):
+        url = (f'people/{str(self.id)}/stats?stats=statsSingleSeason&season=20202021')
+        data = read_API (url)
+        data_stats = data['stats'][0]
+        data_splits = data_stats['splits']
+        self.timeOnIce = data_people.get('timeOnIce')
+        self.assists = data_people.get('assists')
+        self.goals = data_people.get('goals')
+        self.pim = data_people.get('pim')
+        self.shots = data_people.get('shots')
+        self.games = data_people.get('games')
+        self.hits = data_people.get('hits')
+        self.powerPlayGoals = data_people.get('powerPlayGoals')
+        self.powerPlayPoints = data_people.get('powerPlayPoints')
+        self.powerPlayTimeOnIce = data_people.get('powerPlayTimeOnIce')
+        self.evenTimeOnIce = data_people.get('evenTimeOnIce')
+        self.penaltyMinutes = data_people.get('penaltyMinutes')
+        self.faceOffPct = data_people.get('faceOffPct')
+        self.shotPct = data_people.get('shotPct')
+        self.gameWinningGoals = data_people.get('gameWinningGoals')
+        self.overTimeGoals = data_people.get('overTimeGoals')
+        self.shortHandedGoals = data_people.get('shortHandedGoals')
+        self.shortHandedPoints = data_people.get('shortHandedPoints')
+        self.shortHandedTimeOnIce = data_people.get('shortHandedTimeOnIce')
+        self.blocked = data_people.get('blocked')
+        self.plusMinus = data_people.get('plusMinus')
+        self.points = data_people.get('points')
+        self.shifts = data_people.get('shifts')
+        self.timeOnIcePerGame = data_people.get('timeOnIcePerGame')
+        self.evenTimeOnIcePerGame = data_people.get('evenTimeOnIcePerGame')
+        self.shortHandedTimeOnIcePerGame = data_people.get('shortHandedTimeOnIcePerGame')
+        self.powerPlayTimeOnIcePerGame = data_people.get('powerPlayTimeOnIcePerGame')
 
 
+class Goalie (Player):
+    #https://statsapi.web.nhl.com/api/v1/people/8469608 Mike Smith
+    def __init__(self, id):
+        super.__init__(self, id)
+        self.timeOnIce = ''
+        self.ot = ''
+        self.shutouts = ''
+        self.ties = ''
+        self.wins = ''
+        self.losses = ''
+        self.saves = ''
+        self.powerPlaySaves = ''
+        self.shortHandedSaves = ''
+        self.evenSaves = ''
+        self.shortHandedShots = ''
+        self.evenShots = ''
+        self.powerPlayShots = ''
+        self.savePercentage = ''
+        self.goalAgainstAverage = ''
+        self.games = ''
+        self.gamesStarted = ''
+        self.shotsAgainst = ''
+        self.goalsAgainst = ''
+        self.timeOnIcePerGame = '',
+        self.powerPlaySavePercentage = ''
+        self.shortHandedSavePercentage = ''
+        self.evenStrengthSavePercentage = ''
+        self.load_goalie_data()
+
+    def __str__ (self):
+        return (f'{self.first_name} {self.lastName} (#{self.primaryNumber}) {self.primaryPosition_name} and has {self.wins} wins.')
+
+    def load_goalie_data (self):
+        url = (f'people/{str(self.id)}/stats?stats=statsSingleSeason&season=20202021')
+        data = read_API (url)
+        data_stats = data['stats'][0]
+        data_splits = data_stats['splits']
+        self.timeOnIce = data_people.get('timeOnIce')
+        self.ot = data_people.get('ot')
+        self.shutouts = data_people.get('shutouts')
+        self.ties = data_people.get('ties')
+        self.wins = data_people.get('wins')
+        self.losses = data_people.get('losses')
+        self.saves = data_people.get('saves')
+        self.powerPlaySaves = data_people.get('powerPlaySaves')
+        self.shortHandedSaves = data_people.get('shortHandedSaves')
+        self.evenSaves = data_people.get('evenSaves')
+        self.shortHandedShots = data_people.get('shortHandedShots')
+        self.evenShots = data_people.get('evenShots')
+        self.powerPlayShots = data_people.get('powerPlayShots')
+        self.savePercentage = data_people.get('savePercentage')
+        self.goalAgainstAverage = data_people.get('goalAgainstAverage')
+        self.games = data_people.get('games')
+        self.gamesStarted = data_people.get('gamesStarted')
+        self.shotsAgainst = data_people.get('shotsAgainst')
+        self.goalsAgainst = data_people.get('goalsAgainst')
+        self.timeOnIcePerGame = data_people.get('timeOnIcePerGame'),
+        self.powerPlaySavePercentage = data_people.get('powerPlaySavePercentage')
+        self.shortHandedSavePercentage = data_people.get('shortHandedSavePercentage')
+        self.evenStrengthSavePercentage = data_people.get('evenStrengthSavePercentage')
+
+'''
 def get_player_data(url):
     #     print (url)
     r = requests.get(url)
@@ -129,7 +245,7 @@ def get_player_info(id):
     else:
         all_players_df = []
     return all_players_df
-
+'''
 
 if __name__ == '__main__':
     league = load_teams ()
